@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Inter:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
         
         * { box-sizing: border-box; }
 
@@ -15,100 +15,250 @@
             font-family: 'Space Mono', monospace; 
             background-color: #f5f5dc;
             background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(0,0,0,0.03) 50px, rgba(0,0,0,0.03) 51px),
-                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,0,0,0.03) 50px, rgba(0,0,0,0.03) 51px);
+                repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(0,0,0,0.03) 30px, rgba(0,0,0,0.03) 31px),
+                repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(0,0,0,0.03) 30px, rgba(0,0,0,0.03) 31px);
             min-height: 100vh;
         }
 
         .arabic-text { font-family: 'Amiri', serif; direction: rtl; }
-        .brutal-border { border: 4px solid #000; }
-        .brutal-shadow { box-shadow: 8px 8px 0px #000; }
-        .brutal-shadow-lg { box-shadow: 12px 12px 0px #000; }
+        .brutal-border { border: 3px solid #000; }
+        .brutal-shadow { box-shadow: 4px 4px 0px #000; }
+        .brutal-shadow-lg { box-shadow: 6px 6px 0px #000; }
+
+        @media (min-width: 768px) {
+            .brutal-border { border: 4px solid #000; }
+            .brutal-shadow { box-shadow: 8px 8px 0px #000; }
+            .brutal-shadow-lg { box-shadow: 12px 12px 0px #000; }
+        }
 
         .brutal-btn {
-            border: 4px solid #000;
-            box-shadow: 6px 6px 0px #000;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
             transition: all 0.1s ease;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
-        .brutal-btn:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0px #000; }
-        .brutal-btn:active { transform: translate(6px, 6px); box-shadow: 0px 0px 0px #000; }
+        @media (min-width: 768px) {
+            .brutal-btn {
+                border: 4px solid #000;
+                box-shadow: 6px 6px 0px #000;
+                letter-spacing: 2px;
+            }
+        }
+
+        .brutal-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
+        .brutal-btn:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #000; }
 
         .brutal-input {
-            border: 4px solid #000;
+            border: 3px solid #000;
             background: #fff;
             font-family: 'Space Mono', monospace;
+        }
+
+        @media (min-width: 768px) {
+            .brutal-input { border: 4px solid #000; }
         }
 
         .brutal-input:focus { outline: none; background: #ffffa0; }
 
         .card-brutal {
             background: #fff;
-            border: 4px solid #000;
-            box-shadow: 12px 12px 0px #000;
+            border: 3px solid #000;
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        @media (min-width: 768px) {
+            .card-brutal {
+                border: 4px solid #000;
+                box-shadow: 12px 12px 0px #000;
+            }
         }
 
         .header-brutal {
             background: #000;
             color: #fff;
-            padding: 2.5rem 2rem;
-            border-bottom: 4px solid #000;
+            padding: 1.5rem 1rem;
+            border-bottom: 3px solid #000;
             position: relative;
             overflow: hidden;
         }
 
-        .header-brutal::before {
-            content: "//////////";
-            position: absolute; top: 10px; right: 20px;
-            font-size: 1.5rem; opacity: 0.3; letter-spacing: -2px;
+        @media (min-width: 768px) {
+            .header-brutal {
+                padding: 2.5rem 2rem;
+                border-bottom: 4px solid #000;
+            }
         }
 
+        .header-brutal::before {
+            content: "////";
+            position: absolute; top: 8px; right: 12px;
+            font-size: 1rem; opacity: 0.3; letter-spacing: -2px;
+        }
+
+        @media (min-width: 768px) {
+            .header-brutal::before {
+                content: "//////////";
+                font-size: 1.5rem;
+                right: 20px;
+            }
+        }
+
+        /* Mobile-first row layout */
         .row-tashrif {
-            display: grid;
-            grid-template-columns: 160px 1fr 1fr 200px;
-            align-items: center;
-            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
             border-bottom: 3px solid #000;
-            gap: 16px;
             background: #fff;
+            gap: 8px;
         }
 
         .row-tashrif:hover { background: #ffff00; }
 
-        @media (max-width: 768px) {
+        /* Desktop grid layout */
+        @media (min-width: 768px) {
             .row-tashrif {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-            .label-cell { 
-                grid-column: span 2; background: #000 !important; color: #fff;
-                padding: 8px 12px; font-size: 0.7rem; letter-spacing: 2px;
-            }
-            .meaning-cell { 
-                grid-column: span 2; text-align: center; border-top: 2px dashed #000; padding-top: 8px;
+                display: grid;
+                grid-template-columns: 140px 1fr 1fr 180px;
+                align-items: center;
+                padding: 1rem 1.5rem;
+                gap: 16px;
             }
         }
 
-        .label-cell { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
-        .wazan-cell { font-size: 1.6rem; color: #666; }
+        @media (min-width: 1024px) {
+            .row-tashrif {
+                grid-template-columns: 160px 1fr 1fr 200px;
+            }
+        }
+
+        .label-cell { 
+            font-size: 0.6rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            background: #000;
+            color: #fff;
+            padding: 6px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            align-self: flex-start;
+        }
+
+        @media (min-width: 768px) {
+            .label-cell {
+                font-size: 0.65rem;
+                background: transparent;
+                color: #000;
+                padding: 0;
+            }
+        }
+
+        .wazan-mauzun-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        @media (min-width: 768px) {
+            .wazan-mauzun-container {
+                display: contents;
+            }
+        }
+
+        .wazan-cell { 
+            font-size: 1.2rem; 
+            color: #888;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .wazan-cell {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .wazan-cell {
+                font-size: 1.6rem;
+            }
+        }
+
         .mauzun-cell { 
-            font-size: 2.4rem; color: #000; font-weight: 700;
-            display: inline-block; padding: 0 10px;
+            font-size: 1.6rem; 
+            color: #000; 
+            font-weight: 700;
+            display: inline-block; 
+            padding: 2px 8px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .mauzun-cell {
+                font-size: 2rem;
+                padding: 0 10px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .mauzun-cell {
+                font-size: 2.4rem;
+            }
+        }
+
+        .meaning-cell {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            padding-top: 8px;
+            border-top: 2px dashed #ccc;
+        }
+
+        @media (min-width: 768px) {
+            .meaning-cell {
+                font-size: 0.85rem;
+                text-align: right;
+                padding-top: 0;
+                border-top: none;
+            }
         }
 
         .marquee-container {
-            background: #ff0000; border: 4px solid #000;
-            padding: 8px 0; overflow: hidden;
+            background: #ff0000; 
+            border: 3px solid #000;
+            padding: 6px 0; 
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .marquee-container {
+                border: 4px solid #000;
+                padding: 8px 0;
+            }
         }
 
         .marquee-text {
-            display: inline-block; white-space: nowrap;
-            animation: marquee 25s linear infinite;
-            font-weight: 700; font-size: 0.8rem; color: #fff;
-            text-transform: uppercase; letter-spacing: 4px;
+            display: inline-block; 
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+            font-weight: 700; 
+            font-size: 0.65rem; 
+            color: #fff;
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        @media (min-width: 768px) {
+            .marquee-text {
+                font-size: 0.8rem;
+                letter-spacing: 4px;
+                animation-duration: 25s;
+            }
         }
 
         @keyframes marquee {
@@ -117,9 +267,19 @@
         }
 
         .loader-brutal {
-            width: 60px; height: 60px;
-            border: 6px solid #000; border-top: 6px solid #ffff00;
+            width: 40px; 
+            height: 40px;
+            border: 4px solid #000; 
+            border-top: 4px solid #ffff00;
             animation: spin 0.6s linear infinite;
+        }
+
+        @media (min-width: 768px) {
+            .loader-brutal {
+                width: 60px;
+                height: 60px;
+                border-width: 6px;
+            }
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -129,61 +289,174 @@
                         linear-gradient(225deg, #000 25%, transparent 25%) -10px 0,
                         linear-gradient(315deg, #000 25%, transparent 25%),
                         linear-gradient(45deg, #000 25%, transparent 25%);
-            background-size: 20px 20px; background-color: #ffff00; height: 20px;
+            background-size: 16px 16px; 
+            background-color: #ffff00; 
+            height: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .zigzag {
+                background-size: 20px 20px;
+                height: 20px;
+            }
         }
 
         .header-table {
-            display: grid;
-            grid-template-columns: 160px 1fr 1fr 200px;
-            background: #000; color: #fff;
-            padding: 1rem 1.5rem; font-size: 0.65rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 2px;
+            display: none;
         }
 
-        @media (max-width: 768px) { .header-table { display: none; } }
+        @media (min-width: 768px) {
+            .header-table {
+                display: grid;
+                grid-template-columns: 140px 1fr 1fr 180px;
+                background: #000; 
+                color: #fff;
+                padding: 0.75rem 1.5rem; 
+                font-size: 0.6rem; 
+                font-weight: 700;
+                text-transform: uppercase; 
+                letter-spacing: 1px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header-table {
+                grid-template-columns: 160px 1fr 1fr 200px;
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Title responsive */
+        .title-main {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            line-height: 0.9;
+        }
+
+        @media (min-width: 480px) {
+            .title-main {
+                font-size: 5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .title-main {
+                font-size: 7rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .title-main {
+                font-size: 9rem;
+            }
+        }
+
+        /* Input Arabic responsive */
+        .input-arabic {
+            font-size: 1.75rem;
+            padding: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .input-arabic {
+                font-size: 2.5rem;
+                padding: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .input-arabic {
+                font-size: 3rem;
+            }
+        }
+
+        /* Pattern text responsive */
+        .pattern-text {
+            font-size: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .pattern-text {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .pattern-text {
+                font-size: 4.5rem;
+            }
+        }
+
+        /* Arrow indicator for mobile */
+        .arrow-indicator {
+            display: inline-block;
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        @media (min-width: 768px) {
+            .arrow-indicator {
+                display: none;
+            }
+        }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-3 md:p-6 lg:p-8">
 
     <!-- Marquee Banner -->
-    <div class="marquee-container brutal-shadow mb-8">
+    <div class="marquee-container brutal-shadow mb-4 md:mb-8">
         <div class="marquee-text">
-            ★★★ TASHRIF SHARAF — WAZAN & MAUZUN — AL-AMTSILAH AT-TASHRIFIYYAH — ANALISIS AI GEMINI — BRUTALIST EDITION PRO ★★★
+            ★★★ TASHRIF SHARAF — WAZAN & MAUZUN — AL-AMTSILAH AT-TASHRIFIYYAH — ANALISIS AI GEMINI — BRUTALIST EDITION ★★★
         </div>
     </div>
 
     <div class="max-w-6xl mx-auto">
         
         <!-- Title Section -->
-        <div class="text-center mb-10">
-            <h1 class="font-['Bebas_Neue'] text-7xl md:text-9xl text-black leading-none">TASHRIF</h1>
-            <h1 class="font-['Bebas_Neue'] text-7xl md:text-9xl text-black leading-none" style="text-shadow: 6px 6px 0px #ffff00;">SHARAF</h1>
+        <div class="text-center mb-6 md:mb-10">
+            <h1 class="title-main text-black">TASHRIF</h1>
+            <h1 class="title-main text-black" style="text-shadow: 4px 4px 0px #ffff00;">SHARAF</h1>
         </div>
 
         <!-- Input Section -->
-        <div class="card-brutal p-6 md:p-10 mb-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card-brutal p-4 md:p-6 lg:p-10 mb-6 md:mb-12">
+            <div class="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
+                <!-- API Key Input -->
                 <div class="space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-widest block mb-2 underline">API_KEY_REQUIRED</label>
+                    <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
+                        <i class="fas fa-key mr-1"></i> API_KEY
+                    </label>
                     <input type="password" id="apiKeyInput" 
-                        class="brutal-input w-full p-4 text-sm"
-                        placeholder="sk-xxxxxxxxxxxxx">
+                        class="brutal-input w-full p-3 md:p-4 text-xs md:text-sm"
+                        placeholder="Masukkan API Key...">
                 </div>
                 
+                <!-- Arabic Input -->
                 <div class="md:col-span-2 space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-widest block mb-2 underline">INPUT_ARABIC_VERB</label>
-                    <div class="flex gap-4">
+                    <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
+                        <i class="fas fa-pen-fancy mr-1"></i> KATA_FIIL_ARAB
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text" id="userInput" 
-                            class="arabic-text brutal-input flex-1 p-4 text-4xl md:text-5xl"
+                            class="arabic-text brutal-input input-arabic flex-1 w-full"
                             placeholder="أَكْرَمَ"
                             onkeypress="if(event.key === 'Enter') processTashrif()">
                         <button onclick="processTashrif()" 
-                            class="brutal-btn bg-yellow-400 text-black px-8 flex items-center gap-3">
-                            <i class="fas fa-bolt text-2xl"></i>
-                            <span class="hidden md:inline">PROCESS</span>
+                            class="brutal-btn bg-yellow-400 text-black px-6 py-3 md:py-0 md:px-8 flex items-center justify-center gap-2">
+                            <i class="fas fa-bolt text-lg md:text-2xl"></i>
+                            <span class="text-sm md:text-base">PROSES</span>
                         </button>
                     </div>
                 </div>
+            </div>
+
+            <!-- Helper Text -->
+            <div class="mt-4 pt-3 border-t-2 border-dashed border-black">
+                <p class="text-[10px] md:text-xs opacity-70">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Contoh: نَصَرَ، أَكْرَمَ، عَلَّمَ، تَعَلَّمَ
+                </p>
             </div>
         </div>
 
@@ -191,15 +464,18 @@
         <div id="resultArea" class="hidden">
             <div class="card-brutal overflow-hidden">
                 
+                <!-- Header -->
                 <div class="header-brutal">
                     <div class="relative z-10">
-                        <span class="inline-block bg-yellow-400 text-black px-4 py-1 font-bold text-xs mb-4" id="babText">BAB ANALYZED</span>
-                        <h2 id="patternText" class="arabic-text text-5xl md:text-7xl font-bold">— — —</h2>
+                        <span class="inline-block bg-yellow-400 text-black px-3 py-1 font-bold text-[10px] md:text-xs mb-3" id="babText">BAB ANALYZED</span>
+                        <h2 id="patternText" class="arabic-text pattern-text font-bold">— — —</h2>
                     </div>
                 </div>
 
+                <!-- Zigzag -->
                 <div class="zigzag"></div>
 
+                <!-- Table Header (Desktop only) -->
                 <div class="header-table">
                     <div>BENTUK</div>
                     <div class="text-center">WAZAN (RUMUS)</div>
@@ -207,33 +483,49 @@
                     <div class="text-right">ARTI</div>
                 </div>
 
+                <!-- Data Rows -->
                 <div id="tashrifContainer">
-                    <!-- Data Rows -->
+                    <!-- Rows will be injected here -->
                 </div>
 
-                <div class="bg-black text-white p-4 text-center text-[10px] font-bold tracking-[0.5em]">
-                    // SHARAF_AI_ENGINE_V2.5 //
+                <!-- Footer -->
+                <div class="bg-black text-white p-3 md:p-4 text-center text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.5em]">
+                    // SHARAF_AI_ENGINE //
                 </div>
             </div>
         </div>
 
         <!-- Loader -->
-        <div id="loader" class="hidden py-24 text-center">
-            <div class="inline-block mb-6 loader-brutal"></div>
-            <p class="text-2xl font-black uppercase tracking-widest">[ ANALYZING_PATTERNS ]</p>
+        <div id="loader" class="hidden py-16 md:py-24 text-center">
+            <div class="inline-block mb-4 md:mb-6 loader-brutal"></div>
+            <p class="text-base md:text-2xl font-black uppercase tracking-wider md:tracking-widest">[ ANALYZING... ]</p>
         </div>
 
     </div>
 
+    <!-- Error Modal Template -->
+    <div id="errorModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-red-500 brutal-border brutal-shadow-lg p-6 md:p-8 max-w-sm w-full text-center">
+            <div class="text-4xl md:text-5xl mb-4">⚠️</div>
+            <p id="errorMessage" class="text-white text-lg md:text-2xl font-black mb-6">ERROR</p>
+            <button onclick="closeModal()" class="brutal-btn bg-white px-6 py-2 text-sm md:text-base">OK</button>
+        </div>
+    </div>
+
     <script>
-        const modelName = "gemini-2.5-flash-preview-09-2025";
+        const modelName = "gemini-2.5-flash-preview-05-20";
 
         async function processTashrif() {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const input = document.getElementById('userInput').value.trim();
 
-            if (!apiKey || !input) {
-                showBrutalAlert("ERROR: MISSING INPUT OR API KEY!");
+            if (!apiKey) {
+                showBrutalAlert("API KEY KOSONG!");
+                return;
+            }
+            
+            if (!input) {
+                showBrutalAlert("MASUKKAN KATA ARAB!");
                 return;
             }
 
@@ -277,23 +569,28 @@
                 });
 
                 const json = await response.json();
+                
+                if (!json.candidates || !json.candidates[0]) {
+                    throw new Error("Invalid response");
+                }
+                
                 const res = JSON.parse(json.candidates[0].content.parts[0].text);
                 renderResult(res);
             } catch (e) {
-                showBrutalAlert("FATAL_ERROR: AI_CONNECTION_FAILED");
+                console.error(e);
+                showBrutalAlert("KONEKSI GAGAL / API KEY SALAH!");
             } finally {
                 loader.classList.add('hidden');
             }
         }
 
         function showBrutalAlert(msg) {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4';
-            modal.innerHTML = `<div class="bg-red-500 brutal-border brutal-shadow-lg p-8 max-w-md w-full text-center">
-                <p class="text-white text-2xl font-black mb-6">${msg}</p>
-                <button onclick="this.closest('.fixed').remove()" class="brutal-btn bg-white px-8 py-2">ACKNOWLEDGE</button>
-            </div>`;
-            document.body.appendChild(modal);
+            document.getElementById('errorMessage').textContent = msg;
+            document.getElementById('errorModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('errorModal').classList.add('hidden');
         }
 
         function renderResult(res) {
@@ -302,28 +599,46 @@
             document.getElementById('patternText').innerText = res.main_pattern;
             container.innerHTML = '';
 
-            const accents = ['#ffff00', '#00ffff', '#ff69b4', '#00ff00', '#ff8c00', '#ffffff'];
+            const accents = ['#ffff00', '#00ffff', '#ff69b4', '#00ff00', '#ff8c00', '#E879F9', '#38bdf8', '#a3e635', '#fb923c', '#f472b6'];
 
             res.rows.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'row-tashrif';
                 const color = accents[i % accents.length];
+                
                 div.innerHTML = `
-                    <div class="label-cell flex items-center gap-2">
-                        <span class="w-3 h-3 brutal-border" style="background:${color}"></span>${item.label}
+                    <div class="label-cell">
+                        <span class="w-2 h-2 md:w-3 md:h-3 brutal-border flex-shrink-0" style="background:${color}"></span>
+                        <span>${item.label}</span>
                     </div>
-                    <div class="arabic-text wazan-cell text-center text-slate-400 opacity-60">${item.wazan}</div>
-                    <div class="arabic-text text-center">
-                        <span class="mauzun-cell" style="background: linear-gradient(180deg, transparent 65%, ${color} 65%);">${item.mauzun}</span>
+                    <div class="wazan-mauzun-container">
+                        <div class="arabic-text wazan-cell flex-1">${item.wazan}</div>
+                        <span class="arrow-indicator">→</span>
+                        <div class="arabic-text flex-1 text-center">
+                            <span class="mauzun-cell" style="background: linear-gradient(180deg, transparent 65%, ${color} 65%);">${item.mauzun}</span>
+                        </div>
                     </div>
-                    <div class="meaning-cell text-right font-bold italic">"${item.arti}"</div>
+                    <div class="meaning-cell">"${item.arti}"</div>
                 `;
                 container.appendChild(div);
             });
 
             document.getElementById('resultArea').classList.remove('hidden');
-            window.scrollTo({ top: document.getElementById('resultArea').offsetTop - 50, behavior: 'smooth' });
+            
+            setTimeout(() => {
+                document.getElementById('resultArea').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 100);
         }
+
+        // Close modal on outside click
+        document.getElementById('errorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
