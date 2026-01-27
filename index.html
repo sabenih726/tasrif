@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASHRIF SHARAF // BRUTALIST PRO</title>
+    <title>TASHRIF SHARAF PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
@@ -398,7 +398,7 @@
             .arrow-indicator { display: none; }
         }
 
-        .model-select, .type-select {
+        .model-select {
             border: 3px solid #000;
             background: #fff;
             font-family: 'Space Mono', monospace;
@@ -407,7 +407,7 @@
             cursor: pointer;
         }
 
-        .model-select:focus, .type-select:focus {
+        .model-select:focus {
             outline: none;
             background: #ffffa0;
         }
@@ -433,7 +433,6 @@
         .type-btn-auto { background: #d1d5db; }
         .type-btn-auto.active { background: #6b7280; color: #fff; }
 
-        /* Info cards for Isim */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -444,15 +443,11 @@
         }
 
         @media (min-width: 640px) {
-            .info-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .info-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (min-width: 1024px) {
-            .info-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+            .info-grid { grid-template-columns: repeat(4, 1fr); }
         }
 
         .info-card {
@@ -478,7 +473,6 @@
             font-size: 1.25rem;
         }
 
-        /* Derivation tree */
         .derivation-box {
             background: #fef3c7;
             border: 3px solid #000;
@@ -491,6 +485,19 @@
             font-size: 1.5rem;
             color: #666;
         }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            border: 2px solid #000;
+        }
+
+        .status-connected { background: #86efac; }
+        .status-error { background: #fca5a5; }
     </style>
 </head>
 <body class="p-3 md:p-6 lg:p-8">
@@ -498,7 +505,7 @@
     <!-- Marquee Banner -->
     <div class="marquee-container brutal-shadow mb-4 md:mb-8">
         <div class="marquee-text">
-            ★★★ TASHRIF SHARAF — FI'IL & ISIM — WAZAN & MAUZUN — AL-AMTSILAH AT-TASHRIFIYYAH — ANALISIS AI GEMINI ★★★
+            ★★★ TASHRIF SHARAF — FI'IL & ISIM — WAZAN & MAUZUN — MAJELIS KALIBATA ★★★
         </div>
     </div>
 
@@ -508,69 +515,62 @@
         <div class="text-center mb-6 md:mb-10">
             <h1 class="title-main text-black">TASHRIF</h1>
             <h1 class="title-main text-black" style="text-shadow: 4px 4px 0px #ffff00;">SHARAF</h1>
+            <!-- Status Badge -->
+            <div class="mt-4">
+                <span id="statusBadge" class="status-badge status-connected">
+                    <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
+                    AI READY
+                </span>
+            </div>
         </div>
 
-        <!-- Input Section -->
+        <!-- Input Section - Simplified -->
         <div class="card-brutal p-4 md:p-6 lg:p-10 mb-6 md:mb-12">
             
-            <!-- Type Selection -->
-            <div class="mb-4 md:mb-6">
-                <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline mb-2">
-                    <i class="fas fa-tags mr-1"></i> JENIS KATA
-                </label>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="setType('auto')" id="btnAuto" class="type-btn type-btn-auto brutal-shadow active">
-                        <i class="fas fa-magic mr-1"></i> AUTO DETECT
-                    </button>
-                    <button onclick="setType('fiil')" id="btnFiil" class="type-btn type-btn-fiil brutal-shadow">
-                        <i class="fas fa-running mr-1"></i> FI'IL (VERBA)
-                    </button>
-                    <button onclick="setType('isim')" id="btnIsim" class="type-btn type-btn-isim brutal-shadow">
-                        <i class="fas fa-cube mr-1"></i> ISIM (NOMINA)
-                    </button>
-                </div>
-            </div>
-
-            <div class="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
-                <!-- API Key & Model -->
-                <div class="space-y-3">
-                    <div>
-                        <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
-                            <i class="fas fa-key mr-1"></i> API_KEY
-                        </label>
-                        <input type="password" id="apiKeyInput" 
-                            class="brutal-input w-full p-3 md:p-4 text-xs md:text-sm mt-1"
-                            placeholder="Masukkan API Key...">
-                    </div>
-                    
-                    <div>
-                        <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
-                            <i class="fas fa-robot mr-1"></i> MODEL
-                        </label>
-                        <select id="modelSelect" class="model-select w-full mt-1">
-                            <option value="gemini-2.5-flash-preview-09-2025">Gemini 2.5 Flash</option>
-                            <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
-                            <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
-                        </select>
+            <!-- Type Selection & Model in one row -->
+            <div class="flex flex-col md:flex-row md:items-end gap-4 mb-6">
+                <div class="flex-1">
+                    <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline mb-2">
+                        <i class="fas fa-tags mr-1"></i> JENIS KATA
+                    </label>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="setType('auto')" id="btnAuto" class="type-btn type-btn-auto brutal-shadow active">
+                            <i class="fas fa-magic mr-1"></i> AUTO
+                        </button>
+                        <button onclick="setType('fiil')" id="btnFiil" class="type-btn type-btn-fiil brutal-shadow">
+                            <i class="fas fa-running mr-1"></i> FI'IL
+                        </button>
+                        <button onclick="setType('isim')" id="btnIsim" class="type-btn type-btn-isim brutal-shadow">
+                            <i class="fas fa-cube mr-1"></i> ISIM
+                        </button>
                     </div>
                 </div>
                 
-                <!-- Arabic Input -->
-                <div class="md:col-span-2 space-y-2">
-                    <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
-                        <i class="fas fa-pen-fancy mr-1"></i> KATA_ARAB
+                <div class="w-full md:w-48">
+                    <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline mb-2">
+                        <i class="fas fa-robot mr-1"></i> MODEL
                     </label>
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <input type="text" id="userInput" 
-                            class="arabic-text brutal-input input-arabic flex-1 w-full"
-                            placeholder="كَاتِب / كَتَبَ"
-                            onkeypress="if(event.key === 'Enter') processWord()">
-                        <button onclick="processWord()" id="processBtn"
-                            class="brutal-btn bg-yellow-400 text-black px-6 py-3 md:py-0 md:px-8 flex items-center justify-center gap-2">
-                            <i class="fas fa-bolt text-lg md:text-2xl"></i>
-                            <span class="text-sm md:text-base">PROSES</span>
-                        </button>
-                    </div>
+                    <select id="modelSelect" class="model-select w-full">
+                        <option value="gemini-2.5-flash-preview-09-2025">Gemini 2.5 Flash</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Arabic Input - Full Width -->
+            <div class="space-y-2">
+                <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
+                    <i class="fas fa-pen-fancy mr-1"></i> MASUKKAN KATA ARAB
+                </label>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="userInput" 
+                        class="arabic-text brutal-input input-arabic flex-1 w-full"
+                        placeholder="كَاتِب / كَتَبَ / نَصَرَ"
+                        onkeypress="if(event.key === 'Enter') processWord()">
+                    <button onclick="processWord()" id="processBtn"
+                        class="brutal-btn bg-yellow-400 text-black px-6 py-3 md:py-0 md:px-10 flex items-center justify-center gap-2">
+                        <i class="fas fa-bolt text-lg md:text-2xl"></i>
+                        <span class="text-sm md:text-base">ANALISIS</span>
+                    </button>
                 </div>
             </div>
 
@@ -578,8 +578,8 @@
             <div class="mt-4 pt-3 border-t-2 border-dashed border-black">
                 <p class="text-[10px] md:text-xs opacity-70">
                     <i class="fas fa-info-circle mr-1"></i>
-                    <strong>Fi'il:</strong> نَصَرَ، أَكْرَمَ، عَلَّمَ، تَعَلَّمَ &nbsp;|&nbsp;
-                    <strong>Isim:</strong> كَاتِب، مَكْتُوب، مَدْرَسَة، عَالِم، كِتَاب
+                    <strong>Fi'il:</strong> نَصَرَ، ضَرَبَ، أَكْرَمَ، عَلَّمَ، تَعَلَّمَ &nbsp;|&nbsp;
+                    <strong>Isim:</strong> كَاتِب، مَكْتُوب، مَدْرَسَة، عَالِم، كِتَاب، طَالِب
                 </p>
             </div>
         </div>
@@ -593,6 +593,7 @@
                             <i class="fas fa-running mr-1"></i> <span id="babText">FI'IL ANALYZED</span>
                         </span>
                         <h2 id="patternText" class="arabic-text pattern-text font-bold">— — —</h2>
+                        <p id="rootText" class="text-sm mt-2 opacity-70"></p>
                     </div>
                 </div>
                 <div class="zigzag"></div>
@@ -660,25 +661,35 @@
     </div>
 
     <script>
+        // ╔════════════════════════════════════════════════════════════════╗
+        // ║  🔑 GANTI API KEY DI BAWAH INI DENGAN API KEY ANDA            ║
+        // ╚════════════════════════════════════════════════════════════════╝
+        const API_KEY = "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA";  // <-- Ganti dengan API key Anda
+        
+        // Contoh: const API_KEY = "AIzaSyB5Im5DmRH5RjaElvJz8W87OHk2-Gg2kj8";
+        
         let selectedType = 'auto';
 
         function setType(type) {
             selectedType = type;
-            document.querySelectorAll('.type-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            if (type === 'auto') document.getElementById('btnAuto').classList.add('active');
-            if (type === 'fiil') document.getElementById('btnFiil').classList.add('active');
-            if (type === 'isim') document.getElementById('btnIsim').classList.add('active');
+            document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).classList.add('active');
         }
 
         async function processWord() {
-            const apiKey = document.getElementById('apiKeyInput').value.trim();
             const input = document.getElementById('userInput').value.trim();
             const modelName = document.getElementById('modelSelect').value;
 
-            if (!apiKey) { showBrutalAlert("API KEY KOSONG!"); return; }
-            if (!input) { showBrutalAlert("MASUKKAN KATA ARAB!"); return; }
+            // Validasi API Key
+            if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+                showBrutalAlert("API KEY BELUM DIKONFIGURASI! Buka file HTML dan ganti 'YOUR_API_KEY_HERE' dengan API key Anda.");
+                return;
+            }
+
+            if (!input) {
+                showBrutalAlert("MASUKKAN KATA ARAB!");
+                return;
+            }
 
             const loader = document.getElementById('loader');
             loader.classList.remove('hidden');
@@ -696,7 +707,7 @@
             }
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -708,10 +719,19 @@
 
                 const json = await response.json();
                 
-                if (json.error) throw new Error(`API Error: ${json.error.message}`);
+                if (json.error) {
+                    if (json.error.message.includes('API_KEY_INVALID') || json.error.status === 'INVALID_ARGUMENT') {
+                        updateStatus(false);
+                        throw new Error("API KEY TIDAK VALID! Periksa kembali API key Anda.");
+                    }
+                    throw new Error(`API Error: ${json.error.message}`);
+                }
+                
                 if (!json.candidates || !json.candidates[0]) throw new Error("Response tidak valid");
 
                 const res = JSON.parse(json.candidates[0].content.parts[0].text);
+                
+                updateStatus(true);
                 
                 if (res.type === 'fiil') {
                     renderFiilResult(res);
@@ -724,6 +744,17 @@
                 showBrutalAlert(e.message || "TERJADI KESALAHAN!");
             } finally {
                 loader.classList.add('hidden');
+            }
+        }
+
+        function updateStatus(connected) {
+            const badge = document.getElementById('statusBadge');
+            if (connected) {
+                badge.className = 'status-badge status-connected';
+                badge.innerHTML = '<span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span> AI READY';
+            } else {
+                badge.className = 'status-badge status-error';
+                badge.innerHTML = '<span class="w-2 h-2 bg-red-600 rounded-full"></span> API ERROR';
             }
         }
 
@@ -768,9 +799,9 @@ JIKA ISIM, berikan format:
     "forms": [
         {"label": "Mufrad", "arabic": "...", "note": "Bentuk tunggal"},
         {"label": "Mutsanna", "arabic": "...", "note": "Bentuk dual"},
-        {"label": "Jamak", "arabic": "...", "note": "Jenis jamak: Mudzakkar Salim/Muannats Salim/Taksir"},
-        {"label": "Muannats", "arabic": "...", "note": "Bentuk feminin (jika ada)"},
-        {"label": "Tashghir", "arabic": "...", "note": "Bentuk kecil/diminutif"},
+        {"label": "Jamak", "arabic": "...", "note": "Jenis jamak"},
+        {"label": "Muannats", "arabic": "...", "note": "Bentuk feminin"},
+        {"label": "Tashghir", "arabic": "...", "note": "Bentuk diminutif"},
         {"label": "Nisbah", "arabic": "...", "note": "Bentuk penisbatan"}
     ],
     "related_words": [
@@ -790,8 +821,8 @@ JIKA ISIM, berikan format:
                 "main_pattern": "Contoh: أَفْعَلَ - يُفْعِلُ",
                 "root": "Akar kata",
                 "rows": [
-                    {"label": "Madhi Ma'lum", "wazan": "أَفْعَلَ", "mauzun": "...", "arti": "..."},
-                    {"label": "Mudhari Ma'lum", "wazan": "يُفْعِلُ", "mauzun": "...", "arti": "..."},
+                    {"label": "Madhi Ma'lum", "wazan": "...", "mauzun": "...", "arti": "..."},
+                    {"label": "Mudhari Ma'lum", "wazan": "...", "mauzun": "...", "arti": "..."},
                     {"label": "Mashdar", "wazan": "...", "mauzun": "...", "arti": "..."},
                     {"label": "Isim Fa'il", "wazan": "...", "mauzun": "...", "arti": "..."},
                     {"label": "Isim Maf'ul", "wazan": "...", "mauzun": "...", "arti": "..."},
@@ -813,37 +844,34 @@ JIKA ISIM, berikan format:
                 "type": "isim",
                 "word": "${word}",
                 "category": "Musytaq atau Jamid",
-                "subcategory": "Jenis spesifik (Isim Fa'il/Isim Maf'ul/Isim Alat/Masdar/Shifat Musyabbahah/Isim Tafdhil untuk Musytaq, atau Isim 'Alam/Isim Jins/Isim Dhamir untuk Jamid)",
+                "subcategory": "Jenis spesifik",
                 "wazan": "Pola wazan",
-                "root": "Akar kata 3 huruf (jika ada)",
+                "root": "Akar kata 3 huruf",
                 "meaning": "Arti dalam bahasa Indonesia",
                 "gender": "Mudzakkar atau Muannats",
                 "number_type": "Mufrad/Mutsanna/Jamak",
-                "derived_from": "Fi'il asal dalam bentuk madhi (jika musytaq)",
+                "derived_from": "Fi'il asal (jika musytaq)",
                 "derived_from_meaning": "Arti fi'il asal",
                 "forms": [
-                    {"label": "Mufrad", "arabic": "bentuk tunggal", "note": "keterangan"},
-                    {"label": "Mutsanna Rafa'", "arabic": "bentuk dual rafa'", "note": ""},
-                    {"label": "Mutsanna Nashab/Jar", "arabic": "bentuk dual nashab/jar", "note": ""},
-                    {"label": "Jamak", "arabic": "bentuk jamak", "note": "jenis jamak"},
-                    {"label": "Muannats", "arabic": "bentuk feminin", "note": "jika ada"},
-                    {"label": "Tashghir", "arabic": "bentuk diminutif", "note": ""},
-                    {"label": "Nisbah", "arabic": "bentuk nisbah", "note": ""}
+                    {"label": "Mufrad", "arabic": "...", "note": "..."},
+                    {"label": "Mutsanna Rafa'", "arabic": "...", "note": "..."},
+                    {"label": "Mutsanna Nashab/Jar", "arabic": "...", "note": "..."},
+                    {"label": "Jamak", "arabic": "...", "note": "..."},
+                    {"label": "Muannats", "arabic": "...", "note": "..."},
+                    {"label": "Tashghir", "arabic": "...", "note": "..."},
+                    {"label": "Nisbah", "arabic": "...", "note": "..."}
                 ],
                 "related_words": [
-                    {"word": "kata terkait 1", "type": "jenis kata", "meaning": "arti"},
-                    {"word": "kata terkait 2", "type": "jenis kata", "meaning": "arti"},
-                    {"word": "kata terkait 3", "type": "jenis kata", "meaning": "arti"}
+                    {"word": "...", "type": "...", "meaning": "..."}
                 ]
-            }
-            
-            Pastikan semua bentuk yang mungkin diisi. Jika tidak ada, tulis "-".`;
+            }`;
         }
 
         function renderFiilResult(res) {
             const container = document.getElementById('tashrifContainer');
             document.getElementById('babText').innerText = res.bab_title.toUpperCase();
             document.getElementById('patternText').innerText = res.main_pattern;
+            document.getElementById('rootText').innerText = res.root ? `Akar: ${res.root}` : '';
             container.innerHTML = '';
 
             const accents = ['#ffff00', '#00ffff', '#ff69b4', '#00ff00', '#ff8c00', '#E879F9', '#38bdf8', '#a3e635', '#fb923c', '#f472b6'];
@@ -875,11 +903,9 @@ JIKA ISIM, berikan format:
         }
 
         function renderIsimResult(res) {
-            // Header
             document.getElementById('isimTypeText').innerText = `${res.category} - ${res.subcategory}`.toUpperCase();
             document.getElementById('isimWordText').innerText = res.word;
             
-            // Info Grid
             const infoGrid = document.getElementById('isimInfoGrid');
             infoGrid.innerHTML = `
                 <div class="info-card">
@@ -900,7 +926,6 @@ JIKA ISIM, berikan format:
                 </div>
             `;
 
-            // Derivation Section (if musytaq)
             const derivSection = document.getElementById('derivationSection');
             if (res.category === 'Musytaq' && res.derived_from) {
                 derivSection.innerHTML = `
@@ -924,7 +949,6 @@ JIKA ISIM, berikan format:
                 derivSection.classList.add('hidden');
             }
 
-            // Forms Table
             const container = document.getElementById('isimContainer');
             container.innerHTML = '';
 
@@ -949,7 +973,6 @@ JIKA ISIM, berikan format:
                 });
             }
 
-            // Related Words
             if (res.related_words && res.related_words.length > 0) {
                 const relatedDiv = document.createElement('div');
                 relatedDiv.className = 'p-4 bg-gray-100 border-t-3 border-black';
@@ -975,10 +998,7 @@ JIKA ISIM, berikan format:
 
         function scrollToResult(elementId) {
             setTimeout(() => {
-                document.getElementById(elementId).scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
+                document.getElementById(elementId).scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
 
@@ -993,6 +1013,15 @@ JIKA ISIM, berikan format:
 
         document.getElementById('errorModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
+        });
+
+        // Check API Key on load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!API_KEY || API_KEY === "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA") {
+                updateStatus(false);
+                document.getElementById('statusBadge').innerHTML = '<span class="w-2 h-2 bg-orange-500 rounded-full"></span> SETUP REQUIRED';
+                document.getElementById('statusBadge').className = 'status-badge bg-orange-200';
+            }
         });
     </script>
 </body>
