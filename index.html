@@ -885,7 +885,7 @@
         // ╔════════════════════════════════════════════════════════════════╗
         // ║  🔑 GANTI API KEY DI BAWAH INI DENGAN API KEY ANDA            ║
         // ╚════════════════════════════════════════════════════════════════╝
-        const API_KEY = "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA";
+        const API_KEY = "AIzaSyA9yQZKidZZ-e9xu4bCudwPukusnXlA5aw";
         
         let selectedType = 'auto';
 
@@ -909,7 +909,7 @@
             const input = document.getElementById('userInput').value.trim();
             const modelName = document.getElementById('modelSelect').value;
 
-            if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+            if (!API_KEY || API_KEY === "AIzaSyA9yQZKidZZ-e9xu4bCudwPukusnXlA5aw") {
                 showBrutalAlert("API KEY BELUM DIKONFIGURASI!");
                 return;
             }
@@ -1354,7 +1354,7 @@ JIKA ISIM, berikan format JSON:
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            if (!API_KEY || API_KEY === "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA") {
+            if (!API_KEY || API_KEY === "AIzaSyA9yQZKidZZ-e9xu4bCudwPukusnXlA5aw") {
                 updateStatus(false);
                 document.getElementById('statusBadge').innerHTML = '<span class="w-2 h-2 bg-orange-500 rounded-full"></span> SETUP REQUIRED';
                 document.getElementById('statusBadge').className = 'status-badge bg-orange-200';
