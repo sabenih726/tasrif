@@ -109,6 +109,7 @@
 
         .header-fiil { background: #000; }
         .header-isim { background: #1e40af; }
+        .header-lughawi { background: #7c3aed; }
 
         .row-tashrif {
             display: flex;
@@ -309,8 +310,18 @@
             height: 16px;
         }
 
+        .zigzag-purple {
+            background: linear-gradient(135deg, #7c3aed 25%, transparent 25%) -10px 0,
+                        linear-gradient(225deg, #7c3aed 25%, transparent 25%) -10px 0,
+                        linear-gradient(315deg, #7c3aed 25%, transparent 25%),
+                        linear-gradient(45deg, #7c3aed 25%, transparent 25%);
+            background-size: 16px 16px; 
+            background-color: #a78bfa; 
+            height: 16px;
+        }
+
         @media (min-width: 768px) {
-            .zigzag, .zigzag-blue {
+            .zigzag, .zigzag-blue, .zigzag-purple {
                 background-size: 20px 20px;
                 height: 20px;
             }
@@ -498,6 +509,190 @@
 
         .status-connected { background: #86efac; }
         .status-error { background: #fca5a5; }
+
+        /* Tashrif Lughawi Styles */
+        .lughawi-section {
+            margin-top: 1.5rem;
+        }
+
+        .lughawi-title {
+            background: #7c3aed;
+            color: #fff;
+            padding: 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lughawi-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        @media (min-width: 768px) {
+            .lughawi-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .lughawi-column {
+            border: 2px solid #000;
+            border-top: none;
+        }
+
+        @media (min-width: 768px) {
+            .lughawi-column {
+                border-top: 2px solid #000;
+            }
+            .lughawi-column:not(:first-child) {
+                border-left: none;
+            }
+        }
+
+        .lughawi-column-header {
+            background: #e9d5ff;
+            padding: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            border-bottom: 2px solid #000;
+        }
+
+        .lughawi-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr;
+            border-bottom: 1px solid #ddd;
+            background: #fff;
+            transition: background 0.1s;
+        }
+
+        .lughawi-row:hover {
+            background: #f3e8ff;
+        }
+
+        .lughawi-row:last-child {
+            border-bottom: none;
+        }
+
+        .lughawi-dhamir {
+            background: #f3e8ff;
+            padding: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lughawi-dhamir-label {
+            font-size: 0.5rem;
+            color: #666;
+            margin-top: 2px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .lughawi-fiil {
+            padding: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #ddd;
+        }
+
+        .lughawi-meaning {
+            padding: 0.5rem;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #555;
+        }
+
+        @media (min-width: 768px) {
+            .lughawi-dhamir {
+                font-size: 1.3rem;
+            }
+            .lughawi-fiil {
+                font-size: 1.4rem;
+            }
+            .lughawi-meaning {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Gender color coding */
+        .gender-male { background: #dbeafe; }
+        .gender-female { background: #fce7f3; }
+        .gender-mixed { background: #f0fdf4; }
+
+        /* Tabs for Lughawi */
+        .lughawi-tabs {
+            display: flex;
+            border: 2px solid #000;
+            border-bottom: none;
+            overflow-x: auto;
+        }
+
+        .lughawi-tab {
+            flex: 1;
+            min-width: 100px;
+            padding: 0.75rem 1rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            background: #e9d5ff;
+            border-right: 2px solid #000;
+            transition: all 0.1s;
+        }
+
+        .lughawi-tab:last-child {
+            border-right: none;
+        }
+
+        .lughawi-tab:hover {
+            background: #c4b5fd;
+        }
+
+        .lughawi-tab.active {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        .lughawi-content {
+            display: none;
+        }
+
+        .lughawi-content.active {
+            display: block;
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #000 0px,
+                #000 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            margin: 2rem 0;
+        }
     </style>
 </head>
 <body class="p-3 md:p-6 lg:p-8">
@@ -505,7 +700,7 @@
     <!-- Marquee Banner -->
     <div class="marquee-container brutal-shadow mb-4 md:mb-8">
         <div class="marquee-text">
-            ★★★ TASHRIF SHARAF — FI'IL & ISIM — WAZAN & MAUZUN — MAJELIS KALIBATA ★★★
+            TASHRIF SHARAF — ISTILAHI & LUGHAWI — FI'IL & ISIM
         </div>
     </div>
 
@@ -513,21 +708,19 @@
         
         <!-- Title Section -->
         <div class="text-center mb-6 md:mb-10">
-            <h1 class="title-main text-black">TASHRIF</h1>
-            <h1 class="title-main text-black" style="text-shadow: 4px 4px 0px #ffff00;">SHARAF</h1>
-            <!-- Status Badge -->
+            <h1 class="title-main text-black">TASHRIF SHOROF</h1>
+            <h1 class="title-main text-black" style="text-shadow: 4px 4px 0px #ffff00;">MAJELIS KALIBATA</h1>
             <div class="mt-4">
                 <span id="statusBadge" class="status-badge status-connected">
                     <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
-                    AI READY
+                    Ready
                 </span>
             </div>
         </div>
 
-        <!-- Input Section - Simplified -->
+        <!-- Input Section -->
         <div class="card-brutal p-4 md:p-6 lg:p-10 mb-6 md:mb-12">
             
-            <!-- Type Selection & Model in one row -->
             <div class="flex flex-col md:flex-row md:items-end gap-4 mb-6">
                 <div class="flex-1">
                     <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline mb-2">
@@ -551,12 +744,11 @@
                         <i class="fas fa-robot mr-1"></i> MODEL
                     </label>
                     <select id="modelSelect" class="model-select w-full">
-                        <option value="gemini-2.5-flash-preview-09-2025">Gemini 2.5 Flash</option>
+                        <option value="gemini-2.5-flash-preview-09-2025">Sabenih 2.0</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Arabic Input - Full Width -->
             <div class="space-y-2">
                 <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline">
                     <i class="fas fa-pen-fancy mr-1"></i> MASUKKAN KATA ARAB
@@ -564,7 +756,7 @@
                 <div class="flex flex-col sm:flex-row gap-3">
                     <input type="text" id="userInput" 
                         class="arabic-text brutal-input input-arabic flex-1 w-full"
-                        placeholder="كَاتِب / كَتَبَ / نَصَرَ"
+                        placeholder="نَصَرَ / كَاتِب"
                         onkeypress="if(event.key === 'Enter') processWord()">
                     <button onclick="processWord()" id="processBtn"
                         class="brutal-btn bg-yellow-400 text-black px-6 py-3 md:py-0 md:px-10 flex items-center justify-center gap-2">
@@ -574,12 +766,11 @@
                 </div>
             </div>
 
-            <!-- Helper Text -->
             <div class="mt-4 pt-3 border-t-2 border-dashed border-black">
                 <p class="text-[10px] md:text-xs opacity-70">
                     <i class="fas fa-info-circle mr-1"></i>
-                    <strong>Fi'il:</strong> نَصَرَ، ضَرَبَ، أَكْرَمَ، عَلَّمَ، تَعَلَّمَ &nbsp;|&nbsp;
-                    <strong>Isim:</strong> كَاتِب، مَكْتُوب، مَدْرَسَة، عَالِم، كِتَاب، طَالِب
+                    <strong>Fi'il:</strong> نَصَرَ، ضَرَبَ، أَكْرَمَ، عَلَّمَ &nbsp;|&nbsp;
+                    <strong>Isim:</strong> كَاتِب، مَكْتُوب، طَالِب، مُعَلِّم
                 </p>
             </div>
         </div>
@@ -597,6 +788,13 @@
                     </div>
                 </div>
                 <div class="zigzag"></div>
+                
+                <!-- Tashrif Istilahi Section -->
+                <div class="bg-gray-100 px-4 py-2 border-b-2 border-black">
+                    <span class="text-xs font-bold uppercase tracking-wider">
+                        <i class="fas fa-list-ol mr-1"></i> TASHRIF ISTILAHI (10 Bentuk Dasar)
+                    </span>
+                </div>
                 <div class="header-table">
                     <div>BENTUK</div>
                     <div class="text-center">WAZAN</div>
@@ -604,8 +802,35 @@
                     <div class="text-right">ARTI</div>
                 </div>
                 <div id="tashrifContainer"></div>
+
+                <!-- Tashrif Lughawi Section -->
+                <div class="lughawi-section">
+                    <div class="lughawi-title">
+                        <i class="fas fa-users"></i>
+                        TASHRIF LUGHAWI (14 Dhamir)
+                    </div>
+                    
+                    <!-- Tabs -->
+                    <div class="lughawi-tabs">
+                        <div class="lughawi-tab active" onclick="showLughawiTab('madhi')">
+                            <i class="fas fa-history mr-1"></i> MADHI
+                        </div>
+                        <div class="lughawi-tab" onclick="showLughawiTab('mudhari')">
+                            <i class="fas fa-clock mr-1"></i> MUDHARI
+                        </div>
+                        <div class="lughawi-tab" onclick="showLughawiTab('amr')">
+                            <i class="fas fa-exclamation mr-1"></i> AMR
+                        </div>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div id="lughawiMadhi" class="lughawi-content active"></div>
+                    <div id="lughawiMudhari" class="lughawi-content"></div>
+                    <div id="lughawiAmr" class="lughawi-content"></div>
+                </div>
+
                 <div class="bg-black text-white p-3 md:p-4 text-center text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.5em]">
-                    // FI'IL_ANALYZER //
+                    // ANALISIS_FI'IL + TASHRIF_LUGHAWI //
                 </div>
             </div>
         </div>
@@ -623,13 +848,9 @@
                 </div>
                 <div class="zigzag-blue"></div>
                 
-                <!-- Info Cards -->
                 <div class="info-grid" id="isimInfoGrid"></div>
-                
-                <!-- Derivation (if musytaq) -->
                 <div id="derivationSection" class="hidden"></div>
                 
-                <!-- Isim Forms Table -->
                 <div class="header-table-isim hidden md:grid">
                     <div>BENTUK</div>
                     <div class="text-center">KATA ARAB</div>
@@ -638,7 +859,7 @@
                 <div id="isimContainer"></div>
                 
                 <div class="bg-blue-800 text-white p-3 md:p-4 text-center text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.5em]">
-                    // ISIM_ANALYZER //
+                    // ANALISIS_ISIM //
                 </div>
             </div>
         </div>
@@ -664,9 +885,7 @@
         // ╔════════════════════════════════════════════════════════════════╗
         // ║  🔑 GANTI API KEY DI BAWAH INI DENGAN API KEY ANDA            ║
         // ╚════════════════════════════════════════════════════════════════╝
-        const API_KEY = "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA";  // <-- Ganti dengan API key Anda
-        
-        // Contoh: const API_KEY = "AIzaSyB5Im5DmRH5RjaElvJz8W87OHk2-Gg2kj8";
+        const API_KEY = "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA";
         
         let selectedType = 'auto';
 
@@ -676,13 +895,22 @@
             document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).classList.add('active');
         }
 
+        function showLughawiTab(tab) {
+            // Hide all tabs
+            document.querySelectorAll('.lughawi-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.lughawi-tab').forEach(el => el.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById('lughawi' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+            event.target.closest('.lughawi-tab').classList.add('active');
+        }
+
         async function processWord() {
             const input = document.getElementById('userInput').value.trim();
             const modelName = document.getElementById('modelSelect').value;
 
-            // Validasi API Key
             if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
-                showBrutalAlert("API KEY BELUM DIKONFIGURASI! Buka file HTML dan ganti 'YOUR_API_KEY_HERE' dengan API key Anda.");
+                showBrutalAlert("API KEY BELUM DIKONFIGURASI!");
                 return;
             }
 
@@ -720,10 +948,7 @@
                 const json = await response.json();
                 
                 if (json.error) {
-                    if (json.error.message.includes('API_KEY_INVALID') || json.error.status === 'INVALID_ARGUMENT') {
-                        updateStatus(false);
-                        throw new Error("API KEY TIDAK VALID! Periksa kembali API key Anda.");
-                    }
+                    updateStatus(false);
                     throw new Error(`API Error: ${json.error.message}`);
                 }
                 
@@ -760,14 +985,14 @@
 
         function getAutoPrompt(word) {
             return `Anda adalah pakar Sharaf. Analisis kata "${word}".
-            
-LANGKAH 1: Tentukan apakah ini FI'IL (kata kerja) atau ISIM (kata benda/sifat).
 
-JIKA FI'IL, berikan format:
+TENTUKAN apakah ini FI'IL atau ISIM.
+
+JIKA FI'IL, berikan format JSON:
 {
     "type": "fiil",
-    "bab_title": "Nama Bab (contoh: Bab Tsulatsi Mujarrad)",
-    "main_pattern": "Pola dasar (contoh: فَعَلَ - يَفْعُلُ)",
+    "bab_title": "Nama Bab",
+    "main_pattern": "Pola (contoh: فَعَلَ - يَفْعُلُ)",
     "root": "Akar kata 3 huruf",
     "rows": [
         {"label": "Madhi Ma'lum", "wazan": "فَعَلَ", "mauzun": "...", "arti": "..."},
@@ -780,29 +1005,71 @@ JIKA FI'IL, berikan format:
         {"label": "Isim Zaman/Makan", "wazan": "...", "mauzun": "...", "arti": "..."},
         {"label": "Madhi Majhul", "wazan": "...", "mauzun": "...", "arti": "..."},
         {"label": "Mudhari Majhul", "wazan": "...", "mauzun": "...", "arti": "..."}
-    ]
+    ],
+    "tashrif_lughawi": {
+        "madhi": [
+            {"dhamir": "هُوَ", "dhamir_label": "Dia lk", "fiil": "...", "arti": "Dia (lk) telah ..."},
+            {"dhamir": "هُمَا", "dhamir_label": "Mereka 2 lk", "fiil": "...", "arti": "Mereka berdua (lk) telah ..."},
+            {"dhamir": "هُمْ", "dhamir_label": "Mereka lk", "fiil": "...", "arti": "Mereka (lk) telah ..."},
+            {"dhamir": "هِيَ", "dhamir_label": "Dia pr", "fiil": "...", "arti": "Dia (pr) telah ..."},
+            {"dhamir": "هُمَا", "dhamir_label": "Mereka 2 pr", "fiil": "...", "arti": "Mereka berdua (pr) telah ..."},
+            {"dhamir": "هُنَّ", "dhamir_label": "Mereka pr", "fiil": "...", "arti": "Mereka (pr) telah ..."},
+            {"dhamir": "أَنْتَ", "dhamir_label": "Kamu lk", "fiil": "...", "arti": "Kamu (lk) telah ..."},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2", "fiil": "...", "arti": "Kalian berdua telah ..."},
+            {"dhamir": "أَنْتُمْ", "dhamir_label": "Kalian lk", "fiil": "...", "arti": "Kalian (lk) telah ..."},
+            {"dhamir": "أَنْتِ", "dhamir_label": "Kamu pr", "fiil": "...", "arti": "Kamu (pr) telah ..."},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2 pr", "fiil": "...", "arti": "Kalian berdua (pr) telah ..."},
+            {"dhamir": "أَنْتُنَّ", "dhamir_label": "Kalian pr", "fiil": "...", "arti": "Kalian (pr) telah ..."},
+            {"dhamir": "أَنَا", "dhamir_label": "Saya", "fiil": "...", "arti": "Saya telah ..."},
+            {"dhamir": "نَحْنُ", "dhamir_label": "Kami", "fiil": "...", "arti": "Kami telah ..."}
+        ],
+        "mudhari": [
+            {"dhamir": "هُوَ", "dhamir_label": "Dia lk", "fiil": "...", "arti": "Dia (lk) sedang/akan ..."},
+            {"dhamir": "هُمَا", "dhamir_label": "Mereka 2 lk", "fiil": "...", "arti": "Mereka berdua (lk) sedang/akan ..."},
+            {"dhamir": "هُمْ", "dhamir_label": "Mereka lk", "fiil": "...", "arti": "Mereka (lk) sedang/akan ..."},
+            {"dhamir": "هِيَ", "dhamir_label": "Dia pr", "fiil": "...", "arti": "Dia (pr) sedang/akan ..."},
+            {"dhamir": "هُمَا", "dhamir_label": "Mereka 2 pr", "fiil": "...", "arti": "Mereka berdua (pr) sedang/akan ..."},
+            {"dhamir": "هُنَّ", "dhamir_label": "Mereka pr", "fiil": "...", "arti": "Mereka (pr) sedang/akan ..."},
+            {"dhamir": "أَنْتَ", "dhamir_label": "Kamu lk", "fiil": "...", "arti": "Kamu (lk) sedang/akan ..."},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2", "fiil": "...", "arti": "Kalian berdua sedang/akan ..."},
+            {"dhamir": "أَنْتُمْ", "dhamir_label": "Kalian lk", "fiil": "...", "arti": "Kalian (lk) sedang/akan ..."},
+            {"dhamir": "أَنْتِ", "dhamir_label": "Kamu pr", "fiil": "...", "arti": "Kamu (pr) sedang/akan ..."},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2 pr", "fiil": "...", "arti": "Kalian berdua (pr) sedang/akan ..."},
+            {"dhamir": "أَنْتُنَّ", "dhamir_label": "Kalian pr", "fiil": "...", "arti": "Kalian (pr) sedang/akan ..."},
+            {"dhamir": "أَنَا", "dhamir_label": "Saya", "fiil": "...", "arti": "Saya sedang/akan ..."},
+            {"dhamir": "نَحْنُ", "dhamir_label": "Kami", "fiil": "...", "arti": "Kami sedang/akan ..."}
+        ],
+        "amr": [
+            {"dhamir": "أَنْتَ", "dhamir_label": "Kamu lk", "fiil": "...", "arti": "...lah! (untuk lk)"},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2", "fiil": "...", "arti": "...lah! (untuk 2 orang)"},
+            {"dhamir": "أَنْتُمْ", "dhamir_label": "Kalian lk", "fiil": "...", "arti": "...lah! (untuk lk jamak)"},
+            {"dhamir": "أَنْتِ", "dhamir_label": "Kamu pr", "fiil": "...", "arti": "...lah! (untuk pr)"},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2 pr", "fiil": "...", "arti": "...lah! (untuk 2 pr)"},
+            {"dhamir": "أَنْتُنَّ", "dhamir_label": "Kalian pr", "fiil": "...", "arti": "...lah! (untuk pr jamak)"}
+        ]
+    }
 }
 
-JIKA ISIM, berikan format:
+JIKA ISIM, berikan format JSON:
 {
     "type": "isim",
     "word": "Kata yang dianalisis",
     "category": "Musytaq/Jamid",
-    "subcategory": "Jenis spesifik (Isim Fa'il/Isim Maf'ul/Isim Alat/Masdar/dll untuk Musytaq, atau Isim 'Alam/Isim Jins untuk Jamid)",
+    "subcategory": "Jenis spesifik",
     "wazan": "Pola/Wazan",
-    "root": "Akar kata (jika ada)",
+    "root": "Akar kata",
     "meaning": "Arti",
     "gender": "Mudzakkar/Muannats",
     "number_type": "Mufrad/Mutsanna/Jamak",
     "derived_from": "Fi'il asal (jika musytaq)",
     "derived_from_meaning": "Arti fi'il asal",
     "forms": [
-        {"label": "Mufrad", "arabic": "...", "note": "Bentuk tunggal"},
-        {"label": "Mutsanna", "arabic": "...", "note": "Bentuk dual"},
-        {"label": "Jamak", "arabic": "...", "note": "Jenis jamak"},
-        {"label": "Muannats", "arabic": "...", "note": "Bentuk feminin"},
-        {"label": "Tashghir", "arabic": "...", "note": "Bentuk diminutif"},
-        {"label": "Nisbah", "arabic": "...", "note": "Bentuk penisbatan"}
+        {"label": "Mufrad", "arabic": "...", "note": "..."},
+        {"label": "Mutsanna", "arabic": "...", "note": "..."},
+        {"label": "Jamak", "arabic": "...", "note": "..."},
+        {"label": "Muannats", "arabic": "...", "note": "..."},
+        {"label": "Tashghir", "arabic": "...", "note": "..."},
+        {"label": "Nisbah", "arabic": "...", "note": "..."}
     ],
     "related_words": [
         {"word": "...", "type": "...", "meaning": "..."}
@@ -811,33 +1078,12 @@ JIKA ISIM, berikan format:
         }
 
         function getFiilPrompt(word) {
-            return `Anda adalah pakar Sharaf Al-Amtsilah At-Tashrifiyyah.
-            Analisis Fi'il (kata kerja) "${word}".
-            
-            JSON FORMAT:
-            {
-                "type": "fiil",
-                "bab_title": "Nama Bab",
-                "main_pattern": "Contoh: أَفْعَلَ - يُفْعِلُ",
-                "root": "Akar kata",
-                "rows": [
-                    {"label": "Madhi Ma'lum", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Mudhari Ma'lum", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Mashdar", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Isim Fa'il", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Isim Maf'ul", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Fi'il Amr", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Fi'il Nahi", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Isim Zaman/Makan", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Madhi Majhul", "wazan": "...", "mauzun": "...", "arti": "..."},
-                    {"label": "Mudhari Majhul", "wazan": "...", "mauzun": "...", "arti": "..."}
-                ]
-            }`;
+            return getAutoPrompt(word);
         }
 
         function getIsimPrompt(word) {
             return `Anda adalah pakar Sharaf dan Nahwu.
-            Analisis Isim (kata benda/sifat) "${word}" secara komprehensif.
+            Analisis Isim "${word}" secara komprehensif.
             
             JSON FORMAT:
             {
@@ -847,7 +1093,7 @@ JIKA ISIM, berikan format:
                 "subcategory": "Jenis spesifik",
                 "wazan": "Pola wazan",
                 "root": "Akar kata 3 huruf",
-                "meaning": "Arti dalam bahasa Indonesia",
+                "meaning": "Arti",
                 "gender": "Mudzakkar atau Muannats",
                 "number_type": "Mufrad/Mutsanna/Jamak",
                 "derived_from": "Fi'il asal (jika musytaq)",
@@ -898,8 +1144,100 @@ JIKA ISIM, berikan format:
                 container.appendChild(div);
             });
 
+            // Render Tashrif Lughawi
+            if (res.tashrif_lughawi) {
+                renderLughawi('lughawiMadhi', res.tashrif_lughawi.madhi, 'Fi\'il Madhi (Lampau)');
+                renderLughawi('lughawiMudhari', res.tashrif_lughawi.mudhari, 'Fi\'il Mudhari (Sekarang/Akan)');
+                renderLughawi('lughawiAmr', res.tashrif_lughawi.amr, 'Fi\'il Amr (Perintah)');
+            }
+
             document.getElementById('resultFiil').classList.remove('hidden');
             scrollToResult('resultFiil');
+        }
+
+        function renderLughawi(containerId, data, title) {
+            const container = document.getElementById(containerId);
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="p-4 text-center text-gray-500">Data tidak tersedia</div>';
+                return;
+            }
+
+            // Group by gender category
+            const ghaibMale = data.slice(0, 3);   // هو، هما، هم
+            const ghaibFemale = data.slice(3, 6); // هي، هما، هن
+            const mukhatabMale = data.slice(6, 9); // أنت، أنتما، أنتم
+            const mukhatabFemale = data.slice(9, 12); // أنتِ، أنتما، أنتن
+            const mutakallim = data.slice(12, 14); // أنا، نحن
+
+            let html = `
+                <div class="border-2 border-black border-t-0">
+                    <!-- Ghaib (Third Person) -->
+                    <div class="bg-blue-100 px-3 py-2 border-b-2 border-black font-bold text-xs uppercase">
+                        <i class="fas fa-user-secret mr-1"></i> Ghaib (Orang Ketiga)
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <!-- Male -->
+                        <div class="border-b md:border-b-0 md:border-r-2 border-black">
+                            <div class="bg-blue-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
+                                <i class="fas fa-mars mr-1"></i> Mudzakkar
+                            </div>
+                            ${ghaibMale.map(item => createLughawiRow(item, 'gender-male')).join('')}
+                        </div>
+                        <!-- Female -->
+                        <div>
+                            <div class="bg-pink-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
+                                <i class="fas fa-venus mr-1"></i> Muannats
+                            </div>
+                            ${ghaibFemale.map(item => createLughawiRow(item, 'gender-female')).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Mukhatab (Second Person) -->
+                    <div class="bg-green-100 px-3 py-2 border-y-2 border-black font-bold text-xs uppercase">
+                        <i class="fas fa-user mr-1"></i> Mukhatab (Orang Kedua)
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <!-- Male -->
+                        <div class="border-b md:border-b-0 md:border-r-2 border-black">
+                            <div class="bg-blue-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
+                                <i class="fas fa-mars mr-1"></i> Mudzakkar
+                            </div>
+                            ${mukhatabMale.map(item => createLughawiRow(item, 'gender-male')).join('')}
+                        </div>
+                        <!-- Female -->
+                        <div>
+                            <div class="bg-pink-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
+                                <i class="fas fa-venus mr-1"></i> Muannats
+                            </div>
+                            ${mukhatabFemale.map(item => createLughawiRow(item, 'gender-female')).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Mutakallim (First Person) -->
+                    <div class="bg-yellow-100 px-3 py-2 border-y-2 border-black font-bold text-xs uppercase">
+                        <i class="fas fa-user-circle mr-1"></i> Mutakallim (Orang Pertama)
+                    </div>
+                    <div>
+                        ${mutakallim.map(item => createLughawiRow(item, 'gender-mixed')).join('')}
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function createLughawiRow(item, genderClass) {
+            if (!item) return '';
+            return `
+                <div class="lughawi-row ${genderClass}">
+                    <div class="lughawi-dhamir arabic-text">
+                        ${item.dhamir}
+                        <span class="lughawi-dhamir-label">${item.dhamir_label}</span>
+                    </div>
+                    <div class="lughawi-fiil arabic-text">${item.fiil}</div>
+                    <div class="lughawi-meaning">${item.arti}</div>
+                </div>
+            `;
         }
 
         function renderIsimResult(res) {
@@ -1015,7 +1353,6 @@ JIKA ISIM, berikan format:
             if (e.target === this) closeModal();
         });
 
-        // Check API Key on load
         document.addEventListener('DOMContentLoaded', function() {
             if (!API_KEY || API_KEY === "AIzaSyAh9E5pS4yH_84IKCenfFIBwOXIUEUJwDA") {
                 updateStatus(false);
