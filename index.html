@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASHRIF SHARAF // BRUTALIST PRO</title>
+    <title>TASHRIF SHARAF PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
@@ -109,6 +109,7 @@
 
         .header-fiil { background: #000; }
         .header-isim { background: #1e40af; }
+        .header-lughawi { background: #7c3aed; }
 
         .row-tashrif {
             display: flex;
@@ -508,7 +509,6 @@
 
         .status-connected { background: #86efac; }
         .status-error { background: #fca5a5; }
-        .status-warning { background: #fde047; }
 
         /* Tashrif Lughawi Styles */
         .lughawi-section {
@@ -528,46 +528,40 @@
             gap: 8px;
         }
 
-        .lughawi-tabs {
-            display: flex;
-            border: 2px solid #000;
-            border-bottom: none;
-            overflow-x: auto;
+        .lughawi-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
         }
 
-        .lughawi-tab {
-            flex: 1;
-            min-width: 100px;
-            padding: 0.75rem 1rem;
-            font-size: 0.65rem;
+        @media (min-width: 768px) {
+            .lughawi-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .lughawi-column {
+            border: 2px solid #000;
+            border-top: none;
+        }
+
+        @media (min-width: 768px) {
+            .lughawi-column {
+                border-top: 2px solid #000;
+            }
+            .lughawi-column:not(:first-child) {
+                border-left: none;
+            }
+        }
+
+        .lughawi-column-header {
+            background: #e9d5ff;
+            padding: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             text-align: center;
-            cursor: pointer;
-            background: #e9d5ff;
-            border-right: 2px solid #000;
-            transition: all 0.1s;
-        }
-
-        .lughawi-tab:last-child {
-            border-right: none;
-        }
-
-        .lughawi-tab:hover {
-            background: #c4b5fd;
-        }
-
-        .lughawi-tab.active {
-            background: #7c3aed;
-            color: #fff;
-        }
-
-        .lughawi-content {
-            display: none;
-        }
-
-        .lughawi-content.active {
-            display: block;
+            border-bottom: 2px solid #000;
         }
 
         .lughawi-row {
@@ -580,6 +574,10 @@
 
         .lughawi-row:hover {
             background: #f3e8ff;
+        }
+
+        .lughawi-row:last-child {
+            border-bottom: none;
         }
 
         .lughawi-dhamir {
@@ -623,32 +621,77 @@
             color: #555;
         }
 
+        @media (min-width: 768px) {
+            .lughawi-dhamir {
+                font-size: 1.3rem;
+            }
+            .lughawi-fiil {
+                font-size: 1.4rem;
+            }
+            .lughawi-meaning {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Gender color coding */
         .gender-male { background: #dbeafe; }
         .gender-female { background: #fce7f3; }
         .gender-mixed { background: #f0fdf4; }
 
-        /* API Key Section */
-        .api-key-section {
-            background: #fef3c7;
-            border: 2px dashed #000;
-            padding: 1rem;
-            margin-bottom: 1rem;
+        /* Tabs for Lughawi */
+        .lughawi-tabs {
+            display: flex;
+            border: 2px solid #000;
+            border-bottom: none;
+            overflow-x: auto;
         }
 
-        .api-key-section.hidden-section {
+        .lughawi-tab {
+            flex: 1;
+            min-width: 100px;
+            padding: 0.75rem 1rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            background: #e9d5ff;
+            border-right: 2px solid #000;
+            transition: all 0.1s;
+        }
+
+        .lughawi-tab:last-child {
+            border-right: none;
+        }
+
+        .lughawi-tab:hover {
+            background: #c4b5fd;
+        }
+
+        .lughawi-tab.active {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        .lughawi-content {
             display: none;
         }
 
-        .toggle-api-btn {
-            font-size: 0.65rem;
-            padding: 0.25rem 0.5rem;
-            background: #e5e7eb;
-            border: 2px solid #000;
-            cursor: pointer;
+        .lughawi-content.active {
+            display: block;
         }
 
-        .toggle-api-btn:hover {
-            background: #d1d5db;
+        /* Section divider */
+        .section-divider {
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #000 0px,
+                #000 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            margin: 2rem 0;
         }
     </style>
 </head>
@@ -657,7 +700,7 @@
     <!-- Marquee Banner -->
     <div class="marquee-container brutal-shadow mb-4 md:mb-8">
         <div class="marquee-text">
-            ★★★ TASHRIF SHARAF — ISTILAHI & LUGHAWI — FI'IL & ISIM — 14 DHAMIR — POWERED BY GEMINI AI ★★★
+            TASHRIF SHARAF — ISTILAHI & LUGHAWI — FI'IL & ISIM
         </div>
     </div>
 
@@ -665,38 +708,19 @@
         
         <!-- Title Section -->
         <div class="text-center mb-6 md:mb-10">
-            <h1 class="title-main text-black">TASHRIF</h1>
-            <h1 class="title-main text-black" style="text-shadow: 4px 4px 0px #ffff00;">SHARAF</h1>
-            <div class="mt-4 flex items-center justify-center gap-2 flex-wrap">
+            <h1 class="title-main text-black">TASHRIF SHOROF</h1>
+            <h1 class="title-main text-black" style="text-shadow: 4px 4px 0px #ffff00;">MAJELIS KALIBATA</h1>
+            <div class="mt-4">
                 <span id="statusBadge" class="status-badge status-connected">
                     <span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
                     AI READY
                 </span>
-                <button onclick="toggleApiSection()" class="toggle-api-btn">
-                    <i class="fas fa-key mr-1"></i> API KEY
-                </button>
             </div>
         </div>
 
         <!-- Input Section -->
         <div class="card-brutal p-4 md:p-6 lg:p-10 mb-6 md:mb-12">
             
-            <!-- API Key Section (Collapsible) -->
-            <div id="apiKeySection" class="api-key-section hidden-section">
-                <div class="flex items-center gap-2 mb-2">
-                    <i class="fas fa-key text-yellow-600"></i>
-                    <span class="text-xs font-bold uppercase">API Key (Opsional - Override)</span>
-                </div>
-                <input type="password" id="manualApiKey" 
-                    class="brutal-input w-full p-2 text-xs"
-                    placeholder="Masukkan API Key jika ingin override...">
-                <p class="text-[10px] mt-2 opacity-70">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    Kosongkan jika API key sudah dikonfigurasi di kode.
-                    <button onclick="testApiKey()" class="underline font-bold ml-2">Test API Key</button>
-                </p>
-            </div>
-
             <div class="flex flex-col md:flex-row md:items-end gap-4 mb-6">
                 <div class="flex-1">
                     <label class="text-[10px] md:text-xs font-bold uppercase tracking-wider block underline mb-2">
@@ -720,9 +744,7 @@
                         <i class="fas fa-robot mr-1"></i> MODEL
                     </label>
                     <select id="modelSelect" class="model-select w-full">
-                        <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
-                        <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
-                        <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                        <option value="gemini-2.5-flash-preview-09-2025">Sabenih 2.0</option>
                     </select>
                 </div>
             </div>
@@ -767,6 +789,7 @@
                 </div>
                 <div class="zigzag"></div>
                 
+                <!-- Tashrif Istilahi Section -->
                 <div class="bg-gray-100 px-4 py-2 border-b-2 border-black">
                     <span class="text-xs font-bold uppercase tracking-wider">
                         <i class="fas fa-list-ol mr-1"></i> TASHRIF ISTILAHI (10 Bentuk Dasar)
@@ -780,12 +803,14 @@
                 </div>
                 <div id="tashrifContainer"></div>
 
+                <!-- Tashrif Lughawi Section -->
                 <div class="lughawi-section">
                     <div class="lughawi-title">
                         <i class="fas fa-users"></i>
                         TASHRIF LUGHAWI (14 Dhamir)
                     </div>
                     
+                    <!-- Tabs -->
                     <div class="lughawi-tabs">
                         <div class="lughawi-tab active" onclick="showLughawiTab('madhi')">
                             <i class="fas fa-history mr-1"></i> MADHI
@@ -798,13 +823,14 @@
                         </div>
                     </div>
 
+                    <!-- Tab Contents -->
                     <div id="lughawiMadhi" class="lughawi-content active"></div>
                     <div id="lughawiMudhari" class="lughawi-content"></div>
                     <div id="lughawiAmr" class="lughawi-content"></div>
                 </div>
 
                 <div class="bg-black text-white p-3 md:p-4 text-center text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.5em]">
-                    // FI'IL_ANALYZER + TASHRIF_LUGHAWI //
+                    // ANALISIS_FI'IL + TASHRIF_LUGHAWI //
                 </div>
             </div>
         </div>
@@ -833,7 +859,7 @@
                 <div id="isimContainer"></div>
                 
                 <div class="bg-blue-800 text-white p-3 md:p-4 text-center text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.5em]">
-                    // ISIM_ANALYZER //
+                    // ANALISIS_ISIM //
                 </div>
             </div>
         </div>
@@ -855,54 +881,13 @@
         </div>
     </div>
 
-    <!-- Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 hidden">
-        <div class="bg-green-500 brutal-border brutal-shadow-lg p-6 md:p-8 max-w-md w-full text-center">
-            <div class="text-4xl md:text-5xl mb-4">✅</div>
-            <p id="successMessage" class="text-white text-sm md:text-lg font-black mb-6 break-words">SUCCESS</p>
-            <button onclick="closeSuccessModal()" class="brutal-btn bg-white px-6 py-2 text-sm md:text-base">OK</button>
-        </div>
-    </div>
-
     <script>
         // ╔════════════════════════════════════════════════════════════════╗
         // ║  🔑 GANTI API KEY DI BAWAH INI DENGAN API KEY ANDA            ║
-        // ║  Dapatkan di: https://aistudio.google.com/app/apikey          ║
         // ╚════════════════════════════════════════════════════════════════╝
-        
-        const EMBEDDED_API_KEY = "AIzaSyBdePvO2Ggm3wXAZE46gGxfcUXFsIfi8-M";  // <-- GANTI INI!
-        
-        // Contoh yang benar:
-        // const EMBEDDED_API_KEY = "AIzaSyBdePvO2Ggm3wXAZE46gGxfcUXFsIfi8-M";
+        const API_KEY = "AIzaSyBdePvO2Ggm3wXAZE46gGxfcUXFsIfi8-M";
         
         let selectedType = 'auto';
-
-        // Fungsi untuk mendapatkan API Key yang aktif
-        function getActiveApiKey() {
-            // Prioritas: Manual input > Embedded key
-            const manualKey = document.getElementById('manualApiKey')?.value?.trim();
-            if (manualKey && manualKey.length > 10) {
-                return manualKey;
-            }
-            return EMBEDDED_API_KEY?.trim();
-        }
-
-        // Fungsi untuk mengecek apakah API key valid (format)
-        function isValidApiKeyFormat(key) {
-            if (!key) return false;
-            if (key === "YOUR_API_KEY_HERE") return false;
-            if (key.length < 20) return false;
-            // Google API key biasanya dimulai dengan "AIza"
-            if (!key.startsWith("AIza")) {
-                console.warn("API Key tidak dimulai dengan 'AIza', mungkin tidak valid");
-            }
-            return true;
-        }
-
-        function toggleApiSection() {
-            const section = document.getElementById('apiKeySection');
-            section.classList.toggle('hidden-section');
-        }
 
         function setType(type) {
             selectedType = type;
@@ -911,75 +896,21 @@
         }
 
         function showLughawiTab(tab) {
+            // Hide all tabs
             document.querySelectorAll('.lughawi-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.lughawi-tab').forEach(el => el.classList.remove('active'));
             
+            // Show selected tab
             document.getElementById('lughawi' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
             event.target.closest('.lughawi-tab').classList.add('active');
-        }
-
-        async function testApiKey() {
-            const apiKey = getActiveApiKey();
-            
-            console.log("=== API KEY TEST ===");
-            console.log("Active API Key:", apiKey ? apiKey.substring(0, 10) + "..." : "EMPTY");
-            console.log("Key Length:", apiKey?.length || 0);
-            console.log("Is Valid Format:", isValidApiKeyFormat(apiKey));
-            
-            if (!isValidApiKeyFormat(apiKey)) {
-                showBrutalAlert("API KEY TIDAK VALID!\n\nPastikan:\n1. Sudah diganti dari 'YOUR_API_KEY_HERE'\n2. Dimulai dengan 'AIza'\n3. Panjang minimal 20 karakter");
-                return;
-            }
-
-            updateStatus('loading');
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: "Say 'API OK' in 2 words" }] }]
-                    })
-                });
-
-                const json = await response.json();
-                console.log("API Test Response:", json);
-
-                if (json.error) {
-                    updateStatus(false);
-                    showBrutalAlert(`API ERROR:\n${json.error.message}`);
-                } else if (json.candidates) {
-                    updateStatus(true);
-                    showSuccessAlert("API KEY VALID! ✓\nSiap digunakan.");
-                } else {
-                    updateStatus(false);
-                    showBrutalAlert("Response tidak valid");
-                }
-            } catch (e) {
-                console.error("API Test Error:", e);
-                updateStatus(false);
-                showBrutalAlert(`Network Error:\n${e.message}`);
-            }
         }
 
         async function processWord() {
             const input = document.getElementById('userInput').value.trim();
             const modelName = document.getElementById('modelSelect').value;
-            const apiKey = getActiveApiKey();
 
-            // Debug info
-            console.log("=== PROCESS WORD ===");
-            console.log("Input:", input);
-            console.log("Model:", modelName);
-            console.log("API Key (first 10 chars):", apiKey ? apiKey.substring(0, 10) + "..." : "EMPTY");
-            console.log("API Key Length:", apiKey?.length || 0);
-            console.log("Embedded Key:", EMBEDDED_API_KEY?.substring(0, 10) + "...");
-
-            // Validasi API Key
-            if (!isValidApiKeyFormat(apiKey)) {
-                console.error("API Key validation failed");
-                showBrutalAlert("API KEY TIDAK VALID!\n\nKlik tombol 'API KEY' di atas untuk memasukkan API key, atau edit file HTML dan ganti 'YOUR_API_KEY_HERE' dengan API key Anda.\n\nDapatkan API key di:\nhttps://aistudio.google.com/app/apikey");
-                toggleApiSection(); // Buka section API key
+            if (!API_KEY || API_KEY === "AIzaSyBdePvO2Ggm3wXAZE46gGxfcUXFsIfi8-M") {
+                showBrutalAlert("API KEY BELUM DIKONFIGURASI!");
                 return;
             }
 
@@ -993,11 +924,18 @@
             document.getElementById('resultFiil').classList.add('hidden');
             document.getElementById('resultIsim').classList.add('hidden');
 
-            let systemPrompt = getAutoPrompt(input);
+            let systemPrompt = '';
+            
+            if (selectedType === 'auto') {
+                systemPrompt = getAutoPrompt(input);
+            } else if (selectedType === 'fiil') {
+                systemPrompt = getFiilPrompt(input);
+            } else {
+                systemPrompt = getIsimPrompt(input);
+            }
 
             try {
-                console.log("Fetching API...");
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1008,24 +946,15 @@
                 });
 
                 const json = await response.json();
-                console.log("API Response:", json);
                 
                 if (json.error) {
                     updateStatus(false);
                     throw new Error(`API Error: ${json.error.message}`);
                 }
                 
-                if (!json.candidates || !json.candidates[0]) {
-                    throw new Error("Response tidak valid - tidak ada candidates");
-                }
+                if (!json.candidates || !json.candidates[0]) throw new Error("Response tidak valid");
 
-                const textContent = json.candidates[0].content?.parts?.[0]?.text;
-                if (!textContent) {
-                    throw new Error("Response tidak memiliki konten teks");
-                }
-
-                console.log("Parsing JSON response...");
-                const res = JSON.parse(textContent);
+                const res = JSON.parse(json.candidates[0].content.parts[0].text);
                 
                 updateStatus(true);
                 
@@ -1036,27 +965,21 @@
                 }
                 
             } catch (e) {
-                console.error("Process Error:", e);
+                console.error(e);
                 showBrutalAlert(e.message || "TERJADI KESALAHAN!");
             } finally {
                 loader.classList.add('hidden');
             }
         }
 
-        function updateStatus(status) {
+        function updateStatus(connected) {
             const badge = document.getElementById('statusBadge');
-            if (status === true) {
+            if (connected) {
                 badge.className = 'status-badge status-connected';
                 badge.innerHTML = '<span class="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span> AI READY';
-            } else if (status === false) {
+            } else {
                 badge.className = 'status-badge status-error';
                 badge.innerHTML = '<span class="w-2 h-2 bg-red-600 rounded-full"></span> API ERROR';
-            } else if (status === 'loading') {
-                badge.className = 'status-badge status-warning';
-                badge.innerHTML = '<span class="w-2 h-2 bg-yellow-600 rounded-full animate-pulse"></span> TESTING...';
-            } else if (status === 'setup') {
-                badge.className = 'status-badge status-warning';
-                badge.innerHTML = '<span class="w-2 h-2 bg-orange-500 rounded-full"></span> SETUP REQUIRED';
             }
         }
 
@@ -1117,12 +1040,12 @@ JIKA FI'IL, berikan format JSON:
             {"dhamir": "نَحْنُ", "dhamir_label": "Kami", "fiil": "...", "arti": "Kami sedang/akan ..."}
         ],
         "amr": [
-            {"dhamir": "أَنْتَ", "dhamir_label": "Kamu lk", "fiil": "...", "arti": "...lah! (kamu lk)"},
-            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2", "fiil": "...", "arti": "...lah! (kalian 2)"},
-            {"dhamir": "أَنْتُمْ", "dhamir_label": "Kalian lk", "fiil": "...", "arti": "...lah! (kalian lk)"},
-            {"dhamir": "أَنْتِ", "dhamir_label": "Kamu pr", "fiil": "...", "arti": "...lah! (kamu pr)"},
-            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2 pr", "fiil": "...", "arti": "...lah! (kalian 2 pr)"},
-            {"dhamir": "أَنْتُنَّ", "dhamir_label": "Kalian pr", "fiil": "...", "arti": "...lah! (kalian pr)"}
+            {"dhamir": "أَنْتَ", "dhamir_label": "Kamu lk", "fiil": "...", "arti": "...lah! (untuk lk)"},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2", "fiil": "...", "arti": "...lah! (untuk 2 orang)"},
+            {"dhamir": "أَنْتُمْ", "dhamir_label": "Kalian lk", "fiil": "...", "arti": "...lah! (untuk lk jamak)"},
+            {"dhamir": "أَنْتِ", "dhamir_label": "Kamu pr", "fiil": "...", "arti": "...lah! (untuk pr)"},
+            {"dhamir": "أَنْتُمَا", "dhamir_label": "Kalian 2 pr", "fiil": "...", "arti": "...lah! (untuk 2 pr)"},
+            {"dhamir": "أَنْتُنَّ", "dhamir_label": "Kalian pr", "fiil": "...", "arti": "...lah! (untuk pr jamak)"}
         ]
     }
 }
@@ -1154,75 +1077,113 @@ JIKA ISIM, berikan format JSON:
 }`;
         }
 
+        function getFiilPrompt(word) {
+            return getAutoPrompt(word);
+        }
+
+        function getIsimPrompt(word) {
+            return `Anda adalah pakar Sharaf dan Nahwu.
+            Analisis Isim "${word}" secara komprehensif.
+            
+            JSON FORMAT:
+            {
+                "type": "isim",
+                "word": "${word}",
+                "category": "Musytaq atau Jamid",
+                "subcategory": "Jenis spesifik",
+                "wazan": "Pola wazan",
+                "root": "Akar kata 3 huruf",
+                "meaning": "Arti",
+                "gender": "Mudzakkar atau Muannats",
+                "number_type": "Mufrad/Mutsanna/Jamak",
+                "derived_from": "Fi'il asal (jika musytaq)",
+                "derived_from_meaning": "Arti fi'il asal",
+                "forms": [
+                    {"label": "Mufrad", "arabic": "...", "note": "..."},
+                    {"label": "Mutsanna Rafa'", "arabic": "...", "note": "..."},
+                    {"label": "Mutsanna Nashab/Jar", "arabic": "...", "note": "..."},
+                    {"label": "Jamak", "arabic": "...", "note": "..."},
+                    {"label": "Muannats", "arabic": "...", "note": "..."},
+                    {"label": "Tashghir", "arabic": "...", "note": "..."},
+                    {"label": "Nisbah", "arabic": "...", "note": "..."}
+                ],
+                "related_words": [
+                    {"word": "...", "type": "...", "meaning": "..."}
+                ]
+            }`;
+        }
+
         function renderFiilResult(res) {
             const container = document.getElementById('tashrifContainer');
-            document.getElementById('babText').innerText = res.bab_title?.toUpperCase() || 'FI\'IL';
-            document.getElementById('patternText').innerText = res.main_pattern || '—';
+            document.getElementById('babText').innerText = res.bab_title.toUpperCase();
+            document.getElementById('patternText').innerText = res.main_pattern;
             document.getElementById('rootText').innerText = res.root ? `Akar: ${res.root}` : '';
             container.innerHTML = '';
 
             const accents = ['#ffff00', '#00ffff', '#ff69b4', '#00ff00', '#ff8c00', '#E879F9', '#38bdf8', '#a3e635', '#fb923c', '#f472b6'];
 
-            if (res.rows) {
-                res.rows.forEach((item, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'row-tashrif';
-                    const color = accents[i % accents.length];
-                    
-                    div.innerHTML = `
-                        <div class="label-cell">
-                            <span class="w-2 h-2 md:w-3 md:h-3 brutal-border flex-shrink-0" style="background:${color}"></span>
-                            <span>${item.label}</span>
+            res.rows.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'row-tashrif';
+                const color = accents[i % accents.length];
+                
+                div.innerHTML = `
+                    <div class="label-cell">
+                        <span class="w-2 h-2 md:w-3 md:h-3 brutal-border flex-shrink-0" style="background:${color}"></span>
+                        <span>${item.label}</span>
+                    </div>
+                    <div class="wazan-mauzun-container">
+                        <div class="arabic-text wazan-cell flex-1">${item.wazan}</div>
+                        <span class="arrow-indicator">→</span>
+                        <div class="arabic-text flex-1 text-center">
+                            <span class="mauzun-cell" style="background: linear-gradient(180deg, transparent 65%, ${color} 65%);">${item.mauzun}</span>
                         </div>
-                        <div class="wazan-mauzun-container">
-                            <div class="arabic-text wazan-cell flex-1">${item.wazan}</div>
-                            <span class="arrow-indicator">→</span>
-                            <div class="arabic-text flex-1 text-center">
-                                <span class="mauzun-cell" style="background: linear-gradient(180deg, transparent 65%, ${color} 65%);">${item.mauzun}</span>
-                            </div>
-                        </div>
-                        <div class="meaning-cell">"${item.arti}"</div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
+                    </div>
+                    <div class="meaning-cell">"${item.arti}"</div>
+                `;
+                container.appendChild(div);
+            });
 
             // Render Tashrif Lughawi
             if (res.tashrif_lughawi) {
-                renderLughawi('lughawiMadhi', res.tashrif_lughawi.madhi);
-                renderLughawi('lughawiMudhari', res.tashrif_lughawi.mudhari);
-                renderLughawi('lughawiAmr', res.tashrif_lughawi.amr);
+                renderLughawi('lughawiMadhi', res.tashrif_lughawi.madhi, 'Fi\'il Madhi (Lampau)');
+                renderLughawi('lughawiMudhari', res.tashrif_lughawi.mudhari, 'Fi\'il Mudhari (Sekarang/Akan)');
+                renderLughawi('lughawiAmr', res.tashrif_lughawi.amr, 'Fi\'il Amr (Perintah)');
             }
 
             document.getElementById('resultFiil').classList.remove('hidden');
             scrollToResult('resultFiil');
         }
 
-        function renderLughawi(containerId, data) {
+        function renderLughawi(containerId, data, title) {
             const container = document.getElementById(containerId);
             if (!data || data.length === 0) {
                 container.innerHTML = '<div class="p-4 text-center text-gray-500">Data tidak tersedia</div>';
                 return;
             }
 
-            const ghaibMale = data.slice(0, 3);
-            const ghaibFemale = data.slice(3, 6);
-            const mukhatabMale = data.slice(6, 9);
-            const mukhatabFemale = data.slice(9, 12);
-            const mutakallim = data.slice(12, 14);
+            // Group by gender category
+            const ghaibMale = data.slice(0, 3);   // هو، هما، هم
+            const ghaibFemale = data.slice(3, 6); // هي، هما، هن
+            const mukhatabMale = data.slice(6, 9); // أنت، أنتما، أنتم
+            const mukhatabFemale = data.slice(9, 12); // أنتِ، أنتما، أنتن
+            const mutakallim = data.slice(12, 14); // أنا، نحن
 
             let html = `
                 <div class="border-2 border-black border-t-0">
+                    <!-- Ghaib (Third Person) -->
                     <div class="bg-blue-100 px-3 py-2 border-b-2 border-black font-bold text-xs uppercase">
                         <i class="fas fa-user-secret mr-1"></i> Ghaib (Orang Ketiga)
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2">
+                        <!-- Male -->
                         <div class="border-b md:border-b-0 md:border-r-2 border-black">
                             <div class="bg-blue-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
                                 <i class="fas fa-mars mr-1"></i> Mudzakkar
                             </div>
                             ${ghaibMale.map(item => createLughawiRow(item, 'gender-male')).join('')}
                         </div>
+                        <!-- Female -->
                         <div>
                             <div class="bg-pink-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
                                 <i class="fas fa-venus mr-1"></i> Muannats
@@ -1231,16 +1192,19 @@ JIKA ISIM, berikan format JSON:
                         </div>
                     </div>
 
+                    <!-- Mukhatab (Second Person) -->
                     <div class="bg-green-100 px-3 py-2 border-y-2 border-black font-bold text-xs uppercase">
                         <i class="fas fa-user mr-1"></i> Mukhatab (Orang Kedua)
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2">
+                        <!-- Male -->
                         <div class="border-b md:border-b-0 md:border-r-2 border-black">
                             <div class="bg-blue-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
                                 <i class="fas fa-mars mr-1"></i> Mudzakkar
                             </div>
                             ${mukhatabMale.map(item => createLughawiRow(item, 'gender-male')).join('')}
                         </div>
+                        <!-- Female -->
                         <div>
                             <div class="bg-pink-50 px-2 py-1 text-center text-xs font-bold border-b border-gray-300">
                                 <i class="fas fa-venus mr-1"></i> Muannats
@@ -1249,6 +1213,7 @@ JIKA ISIM, berikan format JSON:
                         </div>
                     </div>
 
+                    <!-- Mutakallim (First Person) -->
                     <div class="bg-yellow-100 px-3 py-2 border-y-2 border-black font-bold text-xs uppercase">
                         <i class="fas fa-user-circle mr-1"></i> Mutakallim (Orang Pertama)
                     </div>
@@ -1276,8 +1241,8 @@ JIKA ISIM, berikan format JSON:
         }
 
         function renderIsimResult(res) {
-            document.getElementById('isimTypeText').innerText = `${res.category || ''} - ${res.subcategory || ''}`.toUpperCase();
-            document.getElementById('isimWordText').innerText = res.word || '—';
+            document.getElementById('isimTypeText').innerText = `${res.category} - ${res.subcategory}`.toUpperCase();
+            document.getElementById('isimWordText').innerText = res.word;
             
             const infoGrid = document.getElementById('isimInfoGrid');
             infoGrid.innerHTML = `
@@ -1384,35 +1349,15 @@ JIKA ISIM, berikan format JSON:
             document.getElementById('errorModal').classList.add('hidden');
         }
 
-        function showSuccessAlert(msg) {
-            document.getElementById('successMessage').textContent = msg;
-            document.getElementById('successModal').classList.remove('hidden');
-        }
-
-        function closeSuccessModal() {
-            document.getElementById('successModal').classList.add('hidden');
-        }
-
         document.getElementById('errorModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
 
-        document.getElementById('successModal').addEventListener('click', function(e) {
-            if (e.target === this) closeSuccessModal();
-        });
-
-        // Check API Key on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const apiKey = getActiveApiKey();
-            console.log("=== PAGE LOAD CHECK ===");
-            console.log("EMBEDDED_API_KEY defined:", typeof EMBEDDED_API_KEY !== 'undefined');
-            console.log("EMBEDDED_API_KEY value (first 15):", EMBEDDED_API_KEY?.substring(0, 15));
-            console.log("Is valid format:", isValidApiKeyFormat(apiKey));
-            
-            if (!isValidApiKeyFormat(apiKey)) {
-                updateStatus('setup');
-                // Auto-open API key section if not configured
-                document.getElementById('apiKeySection').classList.remove('hidden-section');
+            if (!API_KEY || API_KEY === "AIzaSyBdePvO2Ggm3wXAZE46gGxfcUXFsIfi8-M") {
+                updateStatus(false);
+                document.getElementById('statusBadge').innerHTML = '<span class="w-2 h-2 bg-orange-500 rounded-full"></span> SETUP REQUIRED';
+                document.getElementById('statusBadge').className = 'status-badge bg-orange-200';
             }
         });
     </script>
