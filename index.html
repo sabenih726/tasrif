@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASHRIF SHARAF // BRUTALIST PRO</title>
+    <title>TASHRIF SHOROF PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
@@ -51,6 +51,156 @@
 
         .brutal-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
         .brutal-btn:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #000; }
+
+        /* ===== CSS YANG HILANG - DITAMBAHKAN ===== */
+        
+        /* API Key Section Styles */
+        .api-key-section {
+            background: #fff3cd;
+            border: 3px solid #000;
+            box-shadow: 6px 6px 0px #000;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .api-key-section {
+                border: 4px solid #000;
+                box-shadow: 8px 8px 0px #000;
+                padding: 2rem;
+            }
+        }
+
+        .api-key-saved {
+            background: #d1fae5;
+            border: 3px solid #000;
+            box-shadow: 6px 6px 0px #000;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .api-key-saved {
+                border: 4px solid #000;
+                box-shadow: 8px 8px 0px #000;
+                padding: 2rem;
+            }
+        }
+
+        .api-key-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .api-key-input-wrapper {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        /* Brutal Input Small */
+        .brutal-input-sm {
+            border: 3px solid #000;
+            background: #fff;
+            font-family: 'Space Mono', monospace;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .brutal-input-sm:focus {
+            outline: none;
+            background: #ffffa0;
+        }
+
+        /* Brutal Button Small */
+        .brutal-btn-sm {
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px #000;
+            transition: all 0.1s ease;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .brutal-btn-sm:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        .brutal-btn-sm:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        /* Toggle Visibility Button */
+        .toggle-visibility {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .toggle-visibility:hover {
+            color: #000;
+        }
+
+        /* Collapsible Styles */
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #e5e7eb;
+            border: 2px solid #000;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .collapsible-header:hover {
+            background: #d1d5db;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            background: #f9fafb;
+            border: 2px solid #000;
+            border-top: none;
+            padding: 0 1rem;
+        }
+
+        .collapsible-content.open {
+            max-height: 500px;
+            padding: 1rem;
+        }
+
+        /* Chevron Icon */
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+
+        .chevron.open {
+            transform: rotate(180deg);
+        }
+
+        /* Status Badge Warning */
+        .status-warning {
+            background: #fed7aa;
+        }
+
+        /* ===== AKHIR CSS YANG DITAMBAHKAN ===== */
 
         .brutal-input {
             border: 3px solid #000;
@@ -700,7 +850,7 @@
     <!-- Marquee Banner -->
     <div class="marquee-container brutal-shadow mb-4 md:mb-8">
         <div class="marquee-text">
-            TASHRIF SHARAF — ISTILAHI & LUGHAWI — FI'IL & ISIM — POWERED BY GEMINI AI
+            TASHRIF SHOROF — ISTILAHI & LUGHAWI — FI'IL & ISIM
         </div>
     </div>
 
@@ -719,7 +869,7 @@
         </div>
 
         <!-- API Key Configuration Section -->
-        <div id="apiKeySection" class="api-key-section brutal-shadow mb-6">
+        <div id="apiKeySection" class="api-key-section mb-6">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 bg-black text-white flex items-center justify-center text-xl">
                     <i class="fas fa-key"></i>
@@ -755,32 +905,6 @@
                 </span>
             </div>
             
-            <!-- Collapsible: Cara Mendapatkan API Key -->
-            <div class="mt-4">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <span><i class="fas fa-question-circle mr-2"></i>Cara Mendapatkan API Key</span>
-                    <i class="fas fa-chevron-down chevron"></i>
-                </div>
-                <div class="collapsible-content">
-                    <ol class="text-xs space-y-2 list-decimal list-inside">
-                        <li>Kunjungi <a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-600 underline font-bold">Google AI Studio</a></li>
-                        <li>Login dengan akun Google Anda</li>
-                        <li>Klik tombol <strong>"Create API Key"</strong></li>
-                        <li>Pilih project atau buat project baru</li>
-                        <li>Copy API Key yang dihasilkan</li>
-                        <li>Paste di kolom input di atas</li>
-                    </ol>
-                    <div class="mt-3 p-3 bg-yellow-100 border-2 border-yellow-400">
-                        <p class="text-xs">
-                            <i class="fas fa-shield-alt mr-1"></i>
-                            <strong>Keamanan:</strong> API Key Anda HANYA disimpan di browser lokal (localStorage). 
-                            Tidak pernah dikirim ke server manapun kecuali langsung ke Google API.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Input Section -->
         <div class="card-brutal p-4 md:p-6 lg:p-10 mb-6 md:mb-12">
             
@@ -807,10 +931,7 @@
                         <i class="fas fa-robot mr-1"></i> MODEL
                     </label>
                     <select id="modelSelect" class="model-select w-full">
-                        <option value="gemini-2.5-flash-preview-09-2025">Gemini 2.5 Flash</option>
-                        <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
-                        <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
-                        <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                        <option value="gemini-2.5-flash-preview-09-2025">Sabenih 2.5</option>
                     </select>
                 </div>
             </div>
