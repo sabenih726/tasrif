@@ -1,151 +1,96 @@
-```md
 <div align="center">
 
 # ﷽
 
-# TASHRIF SHOROF PRO  
-Kamus Konjugasi Bahasa Arab (Fi'il & Isim) — PWA Offline
+# 📚 TASHRIF SHOROF PRO
 
-<!-- Badges -->
-[![PWA Ready](https://img.shields.io/badge/PWA-Ready-0ea5e9?style=for-the-badge)](#)
-[![Offline](https://img.shields.io/badge/Works-Offline-f59e0b?style=for-the-badge)](#)
-[![Vanilla JS](https://img.shields.io/badge/Vanilla-JS-f7df1e?style=for-the-badge&logo=javascript&logoColor=000)](#)
-[![License MIT](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
+### Kamus Konjugasi Bahasa Arab Digital
+
+[![PWA Ready](https://img.shields.io/badge/PWA-Ready-5BB974?style=for-the-badge&logo=pwa&logoColor=white)](/)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge)](/)
+[![Offline](https://img.shields.io/badge/Works-Offline-orange?style=for-the-badge&logo=offline&logoColor=white)](/)
+
+**Aplikasi tashrif (konjugasi) bahasa Arab lengkap dengan dukungan Fi'il & Isim**
+
+[🚀 Demo Langsung](#demo) • [📖 Dokumentasi](#penggunaan) • [🤝 Kontribusi](#kontribusi)
+
+---
+
+<img src="screenshots/preview.png" alt="TASHRIF SHOROF PRO Preview" width="600">
 
 </div>
 
 ---
 
-## Deskripsi
+## ✨ Fitur Utama
 
-**TASHRIF SHOROF PRO** adalah aplikasi kamus & generator **tashrif (konjugasi)** bahasa Arab berbasis **PWA** yang dapat berjalan **offline**. Mendukung pencarian kata dengan **Arab**, **Latin/transliterasi**, maupun **Indonesia**.
-
----
-
-## Fitur
-
-- **Fi'il**
-  - Mujarrad, Mazid, Ruba'i
-  - Tashrif **Istilahi** (format tabel)
-  - Tashrif **Lughawi** (dengan dhamir)
-  - Badge jenis fi'il (shahih, mu'tal, mudha'af, mahmuz)
-- **Isim**
-  - Jamid & Musytaq (bergantung analyzer)
-  - Info akar (root), wazan, gender, arti
-  - Bentuk-bentuk isim (jika tersedia/hasil analisis)
-- **Pencarian**
-  - Input: Arab / Latin / Indonesia
-  - Auto-detect & mode manual (pilih bab)
-- **PWA**
-  - Offline caching via Service Worker
-  - Icon & manifest siap install ke home screen
+| Fitur | Deskripsi |
+|-------|-----------|
+| 📕 **Fi'il Mujarrad** | 6 bab fi'il tsulatsi mujarrad |
+| 📗 **Fi'il Mazid** | 12+ bab fi'il mazid (tsulatsi & ruba'i) |
+| 📙 **Fi'il Ruba'i** | Fi'il ruba'i mujarrad & mazid |
+| 📘 **Isim** | Isim jamid & musytaq dengan analisis lengkap |
+| 🔍 **Multi-Search** | Cari dengan Arab, Latin transliterasi, atau Indonesia |
+| 📴 **Offline Mode** | PWA - Berfungsi tanpa internet |
+| 📱 **Responsive** | Optimal di desktop, tablet, dan mobile |
+| 🎨 **Brutal Design** | UI modern dengan neubrutalism style |
 
 ---
 
-## Demo (GitHub Pages)
+## 📋 Daftar Isi
 
-Jika repo ini diaktifkan GitHub Pages, akses:
-
-- `https://<username>.github.io/<repo>/`
-
-Contoh:
-
-- `https://username.github.io/tashrif-shorof-pro/`
-
-> Ganti `<username>` dan `<repo>` sesuai milik Anda.
+- [Demo](#-demo)
+- [Screenshots](#-screenshots)
+- [Instalasi](#-instalasi)
+- [Penggunaan](#-penggunaan)
+- [Struktur Proyek](#-struktur-proyek)
+- [Tech Stack](#-tech-stack)
+- [Roadmap](#-roadmap)
+- [Kontribusi](#-kontribusi)
+- [Lisensi](#-lisensi)
+- [Kredit](#-kredit)
 
 ---
 
-## Cara Menjalankan (Local)
+## 🚀 Demo
 
-### Opsi 1 — VS Code Live Server (disarankan untuk PWA)
+🔗 **Live Demo:** [https://username.github.io/tashrif-shorof-pro](https://username.github.io/tashrif-shorof-pro)
 
-1. Install extension **Live Server**
-2. Klik kanan `index.html` → **Open with Live Server**
-3. Akses dari URL yang diberikan (mis. `http://127.0.0.1:5500`)
+> Ganti `username` dengan username GitHub Anda
 
-### Opsi 2 — Python HTTP Server
+---
+
+## 📸 Screenshots
+
+<details>
+<summary>📱 Tampilan Mobile</summary>
+
+| Home | Tashrif Fi'il | Tashrif Isim |
+|------|---------------|--------------|
+| ![Home](screenshots/mobile-home.png) | ![Fiil](screenshots/mobile-fiil.png) | ![Isim](screenshots/mobile-isim.png) |
+
+</details>
+
+<details>
+<summary>💻 Tampilan Desktop</summary>
+
+![Desktop Preview](screenshots/desktop-full.png)
+
+</details>
+
+---
+
+## 📦 Instalasi
+
+### Opsi 1: Clone Repository
 
 ```bash
-python -m http.server 8000
-```
+# Clone repo
+git clone https://github.com/username/tashrif-shorof-pro.git
 
-Lalu buka:
+# Masuk direktori
+cd tashrif-shorof-pro
 
-- `http://localhost:8000`
-
-> Catatan: Untuk PWA & service worker, jalankan via server (bukan `file://`).
-
----
-
-## Struktur Proyek (umum)
-
-```txt
-.
-├─ index.html
-├─ manifest.json
-├─ sw.js
-├─ css/
-│  └─ style.css
-├─ js/
-│  ├─ app.js
-│  ├─ tashrif-engine.js
-│  ├─ isim-analyzer.js
-│  ├─ dictionary.js
-│  ├─ transliterator.js
-│  └─ babs.js
-└─ icons/
-   ├─ icon-192.png
-   └─ icon-512.png
-```
-
----
-
-## Catatan Data Kamus
-
-Format entri contoh:
-
-```js
-"طاولة": { bab: "isim", root: ["ط","و","ل"], meaning: "meja", tags: ["benda"] }
-```
-
-Field yang dipakai aplikasi:
-- `bab` (mis. `isim`, atau id bab fi'il)
-- `root` (array huruf akar)
-- `meaning` (arti Indonesia)
-- `tags` (opsional)
-
----
-
-## PWA Icon (Logo)
-
-Logo PWA utama diambil dari **`manifest.json`** pada bagian:
-
-```json
-"icons": [
-  { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-  { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
-]
-```
-
-Di HTML juga ada:
-- `apple-touch-icon` untuk iOS
-- `favicon` untuk tab browser
-
----
-
-## Kontribusi
-
-Kontribusi dipersilakan.
-
-1. Fork repo ini
-2. Buat branch fitur: `git checkout -b fitur-anda`
-3. Commit: `git commit -m "feat: ..."`
-4. Push & buat Pull Request
-
----
-
-## Lisensi
-
-MIT License — lihat file [LICENSE](LICENSE).
-```
+# Buka di browser (gunakan live server)
+# VS Code: Install "Live Server" extension, klik kanan index.html > Open with Live Server
