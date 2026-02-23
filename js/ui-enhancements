@@ -1,7 +1,16 @@
 /**
+ * ============================================
+ * ui-enhancements.js
  * UI Enhancements Module
- * Dark Mode, Keyboard Shortcuts, Toast, Panels, Back-to-Top
+ * TASHRIF SHOROF PRO
+ * Dark Mode, Keyboard Shortcuts, Toast, 
+ * Panels, Back-to-Top, Result Actions
+ * ============================================
  */
+
+// ═══════════════════════════════════════════════════════════════
+//  UI MODULE
+// ═══════════════════════════════════════════════════════════════
 const UI = (() => {
 
     // ══════ DARK MODE ══════
@@ -86,7 +95,6 @@ const UI = (() => {
     // ══════ KEYBOARD SHORTCUTS ══════
     function initKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
-            // Don't trigger if typing in input
             const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName);
 
             // "/" - Focus search
@@ -193,7 +201,6 @@ const UI = (() => {
                 modeEl.className = 'input-mode mode-arabic';
                 if (modeLabel) modeLabel.textContent = 'عرب';
             } else if (hasLatin) {
-                // Check if it looks like Indonesian (longer words)
                 const words = val.split(/\s+/);
                 const avgLen = words.reduce((a, b) => a + b.length, 0) / words.length;
 
@@ -251,7 +258,7 @@ const UI = (() => {
         const bookmarks = getBookmarks();
         const exists = bookmarks.some(b => b.word === data.word);
         if (exists) {
-            showToast('⚠️ Sudah di-bookmark', 'info');
+            showToast('⚠️ Sudah di-bookmark');
             return false;
         }
         bookmarks.unshift({ ...data, timestamp: Date.now() });
@@ -266,6 +273,11 @@ const UI = (() => {
         localStorage.setItem('tashrif-bookmarks', JSON.stringify(bookmarks));
         renderBookmarks();
         showToast('🗑️ Bookmark dihapus');
+    }
+
+    function isBookmarked(word) {
+        const bookmarks = getBookmarks();
+        return bookmarks.some(b => b.word === word);
     }
 
     function renderBookmarks() {
@@ -283,13 +295,13 @@ const UI = (() => {
         }
 
         list.innerHTML = bookmarks.map(b => `
-            <div class="panel-item" onclick="UI.loadBookmark('${b.word}')">
+            <div class="panel-item" onclick="UI.loadBookmark('${escapeHtmlAttr(b.word)}')">
                 <button class="panel-item-delete" 
-                        onclick="event.stopPropagation(); UI.removeBookmark('${b.word}')">
+                        onclick="event.stopPropagation(); UI.removeBookmark('${escapeHtmlAttr(b.word)}')">
                     ✕
                 </button>
-                <div class="panel-item-arabic">${b.word}</div>
-                <div class="panel-item-info">${b.meaning || ''} — ${b.category || ''}</div>
+                <div class="panel-item-arabic">${escapeHtml(b.word)}</div>
+                <div class="panel-item-info">${escapeHtml(b.meaning || '')} — ${escapeHtml(b.category || '')}</div>
             </div>
         `).join('');
     }
@@ -305,11 +317,11 @@ const UI = (() => {
         }
     }
 
-    // ══════ SHARE ══════
+    // ══════ SHARE & COPY ══════
     function shareResult(text) {
         if (navigator.share) {
             navigator.share({
-                title: 'TASHRIF SHOROF',
+                title: 'TASHRIF SHOROF PRO',
                 text: text,
                 url: window.location.href
             }).catch(() => {});
@@ -319,18 +331,48 @@ const UI = (() => {
     }
 
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('📋 Disalin ke clipboard!', 'success');
-        }).catch(() => {
-            // Fallback
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Disalin ke clipboard!', 'success');
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0;';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
             document.execCommand('copy');
-            document.body.removeChild(textarea);
             showToast('📋 Disalin!', 'success');
-        });
+        } catch {
+            showToast('⚠️ Gagal menyalin', 'error');
+        }
+        document.body.removeChild(textarea);
+    }
+
+    // ══════ HTML ESCAPE UTILITIES ══════
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = String(text);
+        return div.innerHTML;
+    }
+
+    function escapeHtmlAttr(text) {
+        if (!text) return '';
+        return String(text)
+            .replace(/\\/g, '\\\\')
+            .replace(/'/g, "\\'")
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     }
 
     // ══════ INIT ALL ══════
@@ -350,7 +392,7 @@ const UI = (() => {
         init();
     }
 
-    // Public API
+    // ══════ PUBLIC API ══════
     return {
         showToast,
         openPanel,
@@ -358,9 +400,241 @@ const UI = (() => {
         closeAllPanels,
         addBookmark,
         removeBookmark,
+        isBookmarked,
         renderBookmarks,
         loadBookmark,
         shareResult,
-        copyToClipboard
+        copyToClipboard,
+        escapeHtml,
+        escapeHtmlAttr
+    };
+})();
+
+
+// ═══════════════════════════════════════════════════════════════
+//  RESULT ACTIONS MODULE
+//  Bridge between HTML onclick and UI module
+// ═══════════════════════════════════════════════════════════════
+const ResultActions = (() => {
+
+    /**
+     * Get current result data from the displayed result
+     * @returns {Object|null}
+     */
+    function getCurrentResult() {
+        const patternEl = document.getElementById('patternText');
+        const meaningEl = document.getElementById('meaningText');
+        const babEl = document.getElementById('babText');
+        const rootEl = document.getElementById('rootText');
+
+        // Check Fi'il result
+        const fiilResult = document.getElementById('resultFiil');
+        if (fiilResult && fiilResult.style.display !== 'none' 
+            && !fiilResult.classList.contains('result-section-hidden')) {
+            return {
+                type: 'fiil',
+                word: patternEl?.textContent?.trim() || '',
+                meaning: meaningEl?.textContent?.trim() || '',
+                bab: babEl?.textContent?.trim() || '',
+                root: rootEl?.textContent?.trim() || '',
+                category: babEl?.textContent?.trim() || 'Fiil'
+            };
+        }
+
+        // Check Isim result
+        const isimResult = document.getElementById('resultIsim');
+        if (isimResult && isimResult.style.display !== 'none'
+            && !isimResult.classList.contains('result-section-hidden')) {
+            const isimWord = document.getElementById('isimWordText');
+            const isimType = document.getElementById('isimTypeText');
+            return {
+                type: 'isim',
+                word: isimWord?.textContent?.trim() || '',
+                meaning: '',
+                bab: '',
+                root: '',
+                category: isimType?.textContent?.trim() || 'Isim'
+            };
+        }
+
+        return null;
+    }
+
+    /**
+     * Build formatted text from result data
+     * @param {Object} data
+     * @returns {string}
+     */
+    function buildResultText(data) {
+        if (!data) return '';
+
+        const lines = [
+            '═══════════════════════',
+            '  TASHRIF SHOROF PRO',
+            '═══════════════════════',
+            ''
+        ];
+
+        lines.push(`📝 Kata  : ${data.word}`);
+        if (data.bab) lines.push(`📖 Bab   : ${data.bab}`);
+        if (data.root) lines.push(`🔤 Akar  : ${data.root}`);
+        if (data.meaning) lines.push(`📘 Arti  : ${data.meaning}`);
+
+        // Get tashrif istilahi rows
+        const rows = document.querySelectorAll('.row-tashrif');
+        if (rows.length > 0) {
+            lines.push('');
+            lines.push('── Tashrif Istilahi ──');
+            
+            rows.forEach(row => {
+                const label = row.querySelector('.label-cell');
+                const mauzun = row.querySelector('.mauzun-cell');
+                const wazan = row.querySelector('.wazan-cell');
+                const meaning = row.querySelector('.meaning-cell');
+                
+                if (label && mauzun) {
+                    const labelText = label.textContent.trim().replace(/\s+/g, ' ');
+                    const mauzunText = mauzun.textContent.trim();
+                    const wazanText = wazan?.textContent?.trim() || '';
+                    const meaningText = meaning?.textContent?.trim() || '';
+                    
+                    let line = `${labelText}: ${mauzunText}`;
+                    if (wazanText) line += ` (${wazanText})`;
+                    if (meaningText) line += ` — ${meaningText}`;
+                    
+                    lines.push(line);
+                }
+            });
+        }
+
+        // Get active lughawi tab data
+        const activeLughawi = document.querySelector('.lughawi-panel-block');
+        if (activeLughawi) {
+            const lughawiRows = activeLughawi.querySelectorAll('.lughawi-row');
+            if (lughawiRows.length > 0) {
+                lines.push('');
+                lines.push('── Tashrif Lughawi ──');
+                
+                lughawiRows.forEach(row => {
+                    const dhamir = row.querySelector('.lughawi-dhamir');
+                    const fiil = row.querySelector('.lughawi-fiil');
+                    const meaning = row.querySelector('.lughawi-meaning');
+                    
+                    if (dhamir && fiil) {
+                        const dhText = dhamir.textContent.trim().replace(/\s+/g, ' ');
+                        const fiilText = fiil.textContent.trim();
+                        const meanText = meaning?.textContent?.trim() || '';
+                        
+                        lines.push(`${dhText} → ${fiilText} (${meanText})`);
+                    }
+                });
+            }
+        }
+
+        lines.push('');
+        lines.push('═══════════════════════');
+        lines.push('tashrif-shorof-pro.web.app');
+
+        return lines.join('\n');
+    }
+
+    /**
+     * Copy current result to clipboard
+     */
+    function copy() {
+        const data = getCurrentResult();
+        if (!data) {
+            UI.showToast('⚠️ Tidak ada hasil untuk disalin', 'error');
+            return;
+        }
+
+        const text = buildResultText(data);
+        UI.copyToClipboard(text);
+    }
+
+    /**
+     * Bookmark current result
+     */
+    function bookmark() {
+        const data = getCurrentResult();
+        if (!data) {
+            UI.showToast('⚠️ Tidak ada hasil untuk di-bookmark', 'error');
+            return;
+        }
+
+        // Check if already bookmarked
+        if (UI.isBookmarked(data.word)) {
+            // Toggle off - remove bookmark
+            UI.removeBookmark(data.word);
+            updateBookmarkButton(false);
+            return;
+        }
+
+        // Add bookmark
+        const success = UI.addBookmark({
+            word: data.word,
+            meaning: data.meaning,
+            category: data.category,
+            bab: data.bab || '',
+            root: data.root || ''
+        });
+
+        if (success) {
+            updateBookmarkButton(true);
+        }
+    }
+
+    /**
+     * Update bookmark button visual state
+     * @param {boolean} isBookmarked
+     */
+    function updateBookmarkButton(isBookmarked) {
+        const btn = document.getElementById('bookmarkBtn');
+        if (!btn) return;
+
+        if (isBookmarked) {
+            btn.classList.add('bookmarked');
+            btn.innerHTML = '✅ Tersimpan';
+        } else {
+            btn.classList.remove('bookmarked');
+            btn.innerHTML = '🔖 Bookmark';
+        }
+    }
+
+    /**
+     * Check and update bookmark button state for current result
+     * Call this when a new result is displayed
+     */
+    function syncBookmarkButton() {
+        const data = getCurrentResult();
+        if (data) {
+            updateBookmarkButton(UI.isBookmarked(data.word));
+        } else {
+            updateBookmarkButton(false);
+        }
+    }
+
+    /**
+     * Share current result
+     */
+    function share() {
+        const data = getCurrentResult();
+        if (!data) {
+            UI.showToast('⚠️ Tidak ada hasil untuk dibagikan', 'error');
+            return;
+        }
+
+        const text = buildResultText(data);
+        UI.shareResult(text);
+    }
+
+    // ══════ PUBLIC API ══════
+    return {
+        copy,
+        bookmark,
+        share,
+        syncBookmarkButton,
+        getCurrentResult,
+        buildResultText
     };
 })();
