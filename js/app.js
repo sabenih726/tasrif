@@ -2,6 +2,7 @@
  * ╔══════════════════════════════════════════════════════════╗
  * ║  APP: UI Controller v3.1 - FIXED COMPLETE               ║
  * ║  - FIX: renderTashrifIstilahi added                      ║
+ * ║  - FIX: container ID matched with HTML                   ║
  * ║  - Support Fi'il (Mujarrad, Mazid, Ruba'i)              ║
  * ║  - Support Isim (Jamid & Musytaq)                        ║
  * ║  - Search: Arab, Latin, Indonesia                        ║
@@ -23,13 +24,9 @@ var App = {
     init: function() {
         console.log('🚀 Initializing TASHRIF SHOROF PRO...');
         
-        // Render stats
         this.renderStats();
-        
-        // Render bab buttons
         this.renderBabButtons();
         
-        // Check engine
         if (typeof TashrifEngine !== 'undefined') {
             var test = TashrifEngine.analyze("نصر", "m1");
             console.log('✅ TashrifEngine:', test ? 'OK' : 'FAIL');
@@ -37,14 +34,12 @@ var App = {
             console.warn('⚠️ TashrifEngine not loaded');
         }
         
-        // Check IsimAnalyzer
         if (typeof IsimAnalyzer !== 'undefined') {
             console.log('✅ IsimAnalyzer: OK');
         } else {
             console.warn('⚠️ IsimAnalyzer not loaded');
         }
         
-        // Set focus to input
         var input = document.getElementById('userInput');
         if (input) input.focus();
         
@@ -59,12 +54,10 @@ var App = {
         var stats = null;
         var totalWords = 0;
         
-        // Try TashrifEngine stats
         if (typeof TashrifEngine !== 'undefined' && TashrifEngine.getStats) {
             stats = TashrifEngine.getStats();
             totalWords = stats.totalWords || 0;
         }
-        // Fallback to DictionaryStats
         else if (typeof DictionaryStats !== 'undefined' && DictionaryStats.getTotal) {
             totalWords = DictionaryStats.getTotal();
             var catStats = DictionaryStats.getTotalByCategory();
@@ -76,7 +69,6 @@ var App = {
                 isimJamid: catStats.isim || 0
             };
         }
-        // Last resort: count DICTIONARY
         else if (typeof DICTIONARY !== 'undefined') {
             totalWords = Object.keys(DICTIONARY).length;
             stats = {
@@ -88,7 +80,6 @@ var App = {
             };
         }
 
-        // Update display
         var totalEl = document.getElementById('totalWords');
         if (totalEl) totalEl.textContent = totalWords;
 
@@ -112,19 +103,16 @@ var App = {
         this.currentCategory = cat;
         this.currentBab = null;
         
-        // Update button states
         var btns = document.querySelectorAll('[data-cat]');
         for (var i = 0; i < btns.length; i++) {
             btns[i].classList.toggle('active', btns[i].dataset.cat === cat);
         }
         
-        // Show/hide bab section
         var babSection = document.getElementById('babSection');
         if (babSection) {
             babSection.style.display = (cat === 'isim') ? 'none' : 'block';
         }
         
-        // Render bab buttons if not isim
         if (cat !== 'isim') {
             this.renderBabButtons();
         }
@@ -136,11 +124,9 @@ var App = {
         
         var babs = null;
         
-        // Try TashrifEngine first
         if (typeof TashrifEngine !== 'undefined' && TashrifEngine.getBabsByCategory) {
             babs = TashrifEngine.getBabsByCategory(this.currentCategory);
         }
-        // Fallback to direct BABS objects
         else {
             if (this.currentCategory === 'mujarrad' && typeof BABS_MUJARRAD !== 'undefined') {
                 babs = BABS_MUJARRAD;
@@ -166,7 +152,6 @@ var App = {
             btn.className = 'bab-btn';
             btn.setAttribute('data-bab', id);
             
-            // Display pattern or name
             var displayText = '';
             if (bab.pattern) {
                 displayText = '<span class="arabic-text">' + bab.pattern + '</span>';
@@ -190,7 +175,6 @@ var App = {
     selectBab: function(babId) {
         this.currentBab = babId;
         
-        // Update button states
         var btns = document.querySelectorAll('.bab-btn');
         for (var i = 0; i < btns.length; i++) {
             btns[i].classList.remove('active');
@@ -199,7 +183,6 @@ var App = {
         var activeBtn = document.querySelector('.bab-btn[data-bab="' + babId + '"]');
         if (activeBtn) activeBtn.classList.add('active');
         
-        // Show word list for this bab
         var words = [];
         if (typeof DictionaryStats !== 'undefined' && DictionaryStats.getByBab) {
             words = DictionaryStats.getByBab(babId);
@@ -276,7 +259,6 @@ var App = {
         var trimmed = value.trim();
         var isArabic = /[\u0600-\u06FF]/.test(trimmed);
         
-        // Transliteration preview for Latin input
         var preview = document.getElementById('translitPreview');
         var previewResult = document.getElementById('translitResult');
         
@@ -297,16 +279,13 @@ var App = {
             preview.style.display = 'none';
         }
 
-        // Search
         if (trimmed.length < 2) return;
 
         var results = [];
         
-        // Try TashrifEngine search
         if (typeof TashrifEngine !== 'undefined' && TashrifEngine.search) {
             results = TashrifEngine.search(trimmed);
         }
-        // Fallback to manual search in DICTIONARY
         else if (typeof DICTIONARY !== 'undefined') {
             var q = trimmed.toLowerCase();
             for (var key in DICTIONARY) {
@@ -315,13 +294,9 @@ var App = {
                 var data = DICTIONARY[key];
                 var score = 0;
                 
-                // Check exact match
                 if (key === trimmed) score = 100;
-                // Check if key contains query
                 else if (key.indexOf(trimmed) !== -1) score = 90;
-                // Check meaning
                 else if (data.meaning && data.meaning.toLowerCase().indexOf(q) !== -1) score = 80;
-                // Check root
                 else if (data.root) {
                     var rootStr = Array.isArray(data.root) ? data.root.join('') : data.root;
                     if (rootStr.indexOf(trimmed) !== -1) score = 70;
@@ -332,7 +307,6 @@ var App = {
                 }
             }
             
-            // Sort by score
             results.sort(function(a, b) { return b.score - a.score; });
             results = results.slice(0, 10);
         }
@@ -372,25 +346,20 @@ var App = {
         console.log('Category:', this.currentCategory);
         console.log('Bab:', this.currentBab || 'auto');
 
-        // Hide all results
         this.hideAllResults();
         
-        // Show loader
         var loader = document.getElementById('loader');
         if (loader) loader.style.display = 'flex';
 
         var self = this;
         
-        // Process after small delay for UX
         setTimeout(function() {
             var result = null;
 
-            // ═══ ISIM MODE ═══
             if (self.currentCategory === 'isim') {
                 console.log('Mode: ISIM');
                 result = self.processIsim(value);
             }
-            // ═══ FI'IL MODE ═══
             else {
                 console.log('Mode: FI\'IL');
                 result = self.processFiil(value);
@@ -398,10 +367,8 @@ var App = {
 
             console.log('Result:', result ? result.type : 'null');
 
-            // Hide loader
             if (loader) loader.style.display = 'none';
 
-            // Render result
             if (result) {
                 if (result.type === 'fiil') {
                     self.renderFiil(result);
@@ -419,13 +386,11 @@ var App = {
     // ═══════════════════════════════════════════════════════════
 
     processFiil: function(input) {
-        // 1. Try to find in dictionary
         var entry = null;
         
         if (typeof TashrifEngine !== 'undefined' && TashrifEngine.findWord) {
             entry = TashrifEngine.findWord(input);
         } else if (typeof DICTIONARY !== 'undefined') {
-            // Manual search
             var clean = input.replace(/[\u064B-\u065F\u0670]/g, '');
             entry = DICTIONARY[clean];
         }
@@ -439,7 +404,6 @@ var App = {
             }
         }
 
-        // 2. Manual mode (user selected bab)
         if (this.currentBab) {
             console.log('Manual mode with bab:', this.currentBab);
             
@@ -476,7 +440,6 @@ var App = {
             return null;
         }
 
-        // Try to find in dictionary first
         var clean = input.replace(/[\u064B-\u065F\u0670]/g, '');
         var dictEntry = null;
         
@@ -484,11 +447,9 @@ var App = {
             dictEntry = DICTIONARY[clean];
         }
 
-        // Analyze
         var analysis = IsimAnalyzer.analyze(input, dictEntry);
         
         if (analysis) {
-            // Convert to render format
             return {
                 type: 'isim',
                 word: input,
@@ -517,14 +478,12 @@ var App = {
         var letters = [];
 
         if (isArabic) {
-            // Extract Arabic letters
             for (var i = 0; i < clean.length; i++) {
                 if (/[\u0600-\u06FF]/.test(clean[i])) {
                     letters.push(clean[i]);
                 }
             }
         } else {
-            // Latin: try transliteration
             if (typeof Transliterator !== 'undefined' && Transliterator.extractConsonants) {
                 var translit = Transliterator.extractConsonants(input);
                 for (var j = 0; j < translit.length; j++) {
@@ -537,85 +496,47 @@ var App = {
     },
 
     // ═══════════════════════════════════════════════════════════
-    // ★★★ RENDER TASHRIF ISTILAHI (NEW - FIX) ★★★
+    // ★★★ RENDER TASHRIF ISTILAHI ★★★
     // ═══════════════════════════════════════════════════════════
 
     renderTashrifIstilahi: function(rows) {
+        // Container ID = tashrifIstilahi (sesuai HTML)
         var container = document.getElementById('tashrifIstilahi');
 
-        // Auto-create container jika belum ada
         if (!container) {
-            var resultFiil = document.getElementById('resultFiil');
-            if (!resultFiil) {
-                console.warn('[App] No container for Tashrif Istilahi');
-                return;
-            }
-
-            // Cari posisi sebelum lughawi section
-            var lughawiSection = resultFiil.querySelector('#lughawiContainer, .lughawi-section, [id*="lughawi"]');
-
-            container = document.createElement('div');
-            container.id = 'tashrifIstilahi';
-
-            if (lughawiSection) {
-                resultFiil.insertBefore(container, lughawiSection);
-            } else {
-                resultFiil.appendChild(container);
-            }
+            console.warn('[App] #tashrifIstilahi container not found in HTML');
+            return;
         }
 
         // Jika rows kosong
         if (!rows || rows.length === 0) {
             container.innerHTML =
                 '<div style="padding:20px;text-align:center;color:#888;' +
-                'border:2px dashed #ccc;margin:16px 0;">' +
-                '📋 Data Tashrif Istilahi tidak tersedia</div>';
-            container.style.display = 'block';
+                'border:2px dashed #ccc;margin:8px 0;">' +
+                'Data Tashrif Istilahi tidak tersedia</div>';
             return;
         }
 
-        // ═══ SIGHAT LABELS & COLORS ═══
+        // ═══ SIGHAT CONFIG (Label, Warna, Icon) ═══
         var sighatConfig = [
-            { label: 'Fi\'il Madhi',           labelAr: 'فِعْل مَاضِي',         icon: '1️⃣',  bg: '#dbeafe', accent: '#3b82f6' },
-            { label: 'Fi\'il Mudhari\'',       labelAr: 'فِعْل مُضَارِع',       icon: '2️⃣',  bg: '#dcfce7', accent: '#22c55e' },
-            { label: 'Masdar',                 labelAr: 'مَصْدَر',              icon: '3️⃣',  bg: '#fef9c3', accent: '#eab308' },
-            { label: 'Isim Fa\'il',            labelAr: 'اِسْم فَاعِل',         icon: '4️⃣',  bg: '#fce7f3', accent: '#ec4899' },
-            { label: 'Isim Maf\'ul',           labelAr: 'اِسْم مَفْعُول',       icon: '5️⃣',  bg: '#e0e7ff', accent: '#6366f1' },
-            { label: 'Fi\'il Amr',             labelAr: 'فِعْل أَمْر',          icon: '6️⃣',  bg: '#ffedd5', accent: '#f97316' },
-            { label: 'Fi\'il Nahi',            labelAr: 'فِعْل نَهْي',          icon: '7️⃣',  bg: '#fecdd3', accent: '#ef4444' },
-            { label: 'Madhi Majhul',           labelAr: 'مَاضِي مَجْهُول',      icon: '8️⃣',  bg: '#f3e8ff', accent: '#a855f7' },
-            { label: 'Mudhari\' Majhul',       labelAr: 'مُضَارِع مَجْهُول',    icon: '9️⃣',  bg: '#ccfbf1', accent: '#14b8a6' },
-            { label: 'Naibu Fa\'il',           labelAr: 'نَائِب فَاعِل',        icon: '🔟',  bg: '#f0fdf4', accent: '#86efac' },
-            { label: 'Isim Zaman',             labelAr: 'اِسْم زَمَان',         icon: '🕐',  bg: '#fefce8', accent: '#fde047' },
-            { label: 'Isim Makan',             labelAr: 'اِسْم مَكَان',         icon: '📍',  bg: '#f0f9ff', accent: '#7dd3fc' },
-            { label: 'Isim Alat',              labelAr: 'اِسْم آلَة',           icon: '🔧',  bg: '#fdf4ff', accent: '#d946ef' }
+            { label: "Fi'il Madhi",         labelAr: 'فِعْل مَاضِي',       icon: '1️⃣',  bg: '#dbeafe', accent: '#3b82f6' },
+            { label: "Fi'il Mudhari'",      labelAr: 'فِعْل مُضَارِع',     icon: '2️⃣',  bg: '#dcfce7', accent: '#22c55e' },
+            { label: 'Masdar',              labelAr: 'مَصْدَر',            icon: '3️⃣',  bg: '#fef9c3', accent: '#eab308' },
+            { label: "Isim Fa'il",          labelAr: 'اِسْم فَاعِل',       icon: '4️⃣',  bg: '#fce7f3', accent: '#ec4899' },
+            { label: "Isim Maf'ul",         labelAr: 'اِسْم مَفْعُول',     icon: '5️⃣',  bg: '#e0e7ff', accent: '#6366f1' },
+            { label: "Fi'il Amr",           labelAr: 'فِعْل أَمْر',        icon: '6️⃣',  bg: '#ffedd5', accent: '#f97316' },
+            { label: "Fi'il Nahi",          labelAr: 'فِعْل نَهْي',        icon: '7️⃣',  bg: '#fecdd3', accent: '#ef4444' },
+            { label: 'Madhi Majhul',        labelAr: 'مَاضِي مَجْهُول',    icon: '8️⃣',  bg: '#f3e8ff', accent: '#a855f7' },
+            { label: "Mudhari' Majhul",     labelAr: 'مُضَارِع مَجْهُول',  icon: '9️⃣',  bg: '#ccfbf1', accent: '#14b8a6' },
+            { label: "Naibu Fa'il",         labelAr: 'نَائِب فَاعِل',      icon: '🔟',  bg: '#f0fdf4', accent: '#86efac' },
+            { label: 'Isim Zaman/Makan',    labelAr: 'ظَرْف زَمَان/مَكَان', icon: '📍',  bg: '#fefce8', accent: '#fde047' },
+            { label: 'Isim Alat',           labelAr: 'اِسْم آلَة',         icon: '🔧',  bg: '#fdf4ff', accent: '#d946ef' }
         ];
 
-        // ═══ BUILD HTML ═══
+        // ═══ BUILD TABLE ═══
         var html = '';
-
-        // Section Title
-        html += '<div style="background:#1e293b;color:#fff;padding:12px 16px;' +
-                'border:3px solid #000;border-bottom:none;font-weight:800;' +
-                'font-size:0.875rem;text-transform:uppercase;letter-spacing:1px;' +
-                'display:flex;align-items:center;gap:8px;margin-top:16px;">' +
-                '<span style="font-size:1.2rem;">📋</span> TASHRIF ISTILAHI</div>';
-
-        // Table
-        html += '<div style="border:3px solid #000;border-top:none;overflow-x:auto;margin-bottom:16px;">';
-        html += '<table style="width:100%;border-collapse:collapse;min-width:500px;">';
-
-        // Header
-        html += '<thead><tr>' +
-                '<th style="background:#f1f5f9;padding:10px 8px;border:1px solid #000;' +
-                'font-size:0.7rem;font-weight:700;text-align:center;width:30%;">SIGHAT</th>' +
-                '<th style="background:#f1f5f9;padding:10px 8px;border:1px solid #000;' +
-                'font-size:0.7rem;font-weight:700;text-align:center;width:30%;">WAZAN</th>' +
-                '<th style="background:#f1f5f9;padding:10px 8px;border:1px solid #000;' +
-                'font-size:0.7rem;font-weight:700;text-align:center;width:40%;">BENTUK</th>' +
-                '</tr></thead>';
-
-        html += '<tbody>';
+        html += '<div style="overflow-x:auto;">';
+        html += '<table style="width:100%;border-collapse:collapse;min-width:480px;">';
 
         for (var i = 0; i < rows.length; i++) {
             var row = rows[i];
@@ -627,69 +548,87 @@ var App = {
                 accent: '#94a3b8'
             };
 
-            // ═══ PARSE ROW FORMAT ═══
-            // Support: Array ['label','wazan','value']
-            //          Object { label, wazan, value/arabic/form }
-            //          String (just the arabic form)
+            // ═══ PARSE ROW (support multiple formats) ═══
             var label = '';
             var wazan = '';
             var value = '';
+            var meaning = '';
 
             if (Array.isArray(row)) {
+                // Format: ['label', 'wazan', 'value'] atau ['label', 'wazan', 'value', 'meaning']
                 label = row[0] || '';
                 wazan = row[1] || '';
                 value = row[2] || '';
+                meaning = row[3] || '';
             } else if (typeof row === 'object' && row !== null) {
+                // Format: { label, wazan, value/arabic/form, meaning/arti }
                 label = row.label || row.sighat || row.name || '';
                 wazan = row.wazan || row.pattern || '';
                 value = row.value || row.arabic || row.form || '';
+                meaning = row.meaning || row.arti || '';
             } else if (typeof row === 'string') {
                 value = row;
             }
 
-            // Use config label if row doesn't provide one
-            if (!label) {
-                label = cfg.label;
-            }
+            // Fallback label dari config
+            if (!label) label = cfg.label;
 
             // ═══ ROW HTML ═══
-            html += '<tr style="transition:background 0.15s;"' +
-                    ' onmouseover="this.style.background=\'#f8fafc\'"' +
-                    ' onmouseout="this.style.background=\'\'">';
+            html += '<tr style="border-bottom:1px solid #e2e8f0;" ' +
+                    'onmouseover="this.style.background=\'#f8fafc\'" ' +
+                    'onmouseout="this.style.background=\'\'">';
 
-            // Sighat cell
-            html += '<td style="background:' + cfg.bg + ';padding:10px 8px;' +
-                    'border:1px solid #000;border-left:5px solid ' + cfg.accent + ';' +
-                    'text-align:center;vertical-align:middle;">' +
-                    '<div style="font-size:0.65rem;font-weight:700;color:#374151;text-transform:uppercase;">' +
+            // KOLOM 1: Bentuk (Label Sighat)
+            html += '<td style="' +
+                    'background:' + cfg.bg + ';' +
+                    'padding:10px 8px;' +
+                    'border-left:5px solid ' + cfg.accent + ';' +
+                    'border-bottom:1px solid #e2e8f0;' +
+                    'text-align:center;vertical-align:middle;width:28%;">' +
+                    '<div style="font-size:0.7rem;font-weight:700;color:#374151;text-transform:uppercase;">' +
                     cfg.icon + ' ' + label + '</div>';
-
-            // Arabic label jika ada
+            
             if (cfg.labelAr) {
                 html += '<div class="arabic-text" style="font-size:0.85rem;color:#6b7280;margin-top:2px;">' +
                         cfg.labelAr + '</div>';
             }
-
             html += '</td>';
 
-            // Wazan cell
-            html += '<td class="arabic-text" style="padding:10px 8px;border:1px solid #000;' +
-                    'font-size:1.1rem;text-align:center;color:#6b7280;vertical-align:middle;">' +
-                    (wazan || '—') + '</td>';
+            // KOLOM 2: Wazan → Mauzun
+            html += '<td style="' +
+                    'padding:10px 8px;' +
+                    'border-bottom:1px solid #e2e8f0;' +
+                    'text-align:center;vertical-align:middle;width:40%;">';
+            
+            if (wazan && value) {
+                html += '<span class="arabic-text" style="font-size:1rem;color:#6b7280;">' + wazan + '</span>' +
+                        '<span style="margin:0 6px;color:#9ca3af;">→</span>' +
+                        '<span class="arabic-text" style="font-size:1.3rem;font-weight:700;color:#1e293b;">' + value + '</span>';
+            } else if (value) {
+                html += '<span class="arabic-text" style="font-size:1.3rem;font-weight:700;color:#1e293b;">' + value + '</span>';
+            } else if (wazan) {
+                html += '<span class="arabic-text" style="font-size:1rem;color:#6b7280;">' + wazan + '</span>';
+            } else {
+                html += '<span style="color:#ccc;">—</span>';
+            }
+            
+            html += '</td>';
 
-            // Value cell (main Arabic form)
-            html += '<td class="arabic-text" style="padding:12px 8px;border:1px solid #000;' +
-                    'font-size:1.4rem;font-weight:700;text-align:center;color:#1e293b;' +
-                    'vertical-align:middle;letter-spacing:1px;">' +
-                    (value || '—') + '</td>';
+            // KOLOM 3: Arti
+            html += '<td style="' +
+                    'padding:10px 8px;' +
+                    'border-bottom:1px solid #e2e8f0;' +
+                    'text-align:right;vertical-align:middle;width:32%;' +
+                    'font-size:0.8rem;color:#6b7280;">' +
+                    (meaning || '') +
+                    '</td>';
 
             html += '</tr>';
         }
 
-        html += '</tbody></table></div>';
+        html += '</table></div>';
 
         container.innerHTML = html;
-        container.style.display = 'block';
 
         console.log('[App] ✅ Tashrif Istilahi rendered:', rows.length, 'rows');
     },
@@ -725,25 +664,18 @@ var App = {
             babBadge.style.background = res.color || '#facc15';
         }
     
-        // ═══════════════════════════════════════════════════════
-        // ★ RENDER FI'IL TYPE BADGES (MUDHA'AF, MU'TAL, SHAHIH) ★
-        // ═══════════════════════════════════════════════════════
+        // ★ FI'IL TYPE BADGES ★
         this.renderFiilTypeBadges(res);
     
-        // ═══════════════════════════════════════════════════════
-        // ★ RENDER TASHRIF ISTILAHI (FIXED) ★
-        // ═══════════════════════════════════════════════════════
+        // ★ TASHRIF ISTILAHI ★
         this.renderTashrifIstilahi(res.rows);
     
-        // ═══════════════════════════════════════════════════════
-        // ★ RENDER TASHRIF LUGHAWI ★
-        // ═══════════════════════════════════════════════════════
+        // ★ TASHRIF LUGHAWI ★
         if (res.tashrif_lughawi) {
             this.renderLughawi('lughawiMadhi', res.tashrif_lughawi.madhi);
             this.renderLughawi('lughawiMudhari', res.tashrif_lughawi.mudhari);
             this.renderLughawi('lughawiAmr', res.tashrif_lughawi.amr);
             
-            // Show madhi by default
             this.showLughawiTab('madhi');
         } else {
             var emptyMsg = '<div style="padding:20px;text-align:center;color:#888;">Tidak tersedia</div>';
@@ -897,7 +829,6 @@ var App = {
     // ═══════════════════════════════════════════════════════════
 
     renderIsim: function(res) {
-        // Update header
         var typeText = document.getElementById('isimTypeText');
         var wordText = document.getElementById('isimWordText');
 
@@ -908,7 +839,6 @@ var App = {
             wordText.textContent = res.word || '';
         }
 
-        // Info Grid
         var infoGrid = document.getElementById('isimInfoGrid');
         if (infoGrid) {
             infoGrid.innerHTML =
@@ -930,7 +860,6 @@ var App = {
                 '</div>';
         }
 
-        // Derivation (if any)
         var derivDiv = document.getElementById('isimDerivation');
         if (derivDiv) {
             if (res.derived_from) {
@@ -946,7 +875,6 @@ var App = {
             }
         }
 
-        // Forms
         var formsContainer = document.getElementById('isimFormsContainer');
         if (formsContainer) {
             var formsHTML = '';
@@ -973,13 +901,11 @@ var App = {
             formsContainer.innerHTML = formsHTML;
         }
 
-        // Related words (placeholder)
         var relatedDiv = document.getElementById('isimRelatedWords');
         if (relatedDiv) {
             relatedDiv.innerHTML = '';
         }
 
-        // Show result
         var resultIsim = document.getElementById('resultIsim');
         if (resultIsim) {
             resultIsim.style.display = 'block';
@@ -1001,21 +927,15 @@ var App = {
             return;
         }
 
-        var isAmr = data.length <= 6; // Amr hanya 6 dhamir
+        var isAmr = data.length <= 6;
         var html = '<div style="border:2px solid #000;border-top:none;">';
 
         if (isAmr) {
-            // Amr: hanya mukhatab
             html += this.lughawiSectionHTML('❗ Mukhatab (Amr)', '#dcfce7', data.slice(0, 3), data.slice(3, 6));
         } else {
-            // Madhi/Mudhari: 14 dhamir
-            // Ghaib (0-5)
             html += this.lughawiSectionHTML('👤 Ghaib (Orang ke-3)', '#dbeafe', data.slice(0, 3), data.slice(3, 6));
-            
-            // Mukhatab (6-11)
             html += this.lughawiSectionHTML('🙋 Mukhatab (Orang ke-2)', '#dcfce7', data.slice(6, 9), data.slice(9, 12));
             
-            // Mutakallim (12-13)
             html += '<div style="background:#fef9c3;padding:8px 12px;border-top:2px solid #000;border-bottom:2px solid #000;font-size:0.75rem;font-weight:700;text-transform:uppercase;">🙋‍♂️ Mutakallim (Orang ke-1)</div>';
             for (var i = 12; i < 14 && i < data.length; i++) {
                 html += this.lughawiRowHTML(data[i], '#f0fdf4');
@@ -1066,7 +986,6 @@ var App = {
     },
 
     showLughawiTab: function(tab) {
-        // Hide all panels
         var madhiPanel = document.getElementById('lughawiMadhi');
         var mudhariPanel = document.getElementById('lughawiMudhari');
         var amrPanel = document.getElementById('lughawiAmr');
@@ -1075,7 +994,6 @@ var App = {
         if (mudhariPanel) mudhariPanel.style.display = (tab === 'mudhari') ? 'block' : 'none';
         if (amrPanel) amrPanel.style.display = (tab === 'amr') ? 'block' : 'none';
 
-        // Update tab states
         var tabs = document.querySelectorAll('.lughawi-tab');
         for (var i = 0; i < tabs.length; i++) {
             tabs[i].classList.remove('active');
@@ -1100,6 +1018,19 @@ var App = {
         if (resultIsim) resultIsim.style.display = 'none';
         if (searchResults) searchResults.style.display = 'none';
         if (translitPreview) translitPreview.style.display = 'none';
+    },
+
+    clearSearch: function() {
+        var input = document.getElementById('userInput');
+        if (input) {
+            input.value = '';
+            input.focus();
+        }
+        
+        this.hideAllResults();
+        
+        var clearBtn = document.getElementById('clearInput');
+        if (clearBtn) clearBtn.style.display = 'none';
     },
 
     scrollTo: function(id) {
