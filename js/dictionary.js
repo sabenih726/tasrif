@@ -719,7 +719,6 @@ const DICTIONARY = {
     "جفف": { bab: "m1", root: ["ج","ف","ف"], meaning: "mengering (menjadi kering)", tags: ["umum"] },
     "حجب": { bab: "m1", root: ["ح","ج","ب"], meaning: "menghalangi/menutupi", tags: ["umum","quran"] },
     "حرق": { bab: "m1", root: ["ح","ر","ق"], meaning: "membakar (varian)", tags: ["umum"] }, // jika ternyata sudah ada di batch 1, hapus baris ini
-    "حزن": { bab: "m1", root: ["ح","ز","ن"], meaning: "bersedih", tags: ["perasaan"] }, // jika kamu sudah punya "حزن", hapus baris ini
     "حلم": { bab: "m1", root: ["ح","ل","م"], meaning: "bersikap sabar/lembut", tags: ["sifat","umum"] },
     "خطأ": { bab: "m1", root: ["خ","ط","أ"], meaning: "berbuat salah/keliru", tags: ["umum","quran"] },
     "دنا": { bab: "m3", root: ["د","ن","و"], meaning: "mendekat", tags: ["umum","quran"] },
@@ -754,7 +753,6 @@ const DICTIONARY = {
     "حرّك": { bab: "z2", root: ["ح","ر","ك"], meaning: "menggerakkan", tags: ["umum","gerakan"] },
     "غلّق": { bab: "z2", root: ["غ","ل","ق"], meaning: "mengunci/menutup rapat", tags: ["umum"] },
     "ساعد": { bab: "z3", root: ["س","ع","د"], meaning: "membantu", tags: ["umum"] },
-    "جالس": { bab: "z3", root: ["ج","ل","س"], meaning: "duduk bersama (varian)", tags: ["umum"] }, // jika "جالس" sudah ada, hapus baris ini
     "تجمّع": { bab: "z4", root: ["ج","م","ع"], meaning: "berkumpul/berhimpun", tags: ["umum"] },
     "تكسّر": { bab: "z4", root: ["ك","س","ر"], meaning: "menjadi pecah berkeping", tags: ["umum"] },
     "تراسل": { bab: "z5", root: ["ر","س","ل"], meaning: "saling berkirim surat", tags: ["umum"] },
@@ -789,14 +787,12 @@ const DICTIONARY = {
     "حذاء": { bab: "isim", root: ["ح","ذ","و"], meaning: "sepatu", tags: ["benda"] },
     "جوارب": { bab: "isim", root: ["ج","ر","ب"], meaning: "kaos kaki", tags: ["benda"] },
     "قبعة": { bab: "isim", root: ["ق","ب","ع"], meaning: "topi", tags: ["benda"] },
-    "مفتاح": { bab: "isim", root: ["ف","ت","ح"], meaning: "kunci", tags: ["alat"] }, // jika "مفتاح" sudah ada, hapus
     "شباك": { bab: "isim", root: ["ش","ب","ك"], meaning: "jendela/jeruji", tags: ["benda"] },
     "جدار": { bab: "isim", root: ["ج","د","ر"], meaning: "dinding", tags: ["benda"] },
     "سقف": { bab: "isim", root: ["س","ق","ف"], meaning: "atap", tags: ["benda"] },
     "أرضية": { bab: "isim", root: ["أ","ر","ض"], meaning: "lantai", tags: ["benda"] },
     "ممر": { bab: "isim", root: ["م","ر","ر"], meaning: "lorong/koridor", tags: ["tempat"] },
     "غرفة": { bab: "isim", root: ["غ","ر","ف"], meaning: "kamar", tags: ["tempat"] },
-    "مفتاحي": { bab: "isim", root: ["ف","ت","ح"], meaning: "kunciku (contoh idhafah)", tags: ["benda"] }, // kalau tidak ingin bentuk idhafah/pronomina, saya ganti
     "رغيف": { bab: "isim", root: ["ر","غ","ف"], meaning: "roti bulat/seporsi roti", tags: ["makanan"] },
     "لوز": { bab: "isim", root: ["ل","و","ز"], meaning: "almond", tags: ["makanan"] },
     "تفاح": { bab: "isim", root: ["ت","ف","ح"], meaning: "apel", tags: ["makanan"] },
@@ -836,7 +832,6 @@ const DICTIONARY = {
     "تلف": { bab: "m1", root: ["ت","ل","ف"], meaning: "rusak/binasa", tags: ["umum"] },
     "جبر": { bab: "m1", root: ["ج","ب","ر"], meaning: "memaksa/menambal (memperbaiki patah)", tags: ["umum"] },
     "جهل": { bab: "m1", root: ["ج","ه","ل"], meaning: "tidak tahu/bodoh", tags: ["umum","quran"] },
-    "حزن": { bab: "m1", root: ["ح","ز","ن"], meaning: "sedih (varian)", tags: ["perasaan"] }, // kalau sudah ada dari batch 2, hapus
     "حلق": { bab: "m1", root: ["ح","ل","ق"], meaning: "mencukur/mengelilingi", tags: ["umum"] },
     "حيا": { bab: "m3", root: ["ح","ي","ي"], meaning: "hidup/menjadi hidup", tags: ["umum","quran"] }, // bisa bentrok dengan "حيي" yang sudah ada; cek dulu
     "خبأ": { bab: "m1", root: ["خ","ب","أ"], meaning: "menyembunyikan", tags: ["umum","quran"] },
@@ -947,7 +942,6 @@ const DICTIONARY = {
     "شوكة": { bab: "isim", root: ["ش","و","ك"], meaning: "garpu", tags: ["alat"] },
     "سكين": { bab: "isim", root: ["س","ك","ن"], meaning: "pisau", tags: ["alat"] },
     "طبق": { bab: "isim", root: ["ط","ب","ق"], meaning: "piring", tags: ["alat"] },
-    "صحن": { bab: "isim", root: ["ص","ح","ن"], meaning: "piring/mangkuk", tags: ["alat"] },
     "كوب": { bab: "isim", root: ["ك","و","ب"], meaning: "gelas", tags: ["alat"] },
     "فنجان": { bab: "isim", root: ["ف","ن","ج"], meaning: "cangkir", tags: ["alat"] },
     "قدر": { bab: "isim", root: ["ق","د","ر"], meaning: "panci", tags: ["alat"] },
@@ -1011,7 +1005,6 @@ const DICTIONARY = {
     "عشاء": { bab: "isim", root: ["ع","ش","ي"], meaning: "makan malam/isya (varian)", tags: ["makanan","waktu"] }, // kamu sudah ada "عشاء" waktu; ini akan menimpa, jadi hapus jika ingin aman
     "وجبة": { bab: "isim", root: ["و","ج","ب"], meaning: "hidangan/porsi makan", tags: ["makanan"] },
     "ملاعق": { bab: "isim", root: ["ل","ع","ق"], meaning: "sendok-sendok (jamak)", tags: ["alat"] },
-    "صحن": { bab: "isim", root: ["ص","ح","ن"], meaning: "piring/mangkuk (varian)", tags: ["alat"] }, // jika sudah kamu tambah, hapus
     "مناديل": { bab: "isim", root: ["ن","د","ل"], meaning: "tisu/serbet (jamak)", tags: ["benda"] },
 
     // --- Kebersihan diri: isim pendukung ---
@@ -1211,4 +1204,5 @@ console.log(`
 ╚════════════════════════════════════════╝
 
 `);
+
 
