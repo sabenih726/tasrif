@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tashrif-v2';
+const CACHE_NAME = 'tashrif-v3'; // ← Ubah versi!
 
 const ASSETS = [
     './',
@@ -9,13 +9,17 @@ const ASSETS = [
     './js/babs-rubai.js',
     './js/dictionary.js',
     './js/fiil-mutal.js',
+    './js/fiil-mudhaaf.js',    // ← TAMBAHKAN INI!
     './js/isim-analyzer.js',
     './js/engine.js',
     './js/app.js',
     './js/ui-enhancements.js',
     './js/search-history.js',
     './js/voice-input.js',
-    './js/pwa.js'
+    './js/pwa.js',
+    './icons/icon-192.png',    // ← Opsional: tambah icons
+    './icons/icon-512.png',    // ← Opsional: tambah icons
+    './manifest.json'          // ← Opsional: tambah manifest
 ];
 
 // Install - Cache assets one by one (resilient)
