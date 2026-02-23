@@ -431,41 +431,216 @@ var App = {
     },
 
     // ═══════════════════════════════════════════════════════════
-    // PROCESS ISIM
+    // PROCESS ISIM - FIXED VERSION
     // ═══════════════════════════════════════════════════════════
-
+    
     processIsim: function(input) {
-        if (typeof IsimAnalyzer === 'undefined') {
-            console.error('IsimAnalyzer not loaded');
-            return null;
-        }
-
-        var clean = input.replace(/[\u064B-\u065F\u0670]/g, '');
+        console.log('=== processIsim ===');
+        console.log('Input:', input);
+        
+        var clean = input.replace(/[\u064B-\u065F\u0670]/g, '').trim();
+        var isArabic = /[\u0600-\u06FF]/.test(input);
+        
+        var arabicKey = null;
         var dictEntry = null;
         
         if (typeof DICTIONARY !== 'undefined') {
-            dictEntry = DICTIONARY[clean];
+            if (isArabic) {
+                // ══ INPUT ARAB: Cari langsung atau tanpa harakat ══
+                console.log('Searching Arabic:', clean);
+                
+                // Exact match
+                if (DICTIONARY[clean]) {
+                    arabicKey = clean;
+                    dictEntry = DICTIONARY[clean];
+                } else {
+                    // Cari tanpa harakat
+                    for (var key in DICTIONARY) {
+                        if (!DICTIONARY.hasOwnProperty(key)) continue;
+                        var keyClean = key.replace(/[\u064B-\u065F\u0670]/g, '');
+                        if (keyClean === clean) {
+                            arabicKey = key;
+                            dictEntry = DICTIONARY[key];
+                            break;
+                        }
+                    }
+                }
+            } else {
+                // ══ INPUT INDONESIA/LATIN: Cari di field 'meaning' ══
+                console.log('Searching Indonesian:', clean);
+                var searchTerm = clean.toLowerCase();
+                
+                for (var key in DICTIONARY) {
+                    if (!DICTIONARY.hasOwnProperty(key)) continue;
+                    
+                    var data = DICTIONARY[key];
+                    
+                    // Cek field 'meaning'
+                    if (data.meaning) {
+                        var meaningLower = data.meaning.toLowerCase();
+                        
+                        // Exact match
+                        if (meaningLower === searchTerm) {
+                            arabicKey = key;
+                            dictEntry = data;
+                            console.log('✅ Found exact match:', key);
+                            break;
+                        }
+                        
+                        // Contains match (untuk "stasiun/halte")
+                        if (meaningLower.indexOf(searchTerm) !== -1) {
+                            arabicKey = key;
+                            dictEntry = data;
+                            console.log('✅ Found partial match:', key);
+                            break;
+                        }
+                        
+                        // Split match (misal: "rumah sakit" dalam meaning)
+                        var meanings = meaningLower.split(/[\/\-,]/);
+                        for (var m = 0; m < meanings.length; m++) {
+                            if (meanings[m].trim() === searchTerm) {
+                                arabicKey = key;
+                                dictEntry = data;
+                                console.log('✅ Found split match:', key);
+                                break;
+                            }
+                        }
+                        if (dictEntry) break;
+                    }
+                    
+                    // Cek juga di 'arti' jika ada
+                    if (data.arti) {
+                        var artiLower = data.arti.toLowerCase();
+                        if (artiLower === searchTerm || artiLower.indexOf(searchTerm) !== -1) {
+                            arabicKey = key;
+                            dictEntry = data;
+                            console.log('✅ Found in arti:', key);
+                            break;
+                        }
+                    }
+                    
+                    // Cek di 'tags'
+                    if (data.tags && Array.isArray(data.tags)) {
+                        for (var t = 0; t < data.tags.length; t++) {
+                            if (data.tags[t].toLowerCase() === searchTerm) {
+                                arabicKey = key;
+                                dictEntry = data;
+                                break;
+                            }
+                        }
+                        if (dictEntry) break;
+                    }
+                }
+            }
         }
-
-        var analysis = IsimAnalyzer.analyze(input, dictEntry);
         
-        if (analysis) {
-            return {
-                type: 'isim',
-                word: input,
-                category: analysis.category || 'Isim',
-                subcategory: analysis.type ? analysis.type.name : 'Unknown',
-                root: analysis.root || '—',
-                wazan: analysis.wazan || '—',
-                gender: analysis.gender || '—',
-                meaning: analysis.meaning || '—',
-                derived_from: null,
-                forms: analysis.forms || [],
-                related_words: []
-            };
+        console.log('Found Arabic Key:', arabicKey);
+        console.log('Found Entry:', dictEntry);
+        
+        // Jika tidak ditemukan
+        if (!dictEntry) {
+            console.log('❌ Word not found in dictionary');
+            return null;
         }
-
-        return null;
+        
+        // ══ GENERATE RESULT ══
+        var rootDisplay = '—';
+        if (dictEntry.root) {
+            rootDisplay = Array.isArray(dictEntry.root) 
+                ? dictEntry.root.join(' - ') 
+                : dictEntry.root;
+        }
+        
+        // Gunakan IsimAnalyzer jika tersedia
+        if (typeof IsimAnalyzer !== 'undefined') {
+            var analysis = IsimAnalyzer.analyze(arabicKey, dictEntry);
+            
+            if (analysis) {
+                return {
+                    type: 'isim',
+                    word: arabicKey,
+                    category: analysis.category || 'Isim',
+                    subcategory: analysis.type ? analysis.type.name : (dictEntry.bab || 'Isim'),
+                    root: rootDisplay,
+                    wazan: analysis.wazan || '—',
+                    gender: analysis.gender || this.detectGender(arabicKey),
+                    meaning: dictEntry.meaning || analysis.meaning || '—',
+                    derived_from: null,
+                    forms: analysis.forms || this.generateBasicForms(arabicKey, dictEntry),
+                    related_words: []
+                };
+            }
+        }
+        
+        // Fallback tanpa IsimAnalyzer
+        return {
+            type: 'isim',
+            word: arabicKey,
+            category: 'Isim',
+            subcategory: dictEntry.bab || 'Isim Jamid',
+            root: rootDisplay,
+            wazan: '—',
+            gender: this.detectGender(arabicKey),
+            meaning: dictEntry.meaning || '—',
+            derived_from: null,
+            forms: this.generateBasicForms(arabicKey, dictEntry),
+            related_words: []
+        };
+    },
+    
+    // ══ HELPER: Detect Gender ══
+    detectGender: function(word) {
+        if (!word) return '—';
+        // Ta marbuthah = muannats
+        if (word.endsWith('ة') || word.endsWith('ـة')) {
+            return 'Muannats (مؤنث)';
+        }
+        return 'Mudzakkar (مذكر)';
+    },
+    
+    // ══ HELPER: Generate Basic Forms ══
+    generateBasicForms: function(arabicWord, data) {
+        var forms = [];
+        
+        // Mufrad
+        forms.push({
+            label: 'مُفْرَد (Mufrad)',
+            arabic: arabicWord,
+            meaning: data.meaning || ''
+        });
+        
+        // Coba generate Mutsanna dan Jamak sederhana
+        var base = arabicWord.replace(/[ٌٍَُِْ]$/, ''); // Hapus tanwin
+        var isMuannats = arabicWord.endsWith('ة');
+        
+        if (isMuannats) {
+            // Muannats
+            var baseNoTa = base.replace(/ة$/, '');
+            forms.push({
+                label: 'مُثَنَّى (Mutsanna)',
+                arabic: baseNoTa + 'تَانِ',
+                meaning: '(dua)'
+            });
+            forms.push({
+                label: 'جَمْع (Jamak)',
+                arabic: baseNoTa + 'ات',
+                meaning: '(banyak)'
+            });
+        } else {
+            // Mudzakkar
+            forms.push({
+                label: 'مُثَنَّى (Mutsanna)',
+                arabic: base + 'انِ',
+                meaning: '(dua)'
+            });
+            forms.push({
+                label: 'جَمْع (Jamak)',
+                arabic: base + 'ون',
+                meaning: '(banyak)'
+            });
+        }
+        
+        return forms;
     },
 
     // ═══════════════════════════════════════════════════════════
@@ -1068,3 +1243,4 @@ document.addEventListener('DOMContentLoaded', function() {
 if (typeof window !== 'undefined') {
     window.App = App;
 }
+
