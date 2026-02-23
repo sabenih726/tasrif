@@ -86,20 +86,13 @@
             box-shadow: 1px 1px 0 #000;
         }
         
-        /* Bookmark active state */
         .action-btn.bookmarked {
             background: #10b981;
             color: #fff;
         }
         
-        /* Result Section Hidden/Shown */
-        .result-section-hidden {
-            display: none;
-        }
-        
-        .result-section-visible {
-            display: block;
-        }
+        .result-section-hidden { display: none; }
+        .result-section-visible { display: block; }
         
         /* Side Panel Styles */
         .side-panel {
@@ -118,9 +111,7 @@
             flex-direction: column;
         }
         
-        .side-panel.open {
-            right: 0;
-        }
+        .side-panel.open { right: 0; }
         
         .panel-header {
             display: flex;
@@ -237,22 +228,18 @@
             <span class="toolbar-brand">📖 TASHRIF</span>
         </div>
         <div class="toolbar-right">
-            <!-- Search History Toggle -->
             <button class="toolbar-btn" id="historyToggle" 
                     aria-label="Riwayat pencarian" title="Riwayat">
                 🕐
             </button>
-            <!-- Bookmark Toggle -->
             <button class="toolbar-btn" id="bookmarkToggle" 
                     aria-label="Bookmark" title="Bookmark">
                 🔖
             </button>
-            <!-- Dark Mode Toggle -->
             <button class="toolbar-btn" id="darkModeToggle" 
                     aria-label="Toggle dark mode" title="Mode Gelap">
                 🌙
             </button>
-            <!-- Install PWA -->
             <button class="toolbar-btn" id="installBtn" 
                     style="display:none" aria-label="Install aplikasi" title="Install">
                 📲
@@ -263,7 +250,7 @@
     <!-- ══════ MARQUEE ══════ -->
     <div class="marquee-container brutal-shadow mb-4 md:mb-8">
         <div class="marquee-text">
-            TASHRIF SHOROF PRO — TSULASI MUJARRAD + MAZID + RUBA'I + ISIM — KETIK ARAB / LATIN / INDONESIA
+            TASHRIF SHOROF PRO — TSULASI MUJARRAD + MAZID + RUBA'I + ISIM + MUDHA'AF — KETIK ARAB / LATIN / INDONESIA
         </div>
     </div>
 
@@ -281,7 +268,6 @@
                 <span class="status-badge badge-blue-bg">
                     🗄️ <span id="totalWords">0</span> KATA
                 </span>
-                <!-- PWA Status Badge -->
                 <span class="status-badge" id="pwaStatus" style="display:none">
                     <span class="status-dot green"></span>
                     INSTALLED
@@ -334,7 +320,6 @@
                 
                 <div class="search-input-wrapper">
                     <div class="input-row-flex">
-                        <!-- Input Mode Indicator -->
                         <div class="input-mode" id="inputMode" title="Mode input terdeteksi">
                             <span id="modeLabel">ABC</span>
                         </div>
@@ -349,14 +334,12 @@
                             aria-describedby="searchHint"
                             aria-label="Masukkan kata Arab, Latin, atau Indonesia">
                         
-                        <!-- Clear Button -->
                         <button class="btn-clear-input" id="clearInput" 
                                 aria-label="Hapus pencarian" style="display:none"
                                 onclick="App.clearSearch()">
                             ✕
                         </button>
                         
-                        <!-- Voice Input Button -->
                         <button class="toolbar-btn btn-voice" id="voiceBtn" 
                                 aria-label="Input suara" title="Bicara"
                                 onclick="VoiceInput.start()">
@@ -370,7 +353,6 @@
                         </button>
                     </div>
                     
-                    <!-- Transliteration Preview -->
                     <div id="translitPreview" class="translit-box" style="display:none;">
                         <span class="translit-label-bold">🔄 Transliterasi:</span>
                         <span id="translitResult" class="arabic-text translit-result-text"></span>
@@ -381,7 +363,6 @@
                 <div id="searchResults" class="search-results-box" role="listbox" 
                      aria-label="Hasil pencarian" style="display:none;">
                     
-                    <!-- Recent Searches (shown when input is empty + focused) -->
                     <div id="recentSearches" class="recent-section" style="display:none">
                         <div class="recent-header">
                             <span>🕐 PENCARIAN TERAKHIR</span>
@@ -392,10 +373,8 @@
                         <div id="recentList"></div>
                     </div>
                     
-                    <!-- Live Results -->
                     <div id="liveResults"></div>
                     
-                    <!-- Result Count -->
                     <div id="resultCount" class="result-count" style="display:none"></div>
                 </div>
 
@@ -415,7 +394,6 @@
         <div id="resultFiil" style="display:none;">
             <div class="card-brutal overflow-hidden">
                 
-                <!-- ═══ RESULT ACTION BAR ═══ -->
                 <div class="result-actions">
                     <button class="action-btn" onclick="ResultActions.copy()" title="Salin hasil">
                         📋 Salin
@@ -432,6 +410,11 @@
                     <div class="header-content-positioned">
                         <span id="babBadge" class="result-badge">
                             🏃 <span id="babText">—</span>
+                        </span>
+                        <!-- ★ Mudha'af Badge ★ -->
+                        <span id="mudhaafBadge" class="result-badge" 
+                              style="display:none; background:#f59e0b; margin-left:8px;">
+                            🔁 <span id="mudhaafText">مُضَعَّف</span>
                         </span>
                         <h2 id="patternText" class="arabic-text pattern-text font-bold">— — —</h2>
                         <p id="rootText" class="header-sub-small"></p>
@@ -468,7 +451,7 @@
                     <div id="lughawiAmr" class="lughawi-panel-block" role="tabpanel" style="display:none;"></div>
                 </div>
 
-                <div class="footer-bar">// TASHRIF ENGINE v3.0 //</div>
+                <div class="footer-bar">// TASHRIF ENGINE v4.0 + MUDHA'AF //</div>
             </div>
         </div>
 
@@ -476,7 +459,6 @@
         <div id="resultIsim" style="display:none;">
             <div class="card-brutal overflow-hidden">
                 
-                <!-- ═══ RESULT ACTION BAR ═══ -->
                 <div class="result-actions">
                     <button class="action-btn" onclick="ResultActions.copy()" title="Salin hasil">
                         📋 Salin
@@ -516,7 +498,7 @@
     <!-- ══════ TOAST NOTIFICATION ══════ -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ══════ BOOKMARK PANEL (Slide-in) ══════ -->
+    <!-- ══════ BOOKMARK PANEL ══════ -->
     <div class="side-panel" id="bookmarkPanel">
         <div class="panel-header">
             <h3>🔖 BOOKMARK</h3>
@@ -530,7 +512,7 @@
         </div>
     </div>
 
-    <!-- ══════ HISTORY PANEL (Slide-in) ══════ -->
+    <!-- ══════ HISTORY PANEL ══════ -->
     <div class="side-panel" id="historyPanel">
         <div class="panel-header">
             <h3>🕐 RIWAYAT</h3>
@@ -570,39 +552,58 @@
         <div class="hint-item"><kbd>?</kbd> Shortcut ini</div>
     </div>
 
-    <!-- ══════ SCRIPTS ══════ -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- ★ SCRIPTS — URUTAN BENAR ★                           -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    
+    <!-- LAYER 1: DATA (tidak bergantung apa-apa) -->
     <script src="js/babs-mujarrad.js"></script>
     <script src="js/babs-mazid.js"></script>
     <script src="js/babs-rubai.js"></script>
     <script src="js/dictionary.js"></script>
+    
+    <!-- LAYER 2: MODUL ANALISIS (sebelum engine) -->
     <script src="js/fiil-mutal.js"></script>
-    <script src="js/isim-analyzer.js"></script>
-    <script src="js/engine.js"></script>
-    <script src="js/transliterator.js"></script>
     <script src="js/fiil-mudhaaf.js"></script>
+    <script src="js/isim-analyzer.js"></script>
+    
+    <!-- LAYER 3: ENGINE (butuh Layer 1 + 2) -->
+    <!-- Transliterator sudah built-in di engine.js -->
+    <script src="js/engine.js"></script>
+    
+    <!-- LAYER 4: APLIKASI (butuh semua di atas) -->
     <script src="js/app.js"></script>
     
-    <!-- UI Enhancement Scripts -->
+    <!-- LAYER 5: UI & FITUR TAMBAHAN -->
     <script src="js/ui-enhancements.js"></script>
     <script src="js/search-history.js"></script>
     <script src="js/voice-input.js"></script>
     <script src="js/pwa.js"></script>
     
-    <!-- Debug: Test buttons on load -->
+    <!-- Debug -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('═══════════════════════════════════════');
             console.log('🔍 CHECKING MODULES...');
-            console.log('UI:', typeof UI !== 'undefined' ? '✅ OK' : '❌ MISSING');
-            console.log('ResultActions:', typeof ResultActions !== 'undefined' ? '✅ OK' : '❌ MISSING');
-            console.log('App:', typeof App !== 'undefined' ? '✅ OK' : '❌ MISSING');
+            console.log('BABS_MUJARRAD:', typeof BABS_MUJARRAD !== 'undefined' ? '✅' : '❌');
+            console.log('BABS_MAZID:', typeof BABS_MAZID !== 'undefined' ? '✅' : '❌');
+            console.log('BABS_RUBAI:', typeof BABS_RUBAI !== 'undefined' ? '✅' : '❌');
+            console.log('DICTIONARY:', typeof DICTIONARY !== 'undefined' ? '✅ (' + Object.keys(DICTIONARY).length + ' kata)' : '❌');
+            console.log('FiilMutal:', typeof FiilMutal !== 'undefined' ? '✅' : '❌');
+            console.log('FiilMudhaaf:', typeof FiilMudhaaf !== 'undefined' ? '✅' : '⚠️ (builtin used)');
+            console.log('IsimAnalyzer:', typeof IsimAnalyzer !== 'undefined' ? '✅' : '❌');
+            console.log('TashrifEngine:', typeof TashrifEngine !== 'undefined' ? '✅' : '❌');
+            console.log('Transliterator:', typeof Transliterator !== 'undefined' ? '✅' : '❌');
+            console.log('App:', typeof App !== 'undefined' ? '✅' : '❌');
+            console.log('UI:', typeof UI !== 'undefined' ? '✅' : '❌');
+            console.log('ResultActions:', typeof ResultActions !== 'undefined' ? '✅' : '❌');
             console.log('═══════════════════════════════════════');
             
-            // Test if functions exist
-            if (typeof ResultActions !== 'undefined') {
-                console.log('ResultActions.copy:', typeof ResultActions.copy);
-                console.log('ResultActions.bookmark:', typeof ResultActions.bookmark);
-                console.log('ResultActions.share:', typeof ResultActions.share);
+            // Test Mudha'af detection
+            if (typeof TashrifEngine !== 'undefined') {
+                var testRoot = ['ع','د','د'];
+                console.log('🔁 Mudha\'af test [ع,د,د]:', 
+                    TashrifEngine.isMudhaaf(testRoot) ? '✅ DETECTED' : '❌ NOT DETECTED');
             }
         });
     </script>
