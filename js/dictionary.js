@@ -1624,6 +1624,156 @@ const DICTIONARY = {
     "غدر": { bab: "isim", root: ["غ","د","ر"], meaning: "pengkhianatan", tags: ["sifat"] },
     "إخلاص": { bab: "isim", root: ["خ","ل","ص"], meaning: "keikhlasan", tags: ["sifat","ibadah","quran"] },
     "رياء": { bab: "isim", root: ["ر","أ","ي"], meaning: "riya", tags: ["sifat","ibadah"] },
+
+    // ═══════════════════════════════════════════════════════════
+    // FI'IL MUDHA'AF (المضعّف) — Ain = Lam
+    // ═══════════════════════════════════════════════════════════
+
+    // ─── BAB 1: فَعَلَ - يَفْعُلُ (m1) ─── Mudha'af ───
+    "عد":  { bab: "m1", root: ["ع","د","د"], meaning: "menghitung", tags: ["umum","quran","mudhaaf"] },
+    "مد":  { bab: "m1", root: ["م","د","د"], meaning: "memanjangkan/membentangkan", tags: ["umum","quran","mudhaaf"] },
+    "رد":  { bab: "m1", root: ["ر","د","د"], meaning: "mengembalikan/menolak", tags: ["umum","quran","mudhaaf"] },
+    "شد":  { bab: "m1", root: ["ش","د","د"], meaning: "mengikat/mengencangkan", tags: ["umum","quran","mudhaaf"] },
+    "صد":  { bab: "m1", root: ["ص","د","د"], meaning: "menghalangi/berpaling", tags: ["umum","quran","mudhaaf"] },
+    "عض":  { bab: "m1", root: ["ع","ض","ض"], meaning: "menggigit", tags: ["umum","mudhaaf"] },
+    "سد":  { bab: "m1", root: ["س","د","د"], meaning: "menutup/menyumbat", tags: ["umum","quran","mudhaaf"] },
+    "حب":  { bab: "m1", root: ["ح","ب","ب"], meaning: "mencintai", tags: ["umum","quran","mudhaaf"] },
+
+    // ─── BAB 2: فَعَلَ - يَفْعِلُ (m2) ─── Mudha'af ───
+    "فر":  { bab: "m2", root: ["ف","ر","ر"], meaning: "melarikan diri", tags: ["umum","quran","mudhaaf"] },
+    "جر":  { bab: "m2", root: ["ج","ر","ر"], meaning: "menarik/menyeret", tags: ["umum","mudhaaf"] },
+    "حل":  { bab: "m2", root: ["ح","ل","ل"], meaning: "menjadi halal/menempati", tags: ["umum","quran","mudhaaf"] },
+    "ضل":  { bab: "m2", root: ["ض","ل","ل"], meaning: "tersesat", tags: ["umum","quran","mudhaaf"] },
+    "دل":  { bab: "m2", root: ["د","ل","ل"], meaning: "menunjukkan", tags: ["umum","quran","mudhaaf"] },
+    "حن":  { bab: "m2", root: ["ح","ن","ن"], meaning: "merindukan/mengasihani", tags: ["umum","mudhaaf"] },
+    "صب":  { bab: "m2", root: ["ص","ب","ب"], meaning: "menuangkan", tags: ["umum","quran","mudhaaf"] },
+
+    // ─── BAB 3: فَعَلَ - يَفْعَلُ (m3) ─── Mudha'af ───
+    "مس":  { bab: "m3", root: ["م","س","س"], meaning: "menyentuh", tags: ["umum","quran","mudhaaf"] },
+    "مر":  { bab: "m3", root: ["م","ر","ر"], meaning: "melewati/berlalu", tags: ["umum","quran","mudhaaf"] },
+    "حق":  { bab: "m3", root: ["ح","ق","ق"], meaning: "menjadi benar/pasti", tags: ["umum","quran","mudhaaf"] },
+    "خص":  { bab: "m3", root: ["خ","ص","ص"], meaning: "mengkhususkan", tags: ["umum","mudhaaf"] },
+
+    // ─── BAB 4: فَعِلَ - يَفْعَلُ (m4) ─── Mudha'af ───
+    "ظل":  { bab: "m4", root: ["ظ","ل","ل"], meaning: "tetap/terus-menerus", tags: ["umum","quran","mudhaaf"] },
+    "مل":  { bab: "m4", root: ["م","ل","ل"], meaning: "bosan/jemu", tags: ["umum","mudhaaf"] },
+    "ذل":  { bab: "m4", root: ["ذ","ل","ل"], meaning: "menjadi hina", tags: ["umum","quran","mudhaaf"] },
+    "قل":  { bab: "m4", root: ["ق","ل","ل"], meaning: "menjadi sedikit", tags: ["umum","quran","mudhaaf"] },
+    "جل":  { bab: "m4", root: ["ج","ل","ل"], meaning: "menjadi agung", tags: ["umum","quran","mudhaaf"] },
+    "عز":  { bab: "m4", root: ["ع","ز","ز"], meaning: "menjadi mulia/kuat", tags: ["umum","quran","mudhaaf"] },
+    "خف":  { bab: "m4", root: ["خ","ف","ف"], meaning: "menjadi ringan", tags: ["umum","quran","mudhaaf"] },
+    "شح":  { bab: "m4", root: ["ش","ح","ح"], meaning: "menjadi kikir/pelit", tags: ["umum","quran","mudhaaf"] },
+
+    // ─── BAB 5: فَعُلَ - يَفْعُلُ (m5) ─── Mudha'af ───
+    "خس":  { bab: "m5", root: ["خ","س","س"], meaning: "menjadi rugi/hina", tags: ["umum","quran","mudhaaf"] },
+    "تم":  { bab: "m5", root: ["ت","م","م"], meaning: "menjadi sempurna", tags: ["umum","quran","mudhaaf"] },
+    "حر":  { bab: "m5", root: ["ح","ر","ر"], meaning: "menjadi merdeka/panas", tags: ["umum","quran","mudhaaf"] },
+    "شذ":  { bab: "m5", root: ["ش","ذ","ذ"], meaning: "menjadi ganjil/menyimpang", tags: ["umum","mudhaaf"] },
+
+    // ─── BAB 6: فَعِلَ - يَفْعِلُ (m6) ─── Mudha'af ───
+    // (Bab ini jarang, tapi ada beberapa)
+
+    // ─── MAZID: أَفْعَلَ (mz1) ─── Mudha'af ───
+    "اعد":  { bab: "mz1", root: ["ع","د","د"], meaning: "mempersiapkan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "امد":  { bab: "mz1", root: ["م","د","د"], meaning: "menyuplai/membantu", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اذل":  { bab: "mz1", root: ["ذ","ل","ل"], meaning: "menghinakan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اعز":  { bab: "mz1", root: ["ع","ز","ز"], meaning: "memuliakan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "احب":  { bab: "mz1", root: ["ح","ب","ب"], meaning: "mencintai/menyukai", tags: ["umum","quran","mazid","mudhaaf"] },
+    "احق":  { bab: "mz1", root: ["ح","ق","ق"], meaning: "membenarkan/mewujudkan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اضر":  { bab: "mz1", root: ["ض","ر","ر"], meaning: "membahayakan/merugikan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اقل":  { bab: "mz1", root: ["ق","ل","ل"], meaning: "mengurangi", tags: ["umum","mazid","mudhaaf"] },
+    "اضل":  { bab: "mz1", root: ["ض","ل","ل"], meaning: "menyesatkan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اخف":  { bab: "mz1", root: ["خ","ف","ف"], meaning: "meringankan", tags: ["umum","mazid","mudhaaf"] },
+    "اتم":  { bab: "mz1", root: ["ت","م","م"], meaning: "menyempurnakan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "احل":  { bab: "mz1", root: ["ح","ل","ل"], meaning: "menghalalkan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اقر":  { bab: "mz1", root: ["ق","ر","ر"], meaning: "menetapkan/mengakui", tags: ["umum","quran","mazid","mudhaaf"] },
+    "الم":  { bab: "mz1", root: ["ل","م","م"], meaning: "menyakitkan", tags: ["umum","mazid","mudhaaf"] },
+    "اصر":  { bab: "mz1", root: ["ص","ر","ر"], meaning: "memaksa/bersikeras", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اهم":  { bab: "mz1", root: ["ه","م","م"], meaning: "menyibukkan/mencemaskan", tags: ["umum","quran","mazid","mudhaaf"] },
+
+    // ─── MAZID: فَعَّلَ (mz2) ─── Mudha'af ───
+    "حدد":  { bab: "mz2", root: ["ح","د","د"], meaning: "menentukan/membatasi", tags: ["umum","mazid","mudhaaf"] },
+    "جدد":  { bab: "mz2", root: ["ج","د","د"], meaning: "memperbarui", tags: ["umum","mazid","mudhaaf"] },
+    "مدد":  { bab: "mz2", root: ["م","د","د"], meaning: "memperpanjang", tags: ["umum","mazid","mudhaaf"] },
+    "عدد":  { bab: "mz2", root: ["ع","د","د"], meaning: "menyiapkan/menjadikan banyak", tags: ["umum","mazid","mudhaaf"] },
+    "ردد":  { bab: "mz2", root: ["ر","د","د"], meaning: "mengulangi/membolak-balikkan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "شدد":  { bab: "mz2", root: ["ش","د","د"], meaning: "memperketat/mengeraskan", tags: ["umum","mazid","mudhaaf"] },
+    "سدد":  { bab: "mz2", root: ["س","د","د"], meaning: "membetulkan/meluruskan", tags: ["umum","mazid","mudhaaf"] },
+    "قرر":  { bab: "mz2", root: ["ق","ر","ر"], meaning: "memutuskan/menetapkan", tags: ["umum","mazid","mudhaaf"] },
+    "حرر":  { bab: "mz2", root: ["ح","ر","ر"], meaning: "membebaskan/mengedit", tags: ["umum","mazid","mudhaaf"] },
+    "برر":  { bab: "mz2", root: ["ب","ر","ر"], meaning: "membenarkan/membuktikan", tags: ["umum","mazid","mudhaaf"] },
+    "ضرر":  { bab: "mz2", root: ["ض","ر","ر"], meaning: "merugikan", tags: ["umum","mazid","mudhaaf"] },
+    "همم":  { bab: "mz2", root: ["ه","م","م"], meaning: "menyemangati", tags: ["umum","mazid","mudhaaf"] },
+    "حسس":  { bab: "mz2", root: ["ح","س","س"], meaning: "merasakan", tags: ["umum","mazid","mudhaaf"] },
+
+    // ─── MAZID: فَاعَلَ (mz3) ─── Mudha'af ───
+    "حاد":  { bab: "mz3", root: ["ح","د","د"], meaning: "menentang/bermusuhan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "ضار":  { bab: "mz3", root: ["ض","ر","ر"], meaning: "membahayakan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "مار":  { bab: "mz3", root: ["م","ر","ر"], meaning: "berdebat/berbantahan", tags: ["umum","mazid","mudhaaf"] },
+    "شاق":  { bab: "mz3", root: ["ش","ق","ق"], meaning: "menentang/memisahkan diri", tags: ["umum","quran","mazid","mudhaaf"] },
+
+    // ─── MAZID: اِفْتَعَلَ (mz4) ─── Mudha'af ───
+    "امتد":  { bab: "mz4", root: ["م","د","د"], meaning: "terbentang/memanjang", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اشتد":  { bab: "mz4", root: ["ش","د","د"], meaning: "menjadi keras/kuat", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اعتد":  { bab: "mz4", root: ["ع","د","د"], meaning: "bersiap/melampaui batas", tags: ["umum","quran","mazid","mudhaaf"] },
+    "ارتد":  { bab: "mz4", root: ["ر","د","د"], meaning: "kembali/murtad", tags: ["umum","quran","mazid","mudhaaf"] },
+    "اهتم":  { bab: "mz4", root: ["ه","م","م"], meaning: "memperhatikan/peduli", tags: ["umum","mazid","mudhaaf"] },
+    "اهتز":  { bab: "mz4", root: ["ه","ز","ز"], meaning: "bergetar/berguncang", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استقر":  { bab: "mz4", root: ["ق","ر","ر"], meaning: "menetap/stabil", tags: ["umum","quran","mazid","mudhaaf"] },
+
+    // ─── MAZID: اِنْفَعَلَ (mz5) ─── Mudha'af ───
+    "انسد":  { bab: "mz5", root: ["س","د","د"], meaning: "tersumbat/tertutup", tags: ["umum","mazid","mudhaaf"] },
+    "انحل":  { bab: "mz5", root: ["ح","ل","ل"], meaning: "terurai/terlepas", tags: ["umum","mazid","mudhaaf"] },
+    "انحط":  { bab: "mz5", root: ["ح","ط","ط"], meaning: "merosot/turun", tags: ["umum","mazid","mudhaaf"] },
+    "انشق":  { bab: "mz5", root: ["ش","ق","ق"], meaning: "terbelah", tags: ["umum","quran","mazid","mudhaaf"] },
+    "انفك":  { bab: "mz5", root: ["ف","ك","ك"], meaning: "terlepas", tags: ["umum","mazid","mudhaaf"] },
+
+    // ─── MAZID: تَفَعَّلَ (mz6) ─── Mudha'af ───
+    "تعدد":  { bab: "mz6", root: ["ع","د","د"], meaning: "menjadi banyak/bermacam-macam", tags: ["umum","mazid","mudhaaf"] },
+    "تمدد":  { bab: "mz6", root: ["م","د","د"], meaning: "memanjangkan badan/berbaring", tags: ["umum","mazid","mudhaaf"] },
+    "تجدد":  { bab: "mz6", root: ["ج","د","د"], meaning: "menjadi baru/terbarui", tags: ["umum","mazid","mudhaaf"] },
+    "تردد":  { bab: "mz6", root: ["ر","د","د"], meaning: "ragu-ragu/bolak-balik", tags: ["umum","mazid","mudhaaf"] },
+    "تحرر":  { bab: "mz6", root: ["ح","ر","ر"], meaning: "menjadi bebas/merdeka", tags: ["umum","mazid","mudhaaf"] },
+    "تقرر":  { bab: "mz6", root: ["ق","ر","ر"], meaning: "menjadi tetap/diputuskan", tags: ["umum","mazid","mudhaaf"] },
+    "تحسس":  { bab: "mz6", root: ["ح","س","س"], meaning: "merasakan/mencari tahu", tags: ["umum","quran","mazid","mudhaaf"] },
+    "تضرر":  { bab: "mz6", root: ["ض","ر","ر"], meaning: "menderita kerugian", tags: ["umum","mazid","mudhaaf"] },
+
+    // ─── MAZID: اِسْتَفْعَلَ (mz7) ─── Mudha'af ───
+    "استعد":  { bab: "mz7", root: ["ع","د","د"], meaning: "bersiap-siap", tags: ["umum","mazid","mudhaaf"] },
+    "استمد":  { bab: "mz7", root: ["م","د","د"], meaning: "meminta bantuan/mengambil sumber", tags: ["umum","mazid","mudhaaf"] },
+    "استمر":  { bab: "mz7", root: ["م","ر","ر"], meaning: "berlanjut/terus-menerus", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استقل":  { bab: "mz7", root: ["ق","ل","ل"], meaning: "mandiri/merdeka", tags: ["umum","mazid","mudhaaf"] },
+    "استدل":  { bab: "mz7", root: ["د","ل","ل"], meaning: "berdalil/menyimpulkan", tags: ["umum","mazid","mudhaaf"] },
+    "استحق":  { bab: "mz7", root: ["ح","ق","ق"], meaning: "berhak/layak mendapat", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استحل":  { bab: "mz7", root: ["ح","ل","ل"], meaning: "menganggap halal", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استقر":  { bab: "mz7", root: ["ق","ر","ر"], meaning: "menetap/stabil", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استحب":  { bab: "mz7", root: ["ح","ب","ب"], meaning: "lebih menyukai/menyenangi", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استعز":  { bab: "mz7", root: ["ع","ز","ز"], meaning: "merasa kuat/sombong", tags: ["umum","mazid","mudhaaf"] },
+    "استخف":  { bab: "mz7", root: ["خ","ف","ف"], meaning: "meremehkan/menganggap ringan", tags: ["umum","quran","mazid","mudhaaf"] },
+    "استخص":  { bab: "mz7", root: ["خ","ص","ص"], meaning: "mengkhususkan untuk diri sendiri", tags: ["umum","mazid","mudhaaf"] },
+    "استذل":  { bab: "mz7", root: ["ذ","ل","ل"], meaning: "menghinakan", tags: ["umum","mazid","mudhaaf"] },
+
+
+    // ═══════════════════════════════════════════════════════════
+    // KATA POPULER MUDHA'AF DARI AL-QUR'AN
+    // ═══════════════════════════════════════════════════════════
+
+    "ضر":  { bab: "m1", root: ["ض","ر","ر"], meaning: "membahayakan/merugikan", tags: ["umum","quran","mudhaaf"] },
+    "بر":  { bab: "m1", root: ["ب","ر","ر"], meaning: "berbuat baik/berbakti", tags: ["umum","quran","mudhaaf"] },
+    "ضم":  { bab: "m1", root: ["ض","م","م"], meaning: "memeluk/menggabungkan", tags: ["umum","quran","mudhaaf"] },
+    "هم":  { bab: "m1", root: ["ه","م","م"], meaning: "bermaksud/berniat", tags: ["umum","quran","mudhaaf"] },
+    "زل":  { bab: "m1", root: ["ز","ل","ل"], meaning: "tergelincir/terpeleset", tags: ["umum","quran","mudhaaf"] },
+    "صم":  { bab: "m1", root: ["ص","م","م"], meaning: "menjadi tuli/bisu", tags: ["umum","quran","mudhaaf"] },
+    "غش":  { bab: "m1", root: ["غ","ش","ش"], meaning: "menipu/berbuat curang", tags: ["umum","mudhaaf"] },
+    "شق":  { bab: "m1", root: ["ش","ق","ق"], meaning: "membelah/menyusahkan", tags: ["umum","quran","mudhaaf"] },
+    "حط":  { bab: "m1", root: ["ح","ط","ط"], meaning: "menurunkan/meletakkan", tags: ["umum","quran","mudhaaf"] },
+    "جن":  { bab: "m1", root: ["ج","ن","ن"], meaning: "menutupi/menjadi gila", tags: ["umum","quran","mudhaaf"] },
+    "صف":  { bab: "m1", root: ["ص","ف","ف"], meaning: "berbaris/menyusun", tags: ["umum","quran","mudhaaf"] },
+    "لف":  { bab: "m1", root: ["ل","ف","ف"], meaning: "melipat/membungkus", tags: ["umum","quran","mudhaaf"] },
+    "كف":  { bab: "m1", root: ["ك","ف","ف"], meaning: "mencegah/menahan", tags: ["umum","quran","mudhaaf"] },
+    "حج":  { bab: "m1", root: ["ح","ج","ج"], meaning: "berhaji/berhujjah", tags: ["umum","quran","mudhaaf","ibadah"] },
+    "غل":  { bab: "m1", root: ["غ","ل","ل"], meaning: "membelenggu/berkhianat", tags: ["umum","quran","mudhaaf"] },
+    "لم":  { bab: "m1", root: ["ل","م","م"], meaning: "mengumpulkan", tags: ["umum","quran","mudhaaf"] },
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -1694,6 +1844,7 @@ console.log(`
 ╚════════════════════════════════════════╝
 
 `);
+
 
 
 
