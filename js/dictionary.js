@@ -924,7 +924,223 @@ const DICTIONARY = {
     "مفتاحي": { bab: "isim", root: ["ف","ت","ح"], meaning: "kunciku (dhamir)", tags: ["benda"] }, // sudah ada batch 2; hapus jika bentrok
     "صحراء": { bab: "isim", root: ["ص","ح","ر"], meaning: "padang pasir", tags: ["alam","quran"] },
     "غابة": { bab: "isim", root: ["غ","و","ب"], meaning: "hutan", tags: ["alam"] },
-    "جزيرة": { bab: "isim", root: ["ج","ز","ر"], meaning: "pulau", tags: ["alam"] }
+    "جزيرة": { bab: "isim", root: ["ج","ز","ر"], meaning: "pulau", tags: ["alam"] },
+
+        // --- Rumah & Ruangan ---
+    "مطبخ": { bab: "isim", root: ["ط","ب","خ"], meaning: "dapur (varian)", tags: ["tempat"] }, // jika sudah ada "مطبخ", hapus
+    "حمام": { bab: "isim", root: ["ح","م","م"], meaning: "kamar mandi", tags: ["tempat"] },
+    "غسالة": { bab: "isim", root: ["غ","س","ل"], meaning: "mesin cuci", tags: ["alat"] },
+    "ثلاجة": { bab: "isim", root: ["ث","ل","ج"], meaning: "kulkas", tags: ["alat"] },
+    "فرن": { bab: "isim", root: ["ف","ر","ن"], meaning: "oven/tungku", tags: ["alat"] },
+    "مغسلة": { bab: "isim", root: ["غ","س","ل"], meaning: "tempat cuci/wastafel", tags: ["alat"] },
+    "مروحة": { bab: "isim", root: ["ر","و","ح"], meaning: "kipas angin", tags: ["alat"] },
+    "مكيف": { bab: "isim", root: ["ك","ي","ف"], meaning: "AC", tags: ["alat"] },
+    "بطانية": { bab: "isim", root: ["ب","ط","ن"], meaning: "selimut", tags: ["benda"] },
+    "وسادة": { bab: "isim", root: ["و","س","د"], meaning: "bantal", tags: ["benda"] },
+    "خزانة": { bab: "isim", root: ["خ","ز","ن"], meaning: "lemari", tags: ["benda"] },
+    "ستارة": { bab: "isim", root: ["س","ت","ر"], meaning: "gorden", tags: ["benda"] },
+    "مصعد": { bab: "isim", root: ["ص","ع","د"], meaning: "lift", tags: ["alat","tempat"] },
+    "سلم": { bab: "isim", root: ["س","ل","م"], meaning: "tangga", tags: ["benda"] }, // cek: kamu sudah punya fi'il "سلم"; beda bab tapi key sama => akan menimpa. Jika ada "سلم" fi'il, jangan pakai ini.
+
+    // --- Peralatan makan & dapur ---
+    "ملعقة": { bab: "isim", root: ["ل","ع","ق"], meaning: "sendok", tags: ["alat"] },
+    "شوكة": { bab: "isim", root: ["ش","و","ك"], meaning: "garpu", tags: ["alat"] },
+    "سكين": { bab: "isim", root: ["س","ك","ن"], meaning: "pisau", tags: ["alat"] },
+    "طبق": { bab: "isim", root: ["ط","ب","ق"], meaning: "piring", tags: ["alat"] },
+    "صحن": { bab: "isim", root: ["ص","ح","ن"], meaning: "piring/mangkuk", tags: ["alat"] },
+    "كوب": { bab: "isim", root: ["ك","و","ب"], meaning: "gelas", tags: ["alat"] },
+    "فنجان": { bab: "isim", root: ["ف","ن","ج"], meaning: "cangkir", tags: ["alat"] },
+    "قدر": { bab: "isim", root: ["ق","د","ر"], meaning: "panci", tags: ["alat"] },
+    "مقلاة": { bab: "isim", root: ["ق","ل","ي"], meaning: "wajan", tags: ["alat"] },
+
+    // --- Sekolah & alat tulis ---
+    "دفتر": { bab: "isim", root: ["د","ف","ت"], meaning: "buku catatan", tags: ["benda","pendidikan"] },
+    "حقيبة": { bab: "isim", root: ["ح","ق","ب"], meaning: "tas", tags: ["benda"] }, // jika sudah ada, hapus
+    "سبورة": { bab: "isim", root: ["س","ب","ر"], meaning: "papan tulis", tags: ["alat","pendidikan"] },
+    "طباشير": { bab: "isim", root: ["ط","ب","ش"], meaning: "kapur tulis", tags: ["alat","pendidikan"] },
+    "ممحاة": { bab: "isim", root: ["م","ح","و"], meaning: "penghapus", tags: ["alat","pendidikan"] },
+    "مبراة": { bab: "isim", root: ["ب","ر","ي"], meaning: "rautan pensil", tags: ["alat","pendidikan"] },
+
+    // --- Pakaian ---
+    "قميص": { bab: "isim", root: ["ق","م","ص"], meaning: "kemeja", tags: ["benda"] },
+    "سروال": { bab: "isim", root: ["س","ر","و"], meaning: "celana", tags: ["benda"] },
+    "جاكيت": { bab: "isim", root: ["ج","ك","ت"], meaning: "jaket", tags: ["benda"] },
+    "حذاء": { bab: "isim", root: ["ح","ذ","و"], meaning: "sepatu", tags: ["benda"] },
+    "جورب": { bab: "isim", root: ["ج","ر","ب"], meaning: "kaos kaki", tags: ["benda"] },
+
+    // --- Tubuh ---
+    "رجل": { bab: "isim", root: ["ر","ج","ل"], meaning: "kaki (anggota tubuh)", tags: ["tubuh"] }, // WARNING: kamu sudah punya "رجل" = laki-laki. Jangan pakai ini kalau ingin hindari duplikat.
+    "إصبع": { bab: "isim", root: ["ص","ب","ع"], meaning: "jari", tags: ["tubuh"] },
+    "أسنان": { bab: "isim", root: ["س","ن","ن"], meaning: "gigi", tags: ["tubuh"] },
+    "لسان": { bab: "isim", root: ["ل","س","ن"], meaning: "lidah", tags: ["tubuh","quran"] },
+    "شعر": { bab: "isim", root: ["ش","ع","ر"], meaning: "rambut/syair", tags: ["tubuh","quran"] },
+
+    // --- Tempat umum ---
+    "مخبز": { bab: "isim", root: ["خ","ب","ز"], meaning: "toko roti", tags: ["tempat"] },
+    "صيدلية": { bab: "isim", root: ["ص","ي","د"], meaning: "apotek", tags: ["tempat","kesehatan"] },
+    "مكتبة": { bab: "isim", root: ["ك","ت","ب"], meaning: "perpustakaan (varian)", tags: ["tempat","pendidikan"] },
+    // --- Aktivitas harian: makan, mandi, tidur, bangun, dsb ---
+    "أكل": { bab: "m1", root: ["أ","ك","ل"], meaning: "makan", tags: ["umum","quran","makanan"] },
+    "نام": { bab: "m1", root: ["ن","و","م"], meaning: "tidur", tags: ["umum"] },
+    "استحم": { bab: "z9", root: ["ح","م","م"], meaning: "mandi", tags: ["umum","kesehatan"] },
+    "اغتسل": { bab: "z7", root: ["غ","س","ل"], meaning: "mandi (mandi besar/bersuci)", tags: ["ibadah","kesehatan"] },
+    "توضأ": { bab: "z5", root: ["و","ض","أ"], meaning: "berwudhu", tags: ["ibadah"] },
+    "استيقظ": { bab: "z9", root: ["ي","ق","ظ"], meaning: "bangun tidur (varian)", tags: ["umum"] }, // jika sudah ada "استيقظ", hapus
+    "لبس": { bab: "m4", root: ["ل","ب","س"], meaning: "memakai (varian)", tags: ["umum"] }, // sudah ada; hapus agar tidak menimpa
+    "بدّل": { bab: "z2", root: ["ب","د","ل"], meaning: "mengganti (pakaian/barang)", tags: ["umum"] },
+    "مشّط": { bab: "z2", root: ["م","ش","ط"], meaning: "menyisir", tags: ["umum"] },
+    "حلق": { bab: "m1", root: ["ح","ل","ق"], meaning: "mencukur", tags: ["umum"] },
+    "استعمل": { bab: "z9", root: ["ع","م","ل"], meaning: "menggunakan (varian)", tags: ["umum"] }, // jika sudah ada "استعمل", hapus
+    "شغّل": { bab: "z2", root: ["ش","غ","ل"], meaning: "menyalakan/mengoperasikan", tags: ["umum"] },
+    "أطفأ": { bab: "z1", root: ["ط","ف","أ"], meaning: "memadamkan", tags: ["umum"] }, // jika sudah ada "أطفأ", hapus
+    "غلق": { bab: "m1", root: ["غ","ل","ق"], meaning: "menutup (pintu/jendela)", tags: ["umum"] },
+    "أغلق": { bab: "z1", root: ["غ","ل","ق"], meaning: "menutup/mengunci", tags: ["umum"] },
+    "استفتح": { bab: "z9", root: ["ف","ت","ح"], meaning: "memulai/memohon pembukaan", tags: ["ibadah"] },
+    "اتصل": { bab: "z8", root: ["و","ص","ل"], meaning: "menghubungi/terhubung", tags: ["umum"] }, // catatan: pola bab tidak ketat; jika kamu mau ketat wazan, saya revisi
+    "هاتف": { bab: "m3", root: ["ه","ت","ف"], meaning: "memanggil/menyeru", tags: ["umum"] },
+
+    // --- Pergi, pulang, berangkat, sampai ---
+    "غادر": { bab: "z3", root: ["غ","د","ر"], meaning: "meninggalkan (tempat)/berangkat", tags: ["gerakan","umum"] },
+    "وصل": { bab: "m2", root: ["و","ص","ل"], meaning: "sampai (varian)", tags: ["gerakan","umum"] }, // sudah ada; hapus
+    "عاد": { bab: "m3", root: ["ع","و","د"], meaning: "pulang/kembali (varian)", tags: ["gerakan"] }, // sudah ada; hapus
+    "سافر": { bab: "z3", root: ["س","ف","ر"], meaning: "bepergian (varian)", tags: ["gerakan","umum"] }, // sudah ada; hapus
+
+    // --- Makan & minum: isim pendukung sehari-hari ---
+    "فطور": { bab: "isim", root: ["ف","ط","ر"], meaning: "sarapan", tags: ["makanan"] },
+    "غداء": { bab: "isim", root: ["غ","د","و"], meaning: "makan siang", tags: ["makanan"] },
+    "عشاء": { bab: "isim", root: ["ع","ش","ي"], meaning: "makan malam/isya (varian)", tags: ["makanan","waktu"] }, // kamu sudah ada "عشاء" waktu; ini akan menimpa, jadi hapus jika ingin aman
+    "وجبة": { bab: "isim", root: ["و","ج","ب"], meaning: "hidangan/porsi makan", tags: ["makanan"] },
+    "ملاعق": { bab: "isim", root: ["ل","ع","ق"], meaning: "sendok-sendok (jamak)", tags: ["alat"] },
+    "صحن": { bab: "isim", root: ["ص","ح","ن"], meaning: "piring/mangkuk (varian)", tags: ["alat"] }, // jika sudah kamu tambah, hapus
+    "مناديل": { bab: "isim", root: ["ن","د","ل"], meaning: "tisu/serbet (jamak)", tags: ["benda"] },
+
+    // --- Kebersihan diri: isim pendukung ---
+    "صابون": { bab: "isim", root: ["ص","ب","ن"], meaning: "sabun", tags: ["benda"] },
+    "شامبو": { bab: "isim", root: ["ش","م","ب"], meaning: "sampo", tags: ["benda"] },
+    "فرشاة": { bab: "isim", root: ["ف","ر","ش"], meaning: "sikat", tags: ["alat"] },
+    "معجون": { bab: "isim", root: ["ع","ج","ن"], meaning: "pasta (mis. pasta gigi)", tags: ["benda"] },
+    "منشفة": { bab: "isim", root: ["ن","ش","ف"], meaning: "handuk", tags: ["benda"] },
+    "مرآة": { bab: "isim", root: ["ر","أ","ي"], meaning: "cermin", tags: ["benda"] },
+    "مقص": { bab: "isim", root: ["ق","ص","ص"], meaning: "gunting", tags: ["alat"] },
+
+    // --- Pakaian & benda yang sering dipakai ---
+    "ملابس": { bab: "isim", root: ["ل","ب","س"], meaning: "pakaian (varian)", tags: ["benda"] }, // jika sudah ada, hapus
+    "قميص": { bab: "isim", root: ["ق","م","ص"], meaning: "kemeja", tags: ["benda"] },
+    "سروال": { bab: "isim", root: ["س","ر","و"], meaning: "celana", tags: ["benda"] },
+    "حذاء": { bab: "isim", root: ["ح","ذ","و"], meaning: "sepatu", tags: ["benda"] }, // jika sudah ada, hapus
+    "جورب": { bab: "isim", root: ["ج","ر","ب"], meaning: "kaos kaki", tags: ["benda"] },
+
+    // --- Rumah: kata benda yang sering dipakai ---
+    "غرفة": { bab: "isim", root: ["غ","ر","ف"], meaning: "kamar", tags: ["tempat"] }, // jika sudah ada, hapus
+    "مفتاح": { bab: "isim", root: ["ف","ت","ح"], meaning: "kunci (varian)", tags: ["alat"] }, // kamu sudah punya "مفتاح"; hapus
+    "حمام": { bab: "isim", root: ["ح","م","م"], meaning: "kamar mandi", tags: ["tempat"] }, // jika sudah ada, hapus
+    "مطبخ": { bab: "isim", root: ["ط","ب","خ"], meaning: "dapur", tags: ["tempat"] }, // jika sudah ada, hapus
+    // --- Aktivitas harian (fi'il) ---
+    "استيقظت": { bab: "z9", root: ["ي","ق","ظ"], meaning: "aku bangun tidur", tags: ["umum"] }, // jika tidak ingin bentuk dhamir, hapus
+    "استحممت": { bab: "z9", root: ["ح","م","م"], meaning: "aku mandi", tags: ["umum"] }, // jika tidak ingin bentuk dhamir, hapus
+    "أفطر": { bab: "z4", root: ["ف","ط","ر"], meaning: "sarapan/berbuka", tags: ["makanan","ibadah"] },
+    "تناول": { bab: "z6", root: ["ن","و","ل"], meaning: "mengambil/menyantap", tags: ["umum","makanan"] },
+    "تحضّر": { bab: "z4", root: ["ح","ض","ر"], meaning: "bersiap-siap", tags: ["umum"] },
+    "ارتدى": { bab: "z7", root: ["ر","د","ي"], meaning: "memakai (pakaian)", tags: ["umum"] },
+    "خلع": { bab: "m3", root: ["خ","ل","ع"], meaning: "melepas (pakaian)", tags: ["umum"] }, // jika sudah ada "خلع", hapus
+    "غسّل": { bab: "z2", root: ["غ","س","ل"], meaning: "mencuci (membasuh kuat/berulang)", tags: ["umum"] },
+    "كنس": { bab: "m1", root: ["ك","ن","س"], meaning: "menyapu", tags: ["umum"] },
+    "مسح": { bab: "m1", root: ["م","س","ح"], meaning: "mengelap/mengusap (varian)", tags: ["umum"] }, // kamu sudah ada "مسح"; hapus
+    "رتّب": { bab: "z2", root: ["ر","ت","ب"], meaning: "merapikan/menyusun", tags: ["umum"] },
+    "طبّق": { bab: "z2", root: ["ط","ب","ق"], meaning: "menerapkan", tags: ["umum"] },
+    "فتح": { bab: "m3", root: ["ف","ت","ح"], meaning: "membuka (varian)", tags: ["umum"] }, // sudah ada; hapus
+    "أعدّ": { bab: "z2", root: ["ع","د","د"], meaning: "menyiapkan", tags: ["umum"] },
+    "أصل": { bab: "m1", root: ["أ","ص","ل"], meaning: "berasal/akar", tags: ["umum"] },
+
+    // --- Belanja & uang ---
+    "اشترى": { bab: "z7", root: ["ش","ر","ي"], meaning: "membeli", tags: ["ekonomi","umum","quran"] },
+    "دفع": { bab: "m1", root: ["د","ف","ع"], meaning: "membayar/mendorong (varian)", tags: ["ekonomi","umum"] }, // sudah ada "دفع"; hapus
+    "حاسب": { bab: "z3", root: ["ح","س","ب"], meaning: "menghitung/mengoreksi tagihan", tags: ["ekonomi","umum"] },
+    "ساوم": { bab: "z3", root: ["س","و","م"], meaning: "menawar", tags: ["ekonomi","umum"] }, // jika sudah ada "ساوم", hapus
+    "فاتورة": { bab: "isim", root: ["ف","ت","ر"], meaning: "nota/tagihan", tags: ["benda","ekonomi"] },
+    "نقود": { bab: "isim", root: ["ن","ق","د"], meaning: "uang tunai", tags: ["benda","ekonomi"] },
+    "بطاقة": { bab: "isim", root: ["ب","ط","ق"], meaning: "kartu", tags: ["benda"] },
+    "محفظة": { bab: "isim", root: ["ح","ف","ظ"], meaning: "dompet", tags: ["benda"] },
+
+    // --- Komunikasi sehari-hari ---
+    "اتصل": { bab: "z8", root: ["و","ص","ل"], meaning: "menghubungi lewat telepon", tags: ["umum"] }, // jika kamu tidak ingin z8, bilang—saya ubah
+    "أرسل": { bab: "z1", root: ["ر","س","ل"], meaning: "mengirim", tags: ["umum","quran"] }, // sudah ada; hapus
+    "أعاد": { bab: "z1", root: ["ع","و","د"], meaning: "mengulang/mengembalikan", tags: ["umum"] }, // jika sudah ada, hapus
+    "شرح": { bab: "m1", root: ["ش","ر","ح"], meaning: "menjelaskan (varian)", tags: ["umum"] }, // sudah ada; hapus
+    "ترجم": { bab: "r1", root: ["ت","ر","ج","م"], meaning: "menerjemahkan (varian)", tags: ["pendidikan"] }, // sudah ada; hapus
+    "رسالة": { bab: "isim", root: ["ر","س","ل"], meaning: "pesan/surat", tags: ["benda"] }, // jika sudah ada, hapus
+    "مكالمة": { bab: "isim", root: ["ك","ل","م"], meaning: "panggilan telepon/percakapan", tags: ["benda"] },
+
+    // --- Kesehatan ringan & keadaan ---
+    "تألّم": { bab: "z4", root: ["أ","ل","م"], meaning: "merasa sakit/nyeri", tags: ["kesehatan","umum"] },
+    "تعافى": { bab: "z5", root: ["ع","ف","و"], meaning: "sembuh/pulih", tags: ["kesehatan","umum"] },
+    "سعال": { bab: "isim", root: ["س","ع","ل"], meaning: "batuk", tags: ["kesehatan"] },
+    "حمّى": { bab: "isim", root: ["ح","م","م"], meaning: "demam", tags: ["kesehatan"] },
+    "صداع": { bab: "isim", root: ["ص","د","ع"], meaning: "sakit kepala", tags: ["kesehatan"] },
+    "جرح": { bab: "isim", root: ["ج","ر","ح"], meaning: "luka", tags: ["kesehatan"] },
+    "دواء": { bab: "isim", root: ["د","و","ي"], meaning: "obat (varian)", tags: ["kesehatan"] }, // jika sudah ada, hapus
+    "وصفة": { bab: "isim", root: ["و","ص","ف"], meaning: "resep (dokter)/deskripsi", tags: ["kesehatan","umum"] },
+
+    // --- Rumah: alat & benda sering muncul ---
+    "مكنسة": { bab: "isim", root: ["ك","ن","س"], meaning: "sapu (varian)", tags: ["alat"] }, // sudah ada; hapus
+    "منظف": { bab: "isim", root: ["ن","ظ","ف"], meaning: "pembersih (cairan/alat)", tags: ["benda"] },
+    "سلة": { bab: "isim", root: ["س","ل","ل"], meaning: "keranjang", tags: ["benda"] },
+    "قمامة": { bab: "isim", root: ["ق","م","م"], meaning: "sampah", tags: ["benda"] },
+    "مفتاحان": { bab: "isim", root: ["ف","ت","ح"], meaning: "dua kunci (mutsanna)", tags: ["benda"] }, // jika tidak ingin mutsanna, hapus
+     // --- Aktivitas harian (fi'il) ---
+    "أعد": { bab: "m1", root: ["ع","و","د"], meaning: "kembali lagi/ulang (عاد dalam bentuk lain)", tags: ["umum"] }, // kalau kamu tidak mau variasi ini, hapus
+    "استحمى": { bab: "z9", root: ["ح","م","م"], meaning: "mandi (varian)", tags: ["umum"] }, // opsional, kalau ingin cukup "استحم" saja, hapus
+    "استيقن": { bab: "z9", root: ["ي","ق","ن"], meaning: "meyakini dengan pasti", tags: ["umum","quran"] },
+    "نظّم": { bab: "z2", root: ["ن","ظ","م"], meaning: "mengatur/menata", tags: ["umum"] },
+    "جهّز": { bab: "z2", root: ["ج","ه","ز"], meaning: "menyiapkan/perlengkapi", tags: ["umum"] },
+    "سخّن": { bab: "z2", root: ["س","خ","ن"], meaning: "memanaskan", tags: ["umum","makanan"] },
+    "برّد": { bab: "z2", root: ["ب","ر","د"], meaning: "mendinginkan", tags: ["umum"] },
+    "أصل": { bab: "m1", root: ["أ","ص","ل"], meaning: "menetap/berasal", tags: ["umum"] }, // jika sudah ada dari batchmu, hapus
+    "استعد": { bab: "z9", root: ["ع","د","د"], meaning: "bersiap-siap", tags: ["umum"] },
+    "استحم": { bab: "z9", root: ["ح","م","م"], meaning: "mandi (varian)", tags: ["umum"] }, // jika sudah ada, hapus (di kamusmu ada)
+    "شوى": { bab: "m3", root: ["ش","و","ي"], meaning: "memanggang (varian)", tags: ["umum","makanan"] }, // jika sudah ada, hapus
+
+    // --- Aktivitas kerja/sekolah (fi'il) ---
+    "امتحن": { bab: "m1", root: ["م","ت","ح"], meaning: "menguji/mengetes", tags: ["pendidikan","umum"] },
+    "نجز": { bab: "m1", root: ["ن","ج","ز"], meaning: "menyelesaikan", tags: ["umum"] },
+    "سلّم": { bab: "z2", root: ["س","ل","م"], meaning: "menyerahkan/mengucapkan salam", tags: ["umum","ibadah"] },
+    "حاور": { bab: "z3", root: ["ح","و","ر"], meaning: "berdialog", tags: ["umum"] },
+    "ناقش": { bab: "z3", root: ["ن","ق","ش"], meaning: "berdiskusi", tags: ["umum","pendidikan"] },
+
+    // --- Komunikasi & gawai (isim) ---
+    "هاتف": { bab: "isim", root: ["ه","ت","ف"], meaning: "telepon (varian)", tags: ["alat"] }, // jika sudah ada, hapus (di kamusmu ada)
+    "شاحن": { bab: "isim", root: ["ش","ح","ن"], meaning: "charger/pengisi daya", tags: ["alat"] },
+    "بطارية": { bab: "isim", root: ["ب","ط","ر"], meaning: "baterai", tags: ["alat"] },
+    "حاسبة": { bab: "isim", root: ["ح","س","ب"], meaning: "kalkulator", tags: ["alat","pendidikan"] },
+    "مذياع": { bab: "isim", root: ["ذ","ي","ع"], meaning: "radio", tags: ["alat"] },
+    "تلفاز": { bab: "isim", root: ["ت","ل","ف"], meaning: "televisi", tags: ["alat"] },
+
+    // --- Sekolah & kantor (isim) ---
+    "امتحان": { bab: "isim", root: ["م","ت","ح"], meaning: "ujian", tags: ["pendidikan"] },
+    "واجب": { bab: "isim", root: ["و","ج","ب"], meaning: "tugas PR/kewajiban", tags: ["pendidikan","quran"] },
+    "درس": { bab: "isim", root: ["د","ر","س"], meaning: "pelajaran", tags: ["pendidikan"] }, // key "درس" sudah ada sebagai fi'il; ini akan menimpa => jangan pakai kalau mau aman
+    "فصل": { bab: "isim", root: ["ف","ص","ل"], meaning: "kelas/bab (pelajaran)", tags: ["pendidikan","quran"] },
+    "صف": { bab: "isim", root: ["ص","ف","ف"], meaning: "barisan/kelas", tags: ["pendidikan","quran"] },
+
+    // --- Rumah (isim) ---
+    "مغرفة": { bab: "isim", root: ["غ","ر","ف"], meaning: "sendok sayur/centong", tags: ["alat"] },
+    "صينية": { bab: "isim", root: ["ص","ن","ي"], meaning: "nampan", tags: ["alat"] },
+    "مصفاة": { bab: "isim", root: ["ص","ف","و"], meaning: "saringan", tags: ["alat"] },
+    "إسفنجة": { bab: "isim", root: ["س","ف","ن"], meaning: "spons", tags: ["alat"] },
+    "منظفة": { bab: "isim", root: ["ن","ظ","ف"], meaning: "alat pembersih", tags: ["alat"] },
+
+    // --- Kesehatan (isim) ---
+    "عيادة": { bab: "isim", root: ["ع","و","د"], meaning: "klinik", tags: ["tempat","kesehatan"] },
+    "ممرضة": { bab: "isim", root: ["م","ر","ض"], meaning: "perawat (perempuan)", tags: ["profesi","kesehatan"] },
+    "ممرض": { bab: "isim", root: ["م","ر","ض"], meaning: "perawat (laki-laki)", tags: ["profesi","kesehatan"] },
+    "حقنة": { bab: "isim", root: ["ح","ق","ن"], meaning: "suntikan", tags: ["alat","kesehatan"] },
+    "ضماد": { bab: "isim", root: ["ض","م","د"], meaning: "perban", tags: ["benda","kesehatan"] },
+
+    // --- Cuaca (isim) ---
+    "حرارة": { bab: "isim", root: ["ح","ر","ر"], meaning: "panas/suhu", tags: ["alam"] },
+    "برد": { bab: "isim", root: ["ب","ر","د"], meaning: "dingin", tags: ["alam"] }, // key "برد" sudah ada fi'il (m2) -> akan menimpa, jadi jangan pakai kalau mau aman
+    "ضباب": { bab: "isim", root: ["ض","ب","ب"], meaning: "kabut", tags: ["alam"] },
+    "عاصفة": { bab: "isim", root: ["ع","ص","ف"], meaning: "badai", tags: ["alam","quran"] }
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -995,3 +1211,4 @@ console.log(`
 ╚════════════════════════════════════════╝
 
 `);
+
