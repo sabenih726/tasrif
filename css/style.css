@@ -1184,6 +1184,24 @@ body {
     background: #fff;
 }
 
+/* Fi'il Type Badges */
+.fiil-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border: 2px solid #000;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: 2px 2px 0 #000;
+    cursor: help;
+}
+    
+.fiil-type-mudhaaf { background: #f59e0b; color: #000; }
+.fiil-type-mutal { background: #8b5cf6; color: #fff; }
+.fiil-type-mahmuz { background: #ec4899; color: #fff; }
+.fiil-type-shahih { background: #10b981; color: #fff; }
+
 .badge-blue-bg { background: #dbeafe; }
 .badge-isim-bg { background: #93c5fd; }
 
@@ -1919,4 +1937,5 @@ body.dark-mode .search-results-box {
     }
 
 }
+
 
