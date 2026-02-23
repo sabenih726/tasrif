@@ -536,9 +536,9 @@ var App = {
     },
 
     // ═══════════════════════════════════════════════════════════
-    // RENDER FI'IL
+    // RENDER FI'IL (WITH BADGES)
     // ═══════════════════════════════════════════════════════════
-
+    
     renderFiil: function(res) {
         // Update header
         var babText = document.getElementById('babText');
@@ -548,7 +548,7 @@ var App = {
         var resultHeader = document.getElementById('resultHeader');
         var zigzagDiv = document.getElementById('zigzagDiv');
         var babBadge = document.getElementById('babBadge');
-
+    
         if (babText) babText.textContent = (res.bab_title || '').toUpperCase();
         if (patternText) patternText.textContent = res.main_pattern || '—';
         if (rootText) rootText.textContent = res.root ? 'Akar: ' + res.root : '';
@@ -565,10 +565,15 @@ var App = {
         if (babBadge) {
             babBadge.style.background = res.color || '#facc15';
         }
-
+    
+        // ═══════════════════════════════════════════════════════
+        // ★ RENDER FI'IL TYPE BADGES (MUDHA'AF, MU'TAL, SHAHIH) ★
+        // ═══════════════════════════════════════════════════════
+        this.renderFiilTypeBadges(res);
+    
         // Render Tashrif Istilahi
         this.renderTashrifIstilahi(res.rows);
-
+    
         // Render Tashrif Lughawi
         if (res.tashrif_lughawi) {
             this.renderLughawi('lughawiMadhi', res.tashrif_lughawi.madhi);
@@ -578,7 +583,6 @@ var App = {
             // Show madhi by default
             this.showLughawiTab('madhi');
         } else {
-            // No lughawi data
             var emptyMsg = '<div style="padding:20px;text-align:center;color:#888;">Tidak tersedia</div>';
             var madhiEl = document.getElementById('lughawiMadhi');
             var mudhariEl = document.getElementById('lughawiMudhari');
@@ -588,55 +592,143 @@ var App = {
             if (mudhariEl) mudhariEl.innerHTML = emptyMsg;
             if (amrEl) amrEl.innerHTML = emptyMsg;
         }
-
+    
         // Show result
         var resultFiil = document.getElementById('resultFiil');
         if (resultFiil) {
             resultFiil.style.display = 'block';
         }
-
+    
+        // Sync bookmark button
+        if (typeof ResultActions !== 'undefined' && ResultActions.syncBookmarkButton) {
+            ResultActions.syncBookmarkButton();
+        }
+    
         this.scrollTo('resultFiil');
     },
 
-    renderTashrifIstilahi: function(rows) {
-        var container = document.getElementById('tashrifContainer');
-        if (!container) return;
-
+    // ═══════════════════════════════════════════════════════════
+    // RENDER FI'IL TYPE BADGES
+    // ═══════════════════════════════════════════════════════════
+    
+    renderFiilTypeBadges: function(res) {
+        var container = document.getElementById('fiilTypeBadges');
+        
+        if (!container) {
+            var headerContent = document.querySelector('#resultHeader .header-content-positioned');
+            if (headerContent) {
+                container = document.createElement('div');
+                container.id = 'fiilTypeBadges';
+                container.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px;';
+                headerContent.appendChild(container);
+            } else {
+                return;
+            }
+        }
+        
         container.innerHTML = '';
-
-        if (!rows || rows.length === 0) {
-            container.innerHTML = '<div style="padding:20px;text-align:center;color:#888;">Tidak ada data</div>';
-            return;
+        
+        var badges = [];
+        
+        // 1. MUDHA'AF
+        if (res.isMudhaaf) {
+            badges.push({
+                type: 'mudhaaf',
+                icon: '🔁',
+                nameAr: 'مُضَعَّف',
+                nameId: "Mudha'af",
+                desc: 'Huruf Ain = Lam (idgham)',
+                color: '#f59e0b',
+                textColor: '#000'
+            });
         }
-
-        var colors = ['#ffff00','#00ffff','#ff69b4','#00ff00','#ff8c00','#E879F9','#38bdf8','#a3e635','#fb923c','#f472b6'];
-
-        for (var i = 0; i < rows.length; i++) {
-            var item = rows[i];
-            if (!item.mauzun || item.mauzun === '—') continue;
-
-            var div = document.createElement('div');
-            div.className = 'row-tashrif';
-            var color = colors[i % colors.length];
-
-            div.innerHTML =
-                '<div class="label-cell">' +
-                '<span class="brutal-border" style="width:10px;height:10px;background:' + color + ';display:inline-block;margin-right:8px;"></span>' +
-                '<span>' + item.label + '</span>' +
-                '</div>' +
-                '<div class="wazan-mauzun-container">' +
-                '<div class="arabic-text wazan-cell" style="flex:1;">' + item.wazan + '</div>' +
-                '<span class="arrow-indicator">→</span>' +
-                '<div class="arabic-text" style="flex:1;text-align:center;">' +
-                '<span class="mauzun-cell" style="background:linear-gradient(180deg,transparent 65%,' + color + ' 65%);">' + item.mauzun + '</span>' +
-                '</div>' +
-                '</div>' +
-                '<div class="meaning-cell">"' + item.arti + '"</div>';
-
-            container.appendChild(div);
+        
+        // 2. MU'TAL
+        if (res.isMutal && res.mutalType) {
+            var mutalData = {
+                'mitsal': { nameAr: 'مِثَال', nameId: "Mitsal", desc: "Fa' = huruf illah" },
+                'ajwaf': { nameAr: 'أَجْوَف', nameId: "Ajwaf", desc: "Ain = huruf illah" },
+                'naqish': { nameAr: 'نَاقِص', nameId: "Naqis", desc: "Lam = huruf illah" },
+                'lafif_mafruq': { nameAr: 'لَفِيف مَفْرُوق', nameId: "Lafif Mafruq", desc: "Fa'+Lam = illah" },
+                'lafif_maqrun': { nameAr: 'لَفِيف مَقْرُون', nameId: "Lafif Maqrun", desc: "Ain+Lam = illah" }
+            };
+            
+            var mt = mutalData[res.mutalType] || { nameAr: 'مُعْتَل', nameId: "Mu'tal", desc: "Mengandung huruf illah" };
+            badges.push({
+                type: 'mutal',
+                icon: '🔀',
+                nameAr: mt.nameAr,
+                nameId: mt.nameId,
+                desc: mt.desc,
+                color: '#8b5cf6',
+                textColor: '#fff'
+            });
         }
+        
+        // 3. MAHMUZ
+        var rootArr = res.root ? res.root.split(' ') : [];
+        var hamzahChars = ['ء', 'أ', 'إ', 'ؤ', 'ئ'];
+        var hasHamzah = false;
+        
+        for (var i = 0; i < rootArr.length; i++) {
+            for (var h = 0; h < hamzahChars.length; h++) {
+                if (rootArr[i] === hamzahChars[h]) {
+                    hasHamzah = true;
+                    break;
+                }
+            }
+            if (hasHamzah) break;
+        }
+        
+        if (hasHamzah) {
+            badges.push({
+                type: 'mahmuz',
+                icon: '⚡',
+                nameAr: 'مَهْمُوز',
+                nameId: 'Mahmuz',
+                desc: 'Mengandung hamzah',
+                color: '#ec4899',
+                textColor: '#fff'
+            });
+        }
+        
+        // 4. SHAHIH (default)
+        if (badges.length === 0) {
+            badges.push({
+                type: 'shahih',
+                icon: '✓',
+                nameAr: 'صَحِيح',
+                nameId: 'Shahih',
+                desc: "Fi'il Shahih Salim",
+                color: '#10b981',
+                textColor: '#fff'
+            });
+        }
+        
+        // RENDER
+        for (var b = 0; b < badges.length; b++) {
+            var badge = badges[b];
+            
+            var el = document.createElement('span');
+            el.className = 'fiil-type-badge fiil-type-' + badge.type;
+            el.title = badge.desc;
+            el.style.cssText = 
+                'display:inline-flex;align-items:center;gap:6px;' +
+                'padding:8px 14px;background:' + badge.color + ';' +
+                'color:' + badge.textColor + ';border:3px solid #000;' +
+                'font-weight:700;box-shadow:3px 3px 0 #000;cursor:help;';
+            
+            el.innerHTML = 
+                '<span style="font-size:1.1rem;">' + badge.icon + '</span>' +
+                '<span class="arabic-text" style="font-size:1rem;">' + badge.nameAr + '</span>' +
+                '<span style="font-size:0.7rem;opacity:0.85;">(' + badge.nameId + ')</span>';
+            
+            container.appendChild(el);
+        }
+        
+        container.style.display = 'flex';
     },
-
+    
     // ═══════════════════════════════════════════════════════════
     // RENDER ISIM
     // ═══════════════════════════════════════════════════════════
@@ -877,4 +969,5 @@ document.addEventListener('DOMContentLoaded', function() {
 // Export untuk browser
 if (typeof window !== 'undefined') {
     window.App = App;
+
 }
