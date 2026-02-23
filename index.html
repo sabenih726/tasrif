@@ -408,17 +408,22 @@
                 
                 <div class="header-brutal" id="resultHeader">
                     <div class="header-content-positioned">
+                        <!-- Bab Badge -->
                         <span id="babBadge" class="result-badge">
                             🏃 <span id="babText">—</span>
                         </span>
-                        <!-- ★ Mudha'af Badge ★ -->
-                        <span id="mudhaafBadge" class="result-badge" 
-                              style="display:none; background:#f59e0b; margin-left:8px;">
-                            🔁 <span id="mudhaafText">مُضَعَّف</span>
-                        </span>
+                        
+                        <!-- Pattern -->
                         <h2 id="patternText" class="arabic-text pattern-text font-bold">— — —</h2>
+                        
+                        <!-- Root & Meaning -->
                         <p id="rootText" class="header-sub-small"></p>
                         <p id="meaningText" class="header-sub-meaning"></p>
+                        
+                        <!-- ★ FI'IL TYPE BADGES CONTAINER ★ -->
+                        <div id="fiilTypeBadges" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px;">
+                            <!-- Badges (Mudha'af, Mu'tal, Mahmuz, Shahih) akan di-render oleh app.js -->
+                        </div>
                     </div>
                 </div>
                 <div id="zigzagDiv" class="zigzag"></div>
