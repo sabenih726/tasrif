@@ -1,6 +1,87 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
 
 /* ═══════════════════════════════════════════════════════════════
+   CSS VARIABLES - ROOT CONFIGURATION
+   ═══════════════════════════════════════════════════════════════ */
+   
+:root {
+  /* Colors */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-yellow: #FACC15;
+  --color-yellow-light: #FFFF00;
+  --color-bg: #F5F5DC;
+  
+  /* Category Colors */
+  --color-mujarrad: #FEF08A;
+  --color-mazid: #A7F3D0;
+  --color-rubai: #FED7AA;
+  --color-isim: #BFDBFE;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Borders */
+  --border-width: 3px;
+  --border-width-thick: 4px;
+  --border-color: var(--color-black);
+  
+  /* Shadows */
+  --shadow-sm: 2px 2px 0 var(--color-black);
+  --shadow-md: 4px 4px 0 var(--color-black);
+  --shadow-lg: 8px 8px 0 var(--color-black);
+  
+  /* Typography */
+  --font-arabic: 'Amiri', 'Noto Naskh Arabic', 'Sakkal Majalla', serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --font-display: 'Bebas Neue', sans-serif;
+  
+  /* Responsive font sizes */
+  --text-xs: clamp(0.6rem, 1.5vw, 0.75rem);
+  --text-sm: clamp(0.7rem, 1.8vw, 0.875rem);
+  --text-base: clamp(1rem, 2.5vw, 1.25rem);
+  --text-lg: clamp(1.25rem, 3vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 4vw, 2rem);
+  --text-2xl: clamp(2rem, 6vw, 3rem);
+  --text-hero: clamp(2rem, 8vw, 7rem);
+  
+  /* Z-index scale */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+  --color-bg: #1A1A2E;
+  --color-white: #16213E;
+  --color-black: #EAEAEA;
+  --color-yellow: #FFB800;
+  
+  --shadow-sm: 2px 2px 0 rgba(255, 255, 255, 0.1);
+  --shadow-md: 4px 4px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive shadow adjustments for mobile */
+@media (max-width: 768px) {
+  :root {
+    --shadow-sm: 2px 2px 0 var(--color-black);
+    --shadow-md: 3px 3px 0 var(--color-black);
+    --shadow-lg: 4px 4px 0 var(--color-black);
+    --border-width: 2px;
+    --border-width-thick: 3px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    RESET & BASE - RESPONSIVE
    ═══════════════════════════════════════════════════════════════ */
 *, *::before, *::after { 
@@ -96,10 +177,34 @@ body {
    TYPOGRAPHY - RESPONSIVE
    ═══════════════════════════════════════════════════════════════ */
 
-.arabic-text { 
-    font-family: 'Amiri', serif; 
-    direction: rtl; 
-    font-size: clamp(1.25rem, 3vw, 1.5rem); /* Responsive font */
+.arabic {
+  font-family: var(--font-arabic);
+  font-size: var(--text-lg);
+  line-height: 2.2; /* Better for Arabic */
+  letter-spacing: 0.02em;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* Enable ligatures */
+  text-rendering: optimizeLegibility;
+}
+
+/* Mixed RTL/LTR container */
+.mixed-direction {
+  unicode-bidi: isolate;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Prevent text selection issues */
+.arabic::selection {
+  background-color: var(--color-yellow);
+  color: var(--color-black);
 }
 
 .title-main {
@@ -190,6 +295,38 @@ body {
         box-shadow: 12px 12px 0px #000; 
     } 
 }
+
+/* Brutalist utilities */
+.brutal {
+  border: var(--border-width) solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+.brutal-thick {
+  border-width: var(--border-width-thick);
+  box-shadow: var(--shadow-lg);
+}
+
+.brutal-interactive {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+.brutal-interactive:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.brutal-interactive:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* Color utilities */
+.bg-mujarrad { background-color: var(--color-mujarrad); }
+.bg-mazid { background-color: var(--color-mazid); }
+.bg-rubai { background-color: var(--color-rubai); }
+.bg-isim { background-color: var(--color-isim); }
 
 /* ═══════════════════════════════════════════════════════════════
    MARQUEE - RESPONSIVE
@@ -977,4 +1114,5 @@ body.dark-mode .search-results-box {
     body {
         background: white;
     }
+
 }
