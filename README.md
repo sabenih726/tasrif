@@ -76,21 +76,3 @@
 <summary>💻 Tampilan Desktop</summary>
 
 ![Desktop Preview](screenshots/desktop-full.png)
-
-</details>
-
----
-
-## 📦 Instalasi
-
-### Opsi 1: Clone Repository
-
-```bash
-# Clone repo
-git clone https://github.com/username/tashrif-shorof-pro.git
-
-# Masuk direktori
-cd tashrif-shorof-pro
-
-# Buka di browser (gunakan live server)
-# VS Code: Install "Live Server" extension, klik kanan index.html > Open with Live Server
