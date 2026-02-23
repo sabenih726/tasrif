@@ -1,6 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════╗
- * ║  APP: UI Controller v3.0 - FINAL COMPLETE                ║
+ * ║  APP: UI Controller v3.1 - FIXED COMPLETE               ║
+ * ║  - FIX: renderTashrifIstilahi added                      ║
  * ║  - Support Fi'il (Mujarrad, Mazid, Ruba'i)              ║
  * ║  - Support Isim (Jamid & Musytaq)                        ║
  * ║  - Search: Arab, Latin, Indonesia                        ║
@@ -526,13 +527,171 @@ var App = {
             // Latin: try transliteration
             if (typeof Transliterator !== 'undefined' && Transliterator.extractConsonants) {
                 var translit = Transliterator.extractConsonants(input);
-                for (var i = 0; i < translit.length; i++) {
-                    letters.push(translit[i]);
+                for (var j = 0; j < translit.length; j++) {
+                    letters.push(translit[j]);
                 }
             }
         }
 
         return letters;
+    },
+
+    // ═══════════════════════════════════════════════════════════
+    // ★★★ RENDER TASHRIF ISTILAHI (NEW - FIX) ★★★
+    // ═══════════════════════════════════════════════════════════
+
+    renderTashrifIstilahi: function(rows) {
+        var container = document.getElementById('tashrifIstilahi');
+
+        // Auto-create container jika belum ada
+        if (!container) {
+            var resultFiil = document.getElementById('resultFiil');
+            if (!resultFiil) {
+                console.warn('[App] No container for Tashrif Istilahi');
+                return;
+            }
+
+            // Cari posisi sebelum lughawi section
+            var lughawiSection = resultFiil.querySelector('#lughawiContainer, .lughawi-section, [id*="lughawi"]');
+
+            container = document.createElement('div');
+            container.id = 'tashrifIstilahi';
+
+            if (lughawiSection) {
+                resultFiil.insertBefore(container, lughawiSection);
+            } else {
+                resultFiil.appendChild(container);
+            }
+        }
+
+        // Jika rows kosong
+        if (!rows || rows.length === 0) {
+            container.innerHTML =
+                '<div style="padding:20px;text-align:center;color:#888;' +
+                'border:2px dashed #ccc;margin:16px 0;">' +
+                '📋 Data Tashrif Istilahi tidak tersedia</div>';
+            container.style.display = 'block';
+            return;
+        }
+
+        // ═══ SIGHAT LABELS & COLORS ═══
+        var sighatConfig = [
+            { label: 'Fi\'il Madhi',           labelAr: 'فِعْل مَاضِي',         icon: '1️⃣',  bg: '#dbeafe', accent: '#3b82f6' },
+            { label: 'Fi\'il Mudhari\'',       labelAr: 'فِعْل مُضَارِع',       icon: '2️⃣',  bg: '#dcfce7', accent: '#22c55e' },
+            { label: 'Masdar',                 labelAr: 'مَصْدَر',              icon: '3️⃣',  bg: '#fef9c3', accent: '#eab308' },
+            { label: 'Isim Fa\'il',            labelAr: 'اِسْم فَاعِل',         icon: '4️⃣',  bg: '#fce7f3', accent: '#ec4899' },
+            { label: 'Isim Maf\'ul',           labelAr: 'اِسْم مَفْعُول',       icon: '5️⃣',  bg: '#e0e7ff', accent: '#6366f1' },
+            { label: 'Fi\'il Amr',             labelAr: 'فِعْل أَمْر',          icon: '6️⃣',  bg: '#ffedd5', accent: '#f97316' },
+            { label: 'Fi\'il Nahi',            labelAr: 'فِعْل نَهْي',          icon: '7️⃣',  bg: '#fecdd3', accent: '#ef4444' },
+            { label: 'Madhi Majhul',           labelAr: 'مَاضِي مَجْهُول',      icon: '8️⃣',  bg: '#f3e8ff', accent: '#a855f7' },
+            { label: 'Mudhari\' Majhul',       labelAr: 'مُضَارِع مَجْهُول',    icon: '9️⃣',  bg: '#ccfbf1', accent: '#14b8a6' },
+            { label: 'Naibu Fa\'il',           labelAr: 'نَائِب فَاعِل',        icon: '🔟',  bg: '#f0fdf4', accent: '#86efac' },
+            { label: 'Isim Zaman',             labelAr: 'اِسْم زَمَان',         icon: '🕐',  bg: '#fefce8', accent: '#fde047' },
+            { label: 'Isim Makan',             labelAr: 'اِسْم مَكَان',         icon: '📍',  bg: '#f0f9ff', accent: '#7dd3fc' },
+            { label: 'Isim Alat',              labelAr: 'اِسْم آلَة',           icon: '🔧',  bg: '#fdf4ff', accent: '#d946ef' }
+        ];
+
+        // ═══ BUILD HTML ═══
+        var html = '';
+
+        // Section Title
+        html += '<div style="background:#1e293b;color:#fff;padding:12px 16px;' +
+                'border:3px solid #000;border-bottom:none;font-weight:800;' +
+                'font-size:0.875rem;text-transform:uppercase;letter-spacing:1px;' +
+                'display:flex;align-items:center;gap:8px;margin-top:16px;">' +
+                '<span style="font-size:1.2rem;">📋</span> TASHRIF ISTILAHI</div>';
+
+        // Table
+        html += '<div style="border:3px solid #000;border-top:none;overflow-x:auto;margin-bottom:16px;">';
+        html += '<table style="width:100%;border-collapse:collapse;min-width:500px;">';
+
+        // Header
+        html += '<thead><tr>' +
+                '<th style="background:#f1f5f9;padding:10px 8px;border:1px solid #000;' +
+                'font-size:0.7rem;font-weight:700;text-align:center;width:30%;">SIGHAT</th>' +
+                '<th style="background:#f1f5f9;padding:10px 8px;border:1px solid #000;' +
+                'font-size:0.7rem;font-weight:700;text-align:center;width:30%;">WAZAN</th>' +
+                '<th style="background:#f1f5f9;padding:10px 8px;border:1px solid #000;' +
+                'font-size:0.7rem;font-weight:700;text-align:center;width:40%;">BENTUK</th>' +
+                '</tr></thead>';
+
+        html += '<tbody>';
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var cfg = sighatConfig[i] || {
+                label: 'Sighat ' + (i + 1),
+                labelAr: '',
+                icon: '•',
+                bg: '#f8fafc',
+                accent: '#94a3b8'
+            };
+
+            // ═══ PARSE ROW FORMAT ═══
+            // Support: Array ['label','wazan','value']
+            //          Object { label, wazan, value/arabic/form }
+            //          String (just the arabic form)
+            var label = '';
+            var wazan = '';
+            var value = '';
+
+            if (Array.isArray(row)) {
+                label = row[0] || '';
+                wazan = row[1] || '';
+                value = row[2] || '';
+            } else if (typeof row === 'object' && row !== null) {
+                label = row.label || row.sighat || row.name || '';
+                wazan = row.wazan || row.pattern || '';
+                value = row.value || row.arabic || row.form || '';
+            } else if (typeof row === 'string') {
+                value = row;
+            }
+
+            // Use config label if row doesn't provide one
+            if (!label) {
+                label = cfg.label;
+            }
+
+            // ═══ ROW HTML ═══
+            html += '<tr style="transition:background 0.15s;"' +
+                    ' onmouseover="this.style.background=\'#f8fafc\'"' +
+                    ' onmouseout="this.style.background=\'\'">';
+
+            // Sighat cell
+            html += '<td style="background:' + cfg.bg + ';padding:10px 8px;' +
+                    'border:1px solid #000;border-left:5px solid ' + cfg.accent + ';' +
+                    'text-align:center;vertical-align:middle;">' +
+                    '<div style="font-size:0.65rem;font-weight:700;color:#374151;text-transform:uppercase;">' +
+                    cfg.icon + ' ' + label + '</div>';
+
+            // Arabic label jika ada
+            if (cfg.labelAr) {
+                html += '<div class="arabic-text" style="font-size:0.85rem;color:#6b7280;margin-top:2px;">' +
+                        cfg.labelAr + '</div>';
+            }
+
+            html += '</td>';
+
+            // Wazan cell
+            html += '<td class="arabic-text" style="padding:10px 8px;border:1px solid #000;' +
+                    'font-size:1.1rem;text-align:center;color:#6b7280;vertical-align:middle;">' +
+                    (wazan || '—') + '</td>';
+
+            // Value cell (main Arabic form)
+            html += '<td class="arabic-text" style="padding:12px 8px;border:1px solid #000;' +
+                    'font-size:1.4rem;font-weight:700;text-align:center;color:#1e293b;' +
+                    'vertical-align:middle;letter-spacing:1px;">' +
+                    (value || '—') + '</td>';
+
+            html += '</tr>';
+        }
+
+        html += '</tbody></table></div>';
+
+        container.innerHTML = html;
+        container.style.display = 'block';
+
+        console.log('[App] ✅ Tashrif Istilahi rendered:', rows.length, 'rows');
     },
 
     // ═══════════════════════════════════════════════════════════
@@ -571,10 +730,14 @@ var App = {
         // ═══════════════════════════════════════════════════════
         this.renderFiilTypeBadges(res);
     
-        // Render Tashrif Istilahi
+        // ═══════════════════════════════════════════════════════
+        // ★ RENDER TASHRIF ISTILAHI (FIXED) ★
+        // ═══════════════════════════════════════════════════════
         this.renderTashrifIstilahi(res.rows);
     
-        // Render Tashrif Lughawi
+        // ═══════════════════════════════════════════════════════
+        // ★ RENDER TASHRIF LUGHAWI ★
+        // ═══════════════════════════════════════════════════════
         if (res.tashrif_lughawi) {
             this.renderLughawi('lughawiMadhi', res.tashrif_lughawi.madhi);
             this.renderLughawi('lughawiMudhari', res.tashrif_lughawi.mudhari);
@@ -870,16 +1033,20 @@ var App = {
         // Male column
         html += '<div style="border-right:2px solid #000;">';
         html += '<div style="background:#eff6ff;padding:4px 8px;text-align:center;font-size:0.75rem;font-weight:700;border-bottom:1px solid #ddd;">♂ Mudzakkar</div>';
-        for (var i = 0; i < maleData.length; i++) {
-            html += this.lughawiRowHTML(maleData[i], '#dbeafe');
+        if (maleData) {
+            for (var i = 0; i < maleData.length; i++) {
+                html += this.lughawiRowHTML(maleData[i], '#dbeafe');
+            }
         }
         html += '</div>';
 
         // Female column
         html += '<div>';
         html += '<div style="background:#fdf2f8;padding:4px 8px;text-align:center;font-size:0.75rem;font-weight:700;border-bottom:1px solid #ddd;">♀ Muannats</div>';
-        for (var i = 0; i < femaleData.length; i++) {
-            html += this.lughawiRowHTML(femaleData[i], '#fce7f3');
+        if (femaleData) {
+            for (var i = 0; i < femaleData.length; i++) {
+                html += this.lughawiRowHTML(femaleData[i], '#fce7f3');
+            }
         }
         html += '</div>';
 
@@ -891,10 +1058,10 @@ var App = {
         if (!item) return '';
         
         return '<div class="lughawi-row" style="background:' + bg + ';">' +
-            '<div class="lughawi-dhamir arabic-text">' + item.dhamir + 
-            '<span class="lughawi-dhamir-label">' + item.dhamir_label + '</span></div>' +
-            '<div class="lughawi-fiil arabic-text">' + item.fiil + '</div>' +
-            '<div class="lughawi-meaning">' + item.arti + '</div>' +
+            '<div class="lughawi-dhamir arabic-text">' + (item.dhamir || '') + 
+            '<span class="lughawi-dhamir-label">' + (item.dhamir_label || '') + '</span></div>' +
+            '<div class="lughawi-fiil arabic-text">' + (item.fiil || '') + '</div>' +
+            '<div class="lughawi-meaning">' + (item.arti || '') + '</div>' +
             '</div>';
     },
 
@@ -969,5 +1136,4 @@ document.addEventListener('DOMContentLoaded', function() {
 // Export untuk browser
 if (typeof window !== 'undefined') {
     window.App = App;
-
 }
