@@ -1,12 +1,8 @@
 /**
  * ╔══════════════════════════════════════════════════════════╗
- * ║  APP: UI Controller v3.1 - FIXED COMPLETE               ║
- * ║  - FIX: renderTashrifIstilahi added                      ║
- * ║  - FIX: container ID matched with HTML                   ║
- * ║  - Support Fi'il (Mujarrad, Mazid, Ruba'i)              ║
- * ║  - Support Isim (Jamid & Musytaq)                        ║
- * ║  - Search: Arab, Latin, Indonesia                        ║
- * ║  - Auto-detect & Manual mode                             ║
+ * ║  APP.JS v3.2 — FIXED VERSION                             ║
+ * ║  FIX: renderTashrifIstilahi container & field names      ║
+ * ║  FIX: WAZAN → MAUZUN now displays correctly              ║
  * ╚══════════════════════════════════════════════════════════╝
  */
 
@@ -370,6 +366,8 @@ var App = {
             if (loader) loader.style.display = 'none';
 
             if (result) {
+                self.currentData = result;
+                
                 if (result.type === 'fiil') {
                     self.renderFiil(result);
                 } else if (result.type === 'isim') {
@@ -431,7 +429,7 @@ var App = {
     },
 
     // ═══════════════════════════════════════════════════════════
-    // PROCESS ISIM - FIXED VERSION
+    // PROCESS ISIM
     // ═══════════════════════════════════════════════════════════
     
     processIsim: function(input) {
@@ -446,15 +444,12 @@ var App = {
         
         if (typeof DICTIONARY !== 'undefined') {
             if (isArabic) {
-                // ══ INPUT ARAB: Cari langsung atau tanpa harakat ══
                 console.log('Searching Arabic:', clean);
                 
-                // Exact match
                 if (DICTIONARY[clean]) {
                     arabicKey = clean;
                     dictEntry = DICTIONARY[clean];
                 } else {
-                    // Cari tanpa harakat
                     for (var key in DICTIONARY) {
                         if (!DICTIONARY.hasOwnProperty(key)) continue;
                         var keyClean = key.replace(/[\u064B-\u065F\u0670]/g, '');
@@ -466,7 +461,6 @@ var App = {
                     }
                 }
             } else {
-                // ══ INPUT INDONESIA/LATIN: Cari di field 'meaning' ══
                 console.log('Searching Indonesian:', clean);
                 var searchTerm = clean.toLowerCase();
                 
@@ -475,51 +469,41 @@ var App = {
                     
                     var data = DICTIONARY[key];
                     
-                    // Cek field 'meaning'
                     if (data.meaning) {
                         var meaningLower = data.meaning.toLowerCase();
                         
-                        // Exact match
                         if (meaningLower === searchTerm) {
                             arabicKey = key;
                             dictEntry = data;
-                            console.log('✅ Found exact match:', key);
                             break;
                         }
                         
-                        // Contains match (untuk "stasiun/halte")
                         if (meaningLower.indexOf(searchTerm) !== -1) {
                             arabicKey = key;
                             dictEntry = data;
-                            console.log('✅ Found partial match:', key);
                             break;
                         }
                         
-                        // Split match (misal: "rumah sakit" dalam meaning)
                         var meanings = meaningLower.split(/[\/\-,]/);
                         for (var m = 0; m < meanings.length; m++) {
                             if (meanings[m].trim() === searchTerm) {
                                 arabicKey = key;
                                 dictEntry = data;
-                                console.log('✅ Found split match:', key);
                                 break;
                             }
                         }
                         if (dictEntry) break;
                     }
                     
-                    // Cek juga di 'arti' jika ada
                     if (data.arti) {
                         var artiLower = data.arti.toLowerCase();
                         if (artiLower === searchTerm || artiLower.indexOf(searchTerm) !== -1) {
                             arabicKey = key;
                             dictEntry = data;
-                            console.log('✅ Found in arti:', key);
                             break;
                         }
                     }
                     
-                    // Cek di 'tags'
                     if (data.tags && Array.isArray(data.tags)) {
                         for (var t = 0; t < data.tags.length; t++) {
                             if (data.tags[t].toLowerCase() === searchTerm) {
@@ -534,16 +518,11 @@ var App = {
             }
         }
         
-        console.log('Found Arabic Key:', arabicKey);
-        console.log('Found Entry:', dictEntry);
-        
-        // Jika tidak ditemukan
         if (!dictEntry) {
             console.log('❌ Word not found in dictionary');
             return null;
         }
         
-        // ══ GENERATE RESULT ══
         var rootDisplay = '—';
         if (dictEntry.root) {
             rootDisplay = Array.isArray(dictEntry.root) 
@@ -551,7 +530,6 @@ var App = {
                 : dictEntry.root;
         }
         
-        // Gunakan IsimAnalyzer jika tersedia
         if (typeof IsimAnalyzer !== 'undefined') {
             var analysis = IsimAnalyzer.analyze(arabicKey, dictEntry);
             
@@ -572,7 +550,6 @@ var App = {
             }
         }
         
-        // Fallback tanpa IsimAnalyzer
         return {
             type: 'isim',
             word: arabicKey,
@@ -588,33 +565,27 @@ var App = {
         };
     },
     
-    // ══ HELPER: Detect Gender ══
     detectGender: function(word) {
         if (!word) return '—';
-        // Ta marbuthah = muannats
         if (word.endsWith('ة') || word.endsWith('ـة')) {
             return 'Muannats (مؤنث)';
         }
         return 'Mudzakkar (مذكر)';
     },
     
-    // ══ HELPER: Generate Basic Forms ══
     generateBasicForms: function(arabicWord, data) {
         var forms = [];
         
-        // Mufrad
         forms.push({
             label: 'مُفْرَد (Mufrad)',
             arabic: arabicWord,
             meaning: data.meaning || ''
         });
         
-        // Coba generate Mutsanna dan Jamak sederhana
-        var base = arabicWord.replace(/[ٌٍَُِْ]$/, ''); // Hapus tanwin
+        var base = arabicWord.replace(/[ٌٍَُِْ]$/, '');
         var isMuannats = arabicWord.endsWith('ة');
         
         if (isMuannats) {
-            // Muannats
             var baseNoTa = base.replace(/ة$/, '');
             forms.push({
                 label: 'مُثَنَّى (Mutsanna)',
@@ -627,7 +598,6 @@ var App = {
                 meaning: '(banyak)'
             });
         } else {
-            // Mudzakkar
             forms.push({
                 label: 'مُثَنَّى (Mutsanna)',
                 arabic: base + 'انِ',
@@ -671,140 +641,82 @@ var App = {
     },
 
     // ═══════════════════════════════════════════════════════════
-    // ★★★ RENDER TASHRIF ISTILAHI ★★★
+    // ★★★ RENDER TASHRIF ISTILAHI — FIXED ★★★
     // ═══════════════════════════════════════════════════════════
 
     renderTashrifIstilahi: function(rows) {
-        // Container ID = tashrifIstilahi (sesuai HTML)
-        var container = document.getElementById('tashrifIstilahi');
+        // ★ FIX: Container ID = 'tashrifContainer' sesuai HTML
+        var container = document.getElementById('tashrifContainer');
 
         if (!container) {
-            console.warn('[App] #tashrifIstilahi container not found in HTML');
+            console.error('[App] ❌ #tashrifContainer not found!');
             return;
         }
 
-        // Jika rows kosong
         if (!rows || rows.length === 0) {
-            container.innerHTML =
-                '<div style="padding:20px;text-align:center;color:#888;' +
-                'border:2px dashed #ccc;margin:8px 0;">' +
-                'Data Tashrif Istilahi tidak tersedia</div>';
+            container.innerHTML = '<div style="padding:20px;text-align:center;color:#888;border:2px dashed #ccc;margin:8px;">Data Tashrif Istilahi tidak tersedia</div>';
             return;
         }
 
-        // ═══ SIGHAT CONFIG (Label, Warna, Icon) ═══
-        var sighatConfig = [
-            { label: "Fi'il Madhi",         labelAr: 'فِعْل مَاضِي',       icon: '1️⃣',  bg: '#dbeafe', accent: '#3b82f6' },
-            { label: "Fi'il Mudhari'",      labelAr: 'فِعْل مُضَارِع',     icon: '2️⃣',  bg: '#dcfce7', accent: '#22c55e' },
-            { label: 'Masdar',              labelAr: 'مَصْدَر',            icon: '3️⃣',  bg: '#fef9c3', accent: '#eab308' },
-            { label: "Isim Fa'il",          labelAr: 'اِسْم فَاعِل',       icon: '4️⃣',  bg: '#fce7f3', accent: '#ec4899' },
-            { label: "Isim Maf'ul",         labelAr: 'اِسْم مَفْعُول',     icon: '5️⃣',  bg: '#e0e7ff', accent: '#6366f1' },
-            { label: "Fi'il Amr",           labelAr: 'فِعْل أَمْر',        icon: '6️⃣',  bg: '#ffedd5', accent: '#f97316' },
-            { label: "Fi'il Nahi",          labelAr: 'فِعْل نَهْي',        icon: '7️⃣',  bg: '#fecdd3', accent: '#ef4444' },
-            { label: 'Madhi Majhul',        labelAr: 'مَاضِي مَجْهُول',    icon: '8️⃣',  bg: '#f3e8ff', accent: '#a855f7' },
-            { label: "Mudhari' Majhul",     labelAr: 'مُضَارِع مَجْهُول',  icon: '9️⃣',  bg: '#ccfbf1', accent: '#14b8a6' },
-            { label: "Naibu Fa'il",         labelAr: 'نَائِب فَاعِل',      icon: '🔟',  bg: '#f0fdf4', accent: '#86efac' },
-            { label: 'Isim Zaman/Makan',    labelAr: 'ظَرْف زَمَان/مَكَان', icon: '📍',  bg: '#fefce8', accent: '#fde047' },
-            { label: 'Isim Alat',           labelAr: 'اِسْم آلَة',         icon: '🔧',  bg: '#fdf4ff', accent: '#d946ef' }
+        // Warna aksen untuk setiap baris
+        var accents = [
+            '#facc15', '#22d3ee', '#f472b6', '#4ade80', '#fb923c',
+            '#a78bfa', '#38bdf8', '#a3e635', '#f97316', '#ec4899'
         ];
 
-        // ═══ BUILD TABLE ═══
         var html = '';
-        html += '<div style="overflow-x:auto;">';
-        html += '<table style="width:100%;border-collapse:collapse;min-width:480px;">';
 
         for (var i = 0; i < rows.length; i++) {
             var row = rows[i];
-            var cfg = sighatConfig[i] || {
-                label: 'Sighat ' + (i + 1),
-                labelAr: '',
-                icon: '•',
-                bg: '#f8fafc',
-                accent: '#94a3b8'
-            };
+            var color = accents[i % accents.length];
 
-            // ═══ PARSE ROW (support multiple formats) ═══
+            // ═══ PARSE ROW ═══
             var label = '';
             var wazan = '';
-            var value = '';
-            var meaning = '';
+            var mauzun = '';
+            var arti = '';
 
-            if (Array.isArray(row)) {
-                // Format: ['label', 'wazan', 'value'] atau ['label', 'wazan', 'value', 'meaning']
+            if (typeof row === 'object' && row !== null) {
+                label = row.label || '';
+                wazan = row.wazan || '';
+                // ★ FIX: Tambahkan 'mauzun' ke daftar fallback (prioritas pertama)
+                mauzun = row.mauzun || row.value || row.arabic || row.form || '';
+                arti = row.arti || row.meaning || '';
+            } else if (Array.isArray(row)) {
                 label = row[0] || '';
                 wazan = row[1] || '';
-                value = row[2] || '';
-                meaning = row[3] || '';
-            } else if (typeof row === 'object' && row !== null) {
-                // Format: { label, wazan, value/arabic/form, meaning/arti }
-                label = row.label || row.sighat || row.name || '';
-                wazan = row.wazan || row.pattern || '';
-                value = row.value || row.arabic || row.form || '';
-                meaning = row.meaning || row.arti || '';
-            } else if (typeof row === 'string') {
-                value = row;
+                mauzun = row[2] || '';
+                arti = row[3] || '';
             }
 
-            // Fallback label dari config
-            if (!label) label = cfg.label;
+            // Skip jika kosong
+            if (!mauzun && !wazan) continue;
 
-            // ═══ ROW HTML ═══
-            html += '<tr style="border-bottom:1px solid #e2e8f0;" ' +
-                    'onmouseover="this.style.background=\'#f8fafc\'" ' +
-                    'onmouseout="this.style.background=\'\'">';
-
-            // KOLOM 1: Bentuk (Label Sighat)
-            html += '<td style="' +
-                    'background:' + cfg.bg + ';' +
-                    'padding:10px 8px;' +
-                    'border-left:5px solid ' + cfg.accent + ';' +
-                    'border-bottom:1px solid #e2e8f0;' +
-                    'text-align:center;vertical-align:middle;width:28%;">' +
-                    '<div style="font-size:0.7rem;font-weight:700;color:#374151;text-transform:uppercase;">' +
-                    cfg.icon + ' ' + label + '</div>';
+            // ═══ BUILD ROW HTML ═══
+            html += '<div class="row-tashrif">';
             
-            if (cfg.labelAr) {
-                html += '<div class="arabic-text" style="font-size:0.85rem;color:#6b7280;margin-top:2px;">' +
-                        cfg.labelAr + '</div>';
-            }
-            html += '</td>';
-
-            // KOLOM 2: Wazan → Mauzun
-            html += '<td style="' +
-                    'padding:10px 8px;' +
-                    'border-bottom:1px solid #e2e8f0;' +
-                    'text-align:center;vertical-align:middle;width:40%;">';
+            // Kolom 1: Label
+            html += '<div class="label-cell">';
+            html += '<span style="display:inline-block;width:10px;height:10px;background:' + color + ';border:2px solid #000;margin-right:8px;flex-shrink:0;"></span>';
+            html += '<span>' + label + '</span>';
+            html += '</div>';
             
-            if (wazan && value) {
-                html += '<span class="arabic-text" style="font-size:1rem;color:#6b7280;">' + wazan + '</span>' +
-                        '<span style="margin:0 6px;color:#9ca3af;">→</span>' +
-                        '<span class="arabic-text" style="font-size:1.3rem;font-weight:700;color:#1e293b;">' + value + '</span>';
-            } else if (value) {
-                html += '<span class="arabic-text" style="font-size:1.3rem;font-weight:700;color:#1e293b;">' + value + '</span>';
-            } else if (wazan) {
-                html += '<span class="arabic-text" style="font-size:1rem;color:#6b7280;">' + wazan + '</span>';
-            } else {
-                html += '<span style="color:#ccc;">—</span>';
-            }
+            // Kolom 2: Wazan → Mauzun
+            html += '<div class="wazan-mauzun-container">';
+            html += '<div class="arabic-text wazan-cell">' + wazan + '</div>';
+            html += '<span class="arrow-indicator">→</span>';
+            html += '<div class="arabic-text" style="text-align:center;flex:1;">';
+            html += '<span class="mauzun-cell" style="background:linear-gradient(180deg, transparent 65%, ' + color + ' 65%);">' + mauzun + '</span>';
+            html += '</div>';
+            html += '</div>';
             
-            html += '</td>';
-
-            // KOLOM 3: Arti
-            html += '<td style="' +
-                    'padding:10px 8px;' +
-                    'border-bottom:1px solid #e2e8f0;' +
-                    'text-align:right;vertical-align:middle;width:32%;' +
-                    'font-size:0.8rem;color:#6b7280;">' +
-                    (meaning || '') +
-                    '</td>';
-
-            html += '</tr>';
+            // Kolom 3: Arti
+            html += '<div class="meaning-cell">"' + arti + '"</div>';
+            
+            html += '</div>';
         }
 
-        html += '</table></div>';
-
         container.innerHTML = html;
-
         console.log('[App] ✅ Tashrif Istilahi rendered:', rows.length, 'rows');
     },
 
@@ -813,7 +725,6 @@ var App = {
     // ═══════════════════════════════════════════════════════════
     
     renderFiil: function(res) {
-        // Update header
         var babText = document.getElementById('babText');
         var patternText = document.getElementById('patternText');
         var rootText = document.getElementById('rootText');
@@ -863,13 +774,11 @@ var App = {
             if (amrEl) amrEl.innerHTML = emptyMsg;
         }
     
-        // Show result
         var resultFiil = document.getElementById('resultFiil');
         if (resultFiil) {
             resultFiil.style.display = 'block';
         }
     
-        // Sync bookmark button
         if (typeof ResultActions !== 'undefined' && ResultActions.syncBookmarkButton) {
             ResultActions.syncBookmarkButton();
         }
@@ -975,7 +884,7 @@ var App = {
             });
         }
         
-        // RENDER
+        // RENDER BADGES
         for (var b = 0; b < badges.length; b++) {
             var badge = badges[b];
             
@@ -1125,7 +1034,6 @@ var App = {
         var html = '<div style="background:' + bg + ';padding:8px 12px;border-bottom:2px solid #000;font-size:0.75rem;font-weight:700;text-transform:uppercase;">' + title + '</div>';
         html += '<div style="display:grid;grid-template-columns:1fr 1fr;">';
 
-        // Male column
         html += '<div style="border-right:2px solid #000;">';
         html += '<div style="background:#eff6ff;padding:4px 8px;text-align:center;font-size:0.75rem;font-weight:700;border-bottom:1px solid #ddd;">♂ Mudzakkar</div>';
         if (maleData) {
@@ -1135,7 +1043,6 @@ var App = {
         }
         html += '</div>';
 
-        // Female column
         html += '<div>';
         html += '<div style="background:#fdf2f8;padding:4px 8px;text-align:center;font-size:0.75rem;font-weight:700;border-bottom:1px solid #ddd;">♀ Muannats</div>';
         if (femaleData) {
@@ -1239,8 +1146,8 @@ document.addEventListener('DOMContentLoaded', function() {
     App.init();
 });
 
-// Export untuk browser
 if (typeof window !== 'undefined') {
     window.App = App;
 }
 
+console.log('[App] ✅ App.js v3.2 FIXED loaded');
