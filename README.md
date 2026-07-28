@@ -55,7 +55,7 @@
 
 ## 🚀 Demo
 
-🔗 **Live Demo:** [https://username.github.io/tashrif-shorof-pro](https://username.github.io/tashrif-shorof-pro)
+🔗 **Live Demo:** [https://tasrif.sabn.workers.dev/)
 
 > Ganti `username` dengan username GitHub Anda
 
